@@ -2,7 +2,7 @@
 
 @section('header')
     <header>
-        @include('guest.partials.nav-bar')
+        @include('guest.partials.navbar-top')
     </header>
 @endsection
 
