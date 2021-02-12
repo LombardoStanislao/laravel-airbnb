@@ -4,19 +4,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
+            <h1>Dashbord Admin</h1>
+            <a href="{{route('admin.apartments.index')}}" class="btn btn-info">
+                Pagina Index ApartmentController
+            </a>
+            <a href="{{route('admin.apartments.create')}}" class="btn btn-info">
+                Pagina Create ApartmentController
+            </a>
+            
         </div>
     </div>
 </div>
