@@ -42,7 +42,6 @@ class Apartment extends Model
         return $this->hasMany('App\Sponsorship');
     }
 
-
     public function comforts() {
         return $this->belongsToMany('App\Comfort');
     }

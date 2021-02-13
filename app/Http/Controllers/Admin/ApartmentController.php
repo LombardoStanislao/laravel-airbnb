@@ -83,6 +83,10 @@ class ApartmentController extends Controller
         $new_apartment->fill($data);
         $new_apartment->save();
 
+        if (array_key_exists('comforts', $data)) {
+            $new_apartment->comforts()->sync($data["comforts"]);
+        }
+
         return redirect()->route('admin.apartments.index');
     }
 
@@ -92,9 +96,17 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Apartment $apartment)
     {
+        if ($apartment && $apartment->user_id == Auth::user()->id) {
+            $data = [
+                'apartment' => $apartment
+            ];
 
+            return view('admin.apartments.show', $data);
+        }
+
+        abort(404);
     }
 
     /**
