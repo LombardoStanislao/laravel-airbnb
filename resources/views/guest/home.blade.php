@@ -8,4 +8,5 @@
 
 @section('content')
     <h1>Hello</h1>
+    <i class="fas fa-search"> Search</i>
 @endsection
