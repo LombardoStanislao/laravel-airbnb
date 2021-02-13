@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Apartment;
+use App\Comfort;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -16,7 +20,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $data = [
-            'apartments' => Apartment::all()
+            'apartments' => Apartment::where('user_id', Auth::user()->id)->get()
         ];
         return view('admin.apartments.index', $data);
     }
@@ -28,7 +32,10 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        return view('admin.apartments.create');
+        $data = [
+            'comforts' => Comfort::all()
+        ];
+        return view('admin.apartments.create', $data);
     }
 
     /**
@@ -39,7 +46,44 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'rooms_number' => 'required|integer|min:1',
+            'sleeps_accomodations' => 'required|integer|min:1',
+            'bathrooms_number' => 'required|integer|min:1',
+            'mq' => 'required|integer|min:1',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'price_per_night' => 'required|numeric|min:0',
+            'image' => 'image',
+            'comforts' => 'exists:comforts,id',
+            'available' => 'required|boolean',
+            'description' => 'nullable'
+        ]);
+
+        $data = $request->all();
+
+        $data["user_id"] = Auth::user()->id;
+
+        $slug = Str::slug($data["title"], '-');
+        $new_slug = $slug;
+        $slug_found = Apartment::where('slug', $new_slug)->first();
+        $counter = 1;
+        while ($slug_found) {
+            $new_slug = $slug . '-' . $counter;
+            $counter++;
+            $slug_found = Apartment::where('slug', $new_slug)->first();
+        }
+        $data["slug"] = $new_slug;
+
+        $main_image = Storage::put('apartment_images', $data["image"]);
+        $data["main-image"] = $main_image;
+
+        $new_apartment = new Apartment();
+        $new_apartment->fill($data);
+        $new_apartment->save();
+
+        return redirect()->route('admin.apartments.index');
     }
 
     /**

@@ -12,7 +12,7 @@
             </div>
             <div class="col-12 col-md-6 text-right">
                 <a href="{{ route('admin.apartments.create') }}" class="btn btn-primary">
-                    Inserisci appartamento
+                    Aggiungi appartamento
                 </a>
             </div>
         </div>
