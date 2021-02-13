@@ -55,7 +55,7 @@ class ApartmentController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'price_per_night' => 'required|numeric|min:0',
-            'image' => 'image',
+            'image' => 'mimes:jpeg,png,jpg,gif,swg',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable'
@@ -83,6 +83,10 @@ class ApartmentController extends Controller
         $new_apartment->fill($data);
         $new_apartment->save();
 
+        if (array_key_exists('comforts', $data)) {
+            $new_apartment->comforts()->sync($data["comforts"]);
+        }
+
         return redirect()->route('admin.apartments.index');
     }
 
@@ -103,9 +107,14 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Apartment $apartment)
     {
-        //
+        $data = [
+            // 'apartment' => Apartment::where('user_id', Auth::user()->id)->get(),
+            'apartment' => Apartment::where('id', $apartment->id)->first(),
+            'comforts' => Comfort::all()
+        ];
+        return view('admin.apartments.edit', $data);
     }
 
     /**
@@ -117,7 +126,44 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'rooms_number' => 'required|integer|min:1',
+            'sleeps_accomodations' => 'required|integer|min:1',
+            'bathrooms_number' => 'required|integer|min:1',
+            'mq' => 'required|integer|min:1',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'price_per_night' => 'required|numeric|min:0',
+            'image' => 'mimes:jpeg,png,jpg,gif,swg',
+            'comforts' => 'exists:comforts,id',
+            'available' => 'required|boolean',
+            'description' => 'nullable'
+        ]);
+
+        $data = $request->all();
+
+        $data["user_id"] = Auth::user()->id;
+
+        $slug = Str::slug($data["title"], '-');
+        $new_slug = $slug;
+        $slug_found = Apartment::where('slug', $new_slug)->first();
+        $counter = 1;
+        while ($slug_found) {
+            $new_slug = $slug . '-' . $counter;
+            $counter++;
+            $slug_found = Apartment::where('slug', $new_slug)->first();
+        }
+        $data["slug"] = $new_slug;
+
+        $main_image = Storage::put('apartment_images', $data["image"]);
+        $data["main-image"] = $main_image;
+
+        $apartment = new Apartment();
+        $apartment->fill($data);
+        $apartment->update($data);
+
+        return redirect()->route('admin.apartments.index');
     }
 
     /**
