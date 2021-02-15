@@ -167,10 +167,11 @@ class ApartmentController extends Controller
             $data["slug"] = $new_slug;
         }
 
-        $main_image = Storage::put('apartment_images', $data["image"]);
-        $data["main-image"] = $main_image;
-
-
+        if(array_key_exists('image',$data)){
+            $main_image = Storage::put('apartment_images', $data["image"]);
+            $data["main-image"] = $main_image;
+        }
+        
         $apartment->update($data);
 
         if (array_key_exists('comforts', $data)) {
