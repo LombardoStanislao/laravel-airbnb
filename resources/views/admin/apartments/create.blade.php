@@ -8,14 +8,19 @@
     <script type="text/javascript" defer>
         function convertAdress(event) {
             event.preventDefault();
-            tt.services.geocode({
+            tt.services.structuredGeocode({
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-                query: document.getElementById('inputAdress').value
+                countryCode: 'IT',
+                streetName: document.querySelector("input[name='street_name']").value,
+                streetNumber: document.querySelector("input[name='street_number']").value,
+                municipality: document.querySelector("input[name='municipality']").value
             }).then(response => {
-                var latitude = response.results[0].position.lat;
-                document.querySelector("input[name='latitude']").value = latitude;
-                var longitude = response.results[0].position.lng;
-                document.querySelector("input[name='longitude']").value = longitude;
+                if (response.results.length) {
+                    var latitude = response.results[0].position.lat;
+                    document.querySelector("input[name='latitude']").value = latitude;
+                    var longitude = response.results[0].position.lng;
+                    document.querySelector("input[name='longitude']").value = longitude;
+                }
                 document.getElementById('create-apartment').submit();
             });
         }
@@ -90,10 +95,32 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Indirizzo: </label>
-                        <input id="inputAdress" type="text" name="adress" class="form-control" value="{{ old('adress') }}" required>
+                        <label>Indirizzo:</label>
+                        <div class="d-md-flex">
+                            <label>Via: </label>
+                            <input type="text" name="street_name" class="form-control ml-md-3 mr-md-3" value="{{ old('street_name') }}" required>
+                            <label>Numero: </label>
+                            <input type="number" name="street_number" class="form-control ml-md-3 mr-md-3" value="{{ old('street_number') }}" required min="1">
+                            <label>Città: </label>
+                            <input type="text" name="municipality" class="form-control ml-md-3" value="{{ old('municipality') }}" required>
+                        </div>
                         <input type="hidden" name="latitude">
                         <input type="hidden" name="longitude">
+                        @error ('street_name')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        @error ('street_number')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        @error ('municipality')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label>Prezzo per notte: </label>
@@ -107,6 +134,11 @@
                     <div class="form-group">
                         <label>Immagine di copertina: </label>
                         <input type="file" class="form-control-file" name="image" required>
+                        @error ('image')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label>Comforts: </label>
@@ -127,13 +159,18 @@
                     <div class="form-group">
                         <label>Disponibilità appartamento: </label>
                         <div class="form-check">
-                            <input type="radio" name="available" value="1" required checked>
+                            <input type="radio" name="available" value="1" required {{ !old('available') || old('available') === '1' ? 'checked' : '' }}>
                             <label>Sì</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" name="available" value="0" required>
+                            <input type="radio" name="available" value="0" required {{ old('available') === '0' ? 'checked' : '' }}>
                             <label>No</label>
                         </div>
+                        @error ('available')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label>Descrizione: </label>
