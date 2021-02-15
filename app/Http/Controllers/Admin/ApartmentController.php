@@ -132,7 +132,7 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Apartment $apartment)
     {
         $request->validate([
             'title' => 'required|max:255',
@@ -153,25 +153,31 @@ class ApartmentController extends Controller
 
         $data["user_id"] = Auth::user()->id;
 
-        $slug = Str::slug($data["title"], '-');
-        $new_slug = $slug;
-        $slug_found = Apartment::where('slug', $new_slug)->first();
-        $counter = 1;
-        while ($slug_found) {
-            $new_slug = $slug . '-' . $counter;
-            $counter++;
+        if($data['title'] != $apartment->title){
+            $slug = Str::slug($data["title"], '-');
+            $new_slug = $slug;
             $slug_found = Apartment::where('slug', $new_slug)->first();
+            $counter = 1;
+            while ($slug_found) {
+                $new_slug = $slug . '-' . $counter;
+                $counter++;
+                $slug_found = Apartment::where('slug', $new_slug)->first();
+            }
+            $data["slug"] = $new_slug;
         }
-        $data["slug"] = $new_slug;
 
         $main_image = Storage::put('apartment_images', $data["image"]);
         $data["main-image"] = $main_image;
 
-        $apartment = new Apartment();
-        $apartment->fill($data);
+
         $apartment->update($data);
 
-        return redirect()->route('admin.apartments.index');
+        if (array_key_exists('comforts', $data)) {
+            $apartment->comforts()->sync($data["comforts"]);
+        }
+
+        return redirect()->route('admin.apartments.show', ['apartment' => $apartment->id]);
+
     }
 
     /**
