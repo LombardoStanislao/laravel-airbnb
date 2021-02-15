@@ -90,8 +90,10 @@ class HomeController extends Controller
         $filteredApartments = $apartments->whereIn('latitude', $lats)->whereIn('longitude', $lons);
 
         $data = [
-            'apartments' => $filteredApartments
+            'apartments' => $filteredApartments,
+            'location' => $location,
+
         ];
-        return view()
+        return view('guest.apartments.index', $data);
     }
 }
