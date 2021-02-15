@@ -6,6 +6,7 @@
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/services/services-web.min.js"></script>
 
     <script type="text/javascript" defer>
+
         function convertAdress(event) {
             event.preventDefault();
             tt.services.geocode({
@@ -19,6 +20,25 @@
                 document.getElementById('create-apartment').submit();
             });
         }
+
+        var longitude_js = "{{$apartment->longitude}}";
+        console.log(longitude_js);
+        var latitude_js = "{{$apartment->latitude}}";
+        console.log(latitude_js);
+
+        function callbackFn() {
+            tt.services.reverseGeocode({
+                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                position: {longitude: longitude_js, latitude: latitude_js}
+            }).then(response => {
+                console.log(response.addresses[0].address.freeformAddress);
+                address = response.addresses[0].address.freeformAddress;
+                document.querySelector("input[name='adress']").value = address;
+            })
+        }
+
+        callbackFn();
+
     </script>
 @endsection
 
@@ -29,6 +49,7 @@
                 <h1>
                     Modifica appartamento
                 </h1>
+                {{-- <button type="button" name="button" onclick = "callbackFn()">Prova</button> --}}
             </div>
         </div>
         <div class="row">
@@ -120,22 +141,6 @@
                         @endif
                         <input type="file" class="form-control-file" name="image" required>
                     </div>
-                    {{-- <div class="form-group">
-                        <label>Comforts: </label>
-                        @foreach ($comforts as $comfort)
-                            <div class="form-check">
-                                <input name="comforts[]" class="form-check-input" type="checkbox" value="{{ $comfort->id }}" {{ in_array($comfort->id, old('comforts', [])) ? 'checked' : '' }}>
-                                <label class="form-check-label">
-                                    {{ $comfort->name }}
-                                </label>
-                            </div>
-                        @endforeach
-                        @error ('comforts')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div> --}}
                     <div class="form-group">
                         <label>Comforts:</label>
                             @foreach ($comforts as $comfort)
@@ -163,11 +168,13 @@
                     <div class="form-group">
                         <label>Disponibilità appartamento: </label>
                         <div class="form-check">
-                            <input type="radio" name="available" value="1" required checked>
+                            <input type="radio" name="available" value="1" required checked
+                             {{$apartment->available? 'checked=checked' : ''}}>
                             <label>Sì</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" name="available" value="0" required>
+                            <input type="radio" name="available" value="0" required
+                            {{$apartment->available? '' : 'checked=checked'}}>
                             <label>No</label>
                         </div>
                     </div>
@@ -181,7 +188,7 @@
                         @enderror
                     </div>
                     <button type="submit" class="btn btn-success">
-                        Aggiungi appartamento
+                        Conferma Modifiche
                     </button>
                 </form>
             </div>
