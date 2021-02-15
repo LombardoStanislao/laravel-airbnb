@@ -39,9 +39,13 @@
                                         <a href="{{ route('admin.apartments.edit', ['apartment' => $apartment->id]) }}" class="btn btn-warning">
                                             Modifica
                                         </a>
-                                        <a href="{{ route('admin.apartments.destroy', ['apartment' => $apartment->id]) }}" class="btn btn-danger">
-                                            Elimina
-                                        </a>
+                                        <form class="d-inline-block" method="post" action="{{ route('admin.apartments.destroy', ['apartment'=> $apartment->id])}}" >
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger" type="submit" name="button">
+                                                Elimina
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
