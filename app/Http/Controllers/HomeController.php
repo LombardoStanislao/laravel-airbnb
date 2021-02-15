@@ -33,42 +33,65 @@ class HomeController extends Controller
     }
 
     public function search($location) {
-        // //get all the apartments in the DB
-        // $apartments = Apartment::all();
-        //
-        // //Array with the positions of all the apartments in the DB
-        // $poiList=[];
-        // foreach ($aparments as $apartment) {
-        //     $poiList[] = [
-        //         "lat" => $apartment->latitude,
-        //         "lon" => $apartment->longitude
-        //     ];
-        // }
-
         $baseURL = 'https://api.tomtom.com/search/2/';
         $key = 'uh1InUaJszlyTvCRilNBbn0pPm2ktvmD';
 
-        $URLCoordinartesSearched = $baseURL . 'geocode/' . Str::slug($location) . '.json';
-        //
+        /*get the searched location*/
+
+        //apiURL request
+        $URLCoordinartesSearched = $baseURL . 'geocode/' . $location . '.json';
+
+        //API request
         $responseLocation = Http::get($URLCoordinartesSearched, [
             'key' => 'uh1InUaJszlyTvCRilNBbn0pPm2ktvmD'
         ]);
 
+        // getting latitude and longitude od the placed searched
         $lat = $responseLocation->json()['results'][0]['position']['lat'];
         $lon = $responseLocation->json()['results'][0]['position']['lon'];
 
         $searchedPosition = $lat . ',' . $lon;
-        dd($searchedPosition);
 
-        // $geometryList = [
-        //     'type' => 'CIRCLE',
-        //     'position' => '' ,
-        //     'radius' => 20000
-        // ];
-        // $URLFilteredApartments = 'https://api.tomtom.com/search/2/geometryFilter.JSON?key=uh1InUaJszlyTvCRilNBbn0pPm2ktvmD';
-        //
-        // $responseFilteredApartments = Http::post($URLFilteredApartments, [
-        //     'poiList' => $poiList
-        // ]);
+        //Area where looking for the apartments
+        $geometryList = [
+            'type' => 'CIRCLE',
+            'position' => $searchedPosition ,
+            'radius' => 20000
+        ];
+
+        //get all the apartments in the DB
+        $apartments = Apartment::all();
+        // Array with the positions of all the apartments in the DB
+        $poiList=[];
+        foreach ($aparments as $apartment) {
+            $poiList[] = [
+                "lat" => $apartment->latitude,
+                "lon" => $apartment->longitude
+            ];
+        }
+
+        //get the pairs of right positions
+        $URLFilteredApartments = $baseURL . 'geometryFilter.JSON?key=' . $key;
+
+        $responseFilteredApartments = Http::post($URLFilteredApartments, [
+            'poiList' => $poiList,
+            'geometryList' => $geometryList
+        ]);
+
+        //create an array with all the right latitude and one with all the longitudes
+        $lats = [];
+        $lons = [];
+        foreach ($responseFilteredApartments->json()->results as $result) {
+            $lats[] = $result['position']['lat'];
+            $lons[] = $result['position']['lon'];
+        }
+
+        //select the apartments where the latitude and longitude are in the arrays
+        $filteredApartments = $apartments->whereIn('latitude', $lats)->whereIn('longitude', $lons);
+
+        $data = [
+            'apartments' => $filteredApartments
+        ];
+        return view()
     }
 }
