@@ -186,8 +186,13 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Apartment $apartment)
     {
-        //
+
+        $apartment->comforts()->sync([]);
+
+        $apartment->delete();
+
+        return redirect()->route('admin.apartments.index');
     }
 }
