@@ -52,8 +52,9 @@ class ApartmentController extends Controller
             'sleeps_accomodations' => 'required|integer|min:1',
             'bathrooms_number' => 'required|integer|min:1',
             'mq' => 'required|integer|min:1',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'street_name' => 'required',
+            'street_number' => 'required|integer|min:1',
+            'municipality' => 'required',
             'price_per_night' => 'required|numeric|min:0',
             'image' => 'mimes:jpeg,png,jpg,gif,swg',
             'comforts' => 'exists:comforts,id',
@@ -166,10 +167,11 @@ class ApartmentController extends Controller
             $data["slug"] = $new_slug;
         }
 
-        $main_image = Storage::put('apartment_images', $data["image"]);
-        $data["main-image"] = $main_image;
-
-
+        if(array_key_exists('image',$data)){
+            $main_image = Storage::put('apartment_images', $data["image"]);
+            $data["main-image"] = $main_image;
+        }
+        
         $apartment->update($data);
 
         if (array_key_exists('comforts', $data)) {

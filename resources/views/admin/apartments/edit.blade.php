@@ -139,7 +139,7 @@
                             <p>Immagine di copertina non presente</p>
                         <label for="">Seleziona una nuova immagine:</label>
                         @endif
-                        <input type="file" class="form-control-file" name="image" required>
+                        <input type="file" class="form-control-file" name="image">
                     </div>
                     <div class="form-group">
                         <label>Comforts:</label>
