@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-// use Illuminate\Http\Request;
-use App\Apartment;
 
+use App\Apartment;
+use App\Comfort;
 class HomeController extends Controller
 {
     /**
@@ -96,9 +96,12 @@ class HomeController extends Controller
         //select the apartments where the latitude and longitude are in the arrays
         $filteredApartments = $apartments->whereIn('latitude', $lats)->whereIn('longitude', $lons);
 
+
         $data = [
             'apartments' => $filteredApartments,
-            'location' => $location,
+            'locationName' => $location,
+            'locationCoordinates' => $searchedPosition,
+            'comforts' => Comfort::all()
         ];
         return view('guest.apartments.index', $data);
     }
