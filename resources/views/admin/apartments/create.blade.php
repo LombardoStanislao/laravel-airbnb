@@ -2,16 +2,6 @@
 
 @section('page-title', 'Aggiungi appartamento')
 
-@section('scripts')
-    <script type="text/javascript" defer>
-    var streetName = "{{ old('street_name') }}";
-    var streetNumber = "{{ old('street_number') }}";
-    var municipality = "{{ old('municipality') }}";
-    var latitude = "{{ old('latitude') }}";
-    var longitude = "{{ old('longitude') }}";
-    </script>
-@endsection
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -23,20 +13,16 @@
         </div>
         <div class="row">
             <div class="col-12">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
+                <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="submitForm()" v-cloak>
+                    @csrf
+                    <div class="alert alert-danger" v-if="errors.length">
+                        <ul class="alert alert-dange">
+                            <li v-for="error in errors">@{{ error }}</li>
                         </ul>
                     </div>
-                @endif
-                <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="convertAdress()" v-cloak>
-                    @csrf
                     <div class="form-group">
                         <label>Titolo riepilogativo: </label>
-                        <input type="text" name="title" class="form-control" value="{{ old('title') }}" maxlength="255" required>
+                        <input type="text" name="title" class="form-control" v-model="title" maxlength="255" required>
                         @error ('title')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -45,7 +31,7 @@
                     </div>
                     <div class="form-group">
                         <label>Numero di stanze: </label>
-                        <input type="number" name="rooms_number" class="form-control" value="{{ old('rooms_number', 1) }}" min="1" required>
+                        <input type="number" name="rooms_number" class="form-control" v-model="roomsNumber" min="1" max="255" required>
                         @error ('rooms_number')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -54,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <label>Numero posti letto: </label>
-                        <input type="number" name="sleeps_accomodations" class="form-control" value="{{ old('sleeps_accomodations', 1) }}" min="1" required>
+                        <input type="number" name="sleeps_accomodations" class="form-control" v-model="sleepsAccomodations" min="1" max="255" required>
                         @error ('sleeps_accomodations')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -63,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <label>Numero bagni: </label>
-                        <input type="number" name="bathrooms_number" class="form-control" value="{{ old('bathrooms_number', 1) }}" min="1" required>
+                        <input type="number" name="bathrooms_number" class="form-control" v-model="bathroomsNumber" min="1" max="255" required>
                         @error ('bathrooms_number')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -72,7 +58,7 @@
                     </div>
                     <div class="form-group">
                         <label>Metri quadrati: </label>
-                        <input type="number" name="mq" class="form-control" value="{{ old('mq') }}" min="1" required>
+                        <input type="number" name="mq" class="form-control" v-model="mq" min="1" max="255" required>
                         @error ('mq')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -85,7 +71,7 @@
                             <label>Via: </label>
                             <input type="text" name="street_name" class="form-control ml-md-3 mr-md-3" v-model="streetName" required>
                             <label>Numero: </label>
-                            <input type="text" name="street_number" class="form-control ml-md-3 mr-md-3" value="{{ old('street_number') }}" required min="1">
+                            <input type="number" name="street_number" class="form-control ml-md-3 mr-md-3" v-model="streetNumber" required min="1">
                             <label>Città: </label>
                             <input type="text" name="municipality" class="form-control ml-md-3" v-model="municipality" required>
                         </div>
@@ -111,13 +97,10 @@
                                 The adress is not valid
                             </div>
                         @endif
-                        <div v-if="errorAdress" class="alert alert-danger">
-                            The adress is not valid
-                        </div>
                     </div>
                     <div class="form-group">
                         <label>Prezzo per notte: </label>
-                        <input type="number" name="price_per_night" class="form-control" value="{{ old('price_per_night') }}" min="0" step="0.01" required>
+                        <input type="number" name="price_per_night" class="form-control" v-model="pricePerNight" min="0" max="9999.99" step="0.01" required>
                         @error ('price_per_night')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -126,7 +109,7 @@
                     </div>
                     <div class="form-group">
                         <label>Immagine di copertina: </label>
-                        <input type="file" class="form-control-file" name="image" required>
+                        <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*" required>
                         @error ('image')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -167,7 +150,7 @@
                     </div>
                     <div class="form-group">
                         <label>Descrizione: </label>
-                        <textarea name="description" rows="8" cols="80" class="form-control">{{ old('description') }}</textarea>
+                        <textarea name="description" rows="8" cols="80" class="form-control" max="65535">@{{ description }}</textarea>
                         @error ('description')
                             <div class="alert alert-danger">
                                 {{ $message }}

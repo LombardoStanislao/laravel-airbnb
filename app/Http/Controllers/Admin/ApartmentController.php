@@ -57,6 +57,8 @@ class ApartmentController extends Controller
             'street_name' => 'required',
             'street_number' => 'required|min:1',
             'municipality' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
