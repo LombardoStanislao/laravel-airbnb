@@ -49667,8 +49667,8 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#root',
   data: {
     radius: 20000,
-    minimumRooms: '',
-    minimumSleepsAccomodations: '',
+    minimumRooms: 1,
+    minimumSleepsAccomodations: 1,
     locationName: null,
     locationCoordinates: null,
     checkedComfortsId: []
@@ -49676,6 +49676,24 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   methods: {
     getApartmentsFiltered: function getApartmentsFiltered() {
       console.log('nuovi filtri per gli Appartamenti');
+      var comfortIdString = '';
+      this.checkedComfortsId.forEach(function (id) {
+        comfortIdString += id;
+      });
+      axios({
+        url: 'http://localhost:8000/api/filteredSearch',
+        method: 'get',
+        params: {
+          radius: this.radius,
+          minimumRooms: this.minimumRooms,
+          minimumSleepsAccomodations: this.minimumSleepsAccomodations,
+          locationName: this.locationName,
+          comfortIdString: comfortIdString
+        }
+      }).then(function (response) {
+        console.log('success');
+        console.log(response);
+      });
     }
   },
   mounted: function mounted() {

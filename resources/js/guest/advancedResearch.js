@@ -10,8 +10,8 @@ const advancedResearch = new Vue({
     el: '#root',
     data: {
         radius: 20000,
-        minimumRooms: '',
-        minimumSleepsAccomodations: '',
+        minimumRooms: 1,
+        minimumSleepsAccomodations: 1,
         locationName: null,
         locationCoordinates: null,
         checkedComfortsId: []
@@ -19,6 +19,26 @@ const advancedResearch = new Vue({
     methods: {
         getApartmentsFiltered() {
             console.log('nuovi filtri per gli Appartamenti');
+
+            let comfortIdString = '';
+            this.checkedComfortsId.forEach(id => {
+                comfortIdString += id;
+            });
+
+            axios({
+                url: 'http://localhost:8000/api/filteredSearch',
+                method: 'get',
+                params: {
+                    radius: this.radius,
+                    minimumRooms: this.minimumRooms,
+                    minimumSleepsAccomodations: this.minimumSleepsAccomodations,
+                    locationName: this.locationName,
+                    comfortIdString: comfortIdString
+                }
+            }).then(response => {
+                console.log('success');
+                console.log(response);
+            });
         }
 
     },
