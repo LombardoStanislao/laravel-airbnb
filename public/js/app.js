@@ -49617,16 +49617,96 @@ if (document.getElementById('create-apartment')) {
   var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     el: '#create-apartment',
     data: {
-      streetName: streetName,
-      streetNumber: streetNumber,
-      municipality: municipality,
-      latitude: latitude,
-      longitude: longitude,
-      errorAdress: false
+      title: '',
+      roomsNumber: 1,
+      sleepsAccomodations: 1,
+      bathroomsNumber: 1,
+      mq: null,
+      streetName: '',
+      streetNumber: null,
+      municipality: '',
+      latitude: null,
+      longitude: null,
+      pricePerNight: null,
+      availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
+      comforts: [],
+      description: '',
+      errors: []
     },
     methods: {
-      convertAdress: function convertAdress() {
+      submitForm: function submitForm() {
         var _this = this;
+
+        this.errors = [];
+        window.scrollTo(0, 0);
+
+        if (!this.title) {
+          this.errors.push('Il titolo è un campo obbligatorio');
+        } else if (this.title.length > 255) {
+          this.errors.push('Il titolo non può essere più lungo di 255 caratteri');
+        }
+
+        if (!this.roomsNumber) {
+          this.errors.push('Il numero di stanze è un campo obbligatorio');
+        } else if (this.roomsNumber <= 0) {
+          this.errors.push('Il numero di stanze dev\'essere maggiore di zero');
+        } else if (this.roomsNumber > 255) {
+          this.errors.push('Il numero di stanze non può essere maggiore di 255');
+        }
+
+        if (!this.sleepsAccomodations) {
+          this.errors.push('Il numero di posti letto è un campo obbligatorio');
+        } else if (this.sleepsAccomodations <= 0) {
+          this.errors.push('Il numero di posti letto dev\'essere maggiore di zero');
+        } else if (this.sleepsAccomodations > 255) {
+          this.errors.push('Il numero di posti letto non può essere maggiore di 255');
+        }
+
+        if (!this.bathroomsNumber) {
+          this.errors.push('Il numero di bagni è un campo obbligatorio');
+        } else if (this.bathroomsNumber <= 0) {
+          this.errors.push('Il numero di bagni dev\'essere maggiore di zero');
+        } else if (this.bathroomsNumber > 255) {
+          this.errors.push('Il numero di bagni non può essere maggiore di 255');
+        }
+
+        if (!this.mq) {
+          this.errors.push('Il numero di metri quadrati è un campo obbligatorio');
+        } else if (this.mq <= 0) {
+          this.errors.push('Il numero di metri quadrati dev\'essere maggiore di zero');
+        } else if (this.mq > 255) {
+          this.errors.push('Il numero di metri quadrati non può essere maggiore di 255');
+        }
+
+        if (!this.streetName) {
+          this.errors.push('Il nome della via è un campo obbligatorio');
+        }
+
+        if (!this.streetNumber) {
+          this.errors.push('Il numero della via è un campo obbligatorio');
+        } else if (this.streetNumber <= 0) {
+          this.errors.push('Il numero della via dev\'essere maggiore di zero');
+        }
+
+        if (!this.municipality) {
+          this.errors.push('La città è un campo obbligatorio');
+        }
+
+        if (!this.pricePerNight) {
+          this.errors.push('Il prezzo per notte è un campo obbligatorio');
+        } else if (this.pricePerNight < 0) {
+          this.errors.push('Il prezzo per notte non può essere negativo');
+        } else if (this.pricePerNight > 9999.99) {
+          this.errors.push('Il prezzo per notte non può superare i 9999.99 euro');
+        }
+
+        if (!this.availableTypes.includes(this.$refs.inputFile.files[0].type)) {
+          this.errors.push('L\'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg');
+        }
+
+        if (this.description.length > 65535) {
+          this.errors.push('La descrizione non può superare i 65535 caratteri');
+        }
 
         _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
           key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
@@ -49636,15 +49716,16 @@ if (document.getElementById('create-apartment')) {
           streetNumber: this.streetNumber,
           municipality: this.municipality
         }).then(function (response) {
-          _this.errorAdress = false;
           _this.latitude = response.position.lat;
           _this.longitude = response.position.lng;
 
           _this.$nextTick(function () {
-            _this.$refs.createApartment.submit();
+            if (!_this.errors.length) {
+              _this.$refs.createApartment.submit();
+            }
           });
         })["catch"](function (error) {
-          _this.errorAdress = true;
+          _this.errors.push('L\'indirizzo non è valido');
         });
       }
     }
@@ -49718,7 +49799,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed (from ./node_modules/css-loader/index.js):\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\nSassError: Can't find stylesheet to import.\n   ╷\n11 │ @import \"~@fortawesome/fontawesome-free/scss/fontawesome\";\r\n   │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n   ╵\n  C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\resources\\sass\\app.scss 11:9  root stylesheet\n    at C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\webpack\\lib\\NormalModule.js:316:20\n    at C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass-loader\\dist\\index.js:73:7\n    at Function.call$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:91717:16)\n    at _render_closure1.call$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:80362:12)\n    at _RootZone.runBinary$3$3 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:27258:18)\n    at _FutureListener.handleError$1 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25786:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:26083:49)\n    at Object._Future__propagateToListeners (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:4543:77)\n    at _Future._completeError$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25916:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25259:12)\n    at Object._asyncRethrow (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:4292:17)\n    at C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:13233:20\n    at _wrapJsFunctionForAsync_closure.$protected (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:4317:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25280:12)\n    at _awaitOnObject_closure0.call$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25272:25)\n    at _RootZone.runBinary$3$3 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:27258:18)\n    at _FutureListener.handleError$1 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25786:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:26083:49)\n    at Object._Future__propagateToListeners (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:4543:77)\n    at _Future._completeError$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25916:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25259:12)\n    at Object._asyncRethrow (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:4292:17)\n    at C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:18020:20\n    at _wrapJsFunctionForAsync_closure.$protected (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:4317:15)\n    at _wrapJsFunctionForAsync_closure.call$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25280:12)\n    at _awaitOnObject_closure0.call$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25272:25)\n    at _RootZone.runBinary$3$3 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:27258:18)\n    at _FutureListener.handleError$1 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25786:19)\n    at _Future__propagateToListeners_handleError.call$0 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:26083:49)\n    at Object._Future__propagateToListeners (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:4543:77)\n    at _Future._completeError$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25916:9)\n    at _AsyncAwaitCompleter.completeError$2 (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:25259:12)\n    at Object._asyncRethrow (C:\\MAMP\\htdocs\\boolean\\laravel-airbnb\\node_modules\\sass\\sass.dart.js:4292:17)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
