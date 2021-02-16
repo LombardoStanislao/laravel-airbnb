@@ -1,35 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-
 use App\Apartment;
-use App\Comfort;
-class HomeController extends Controller
+
+class ApartmentController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-
-        return view('guest.home');
-    }
-
-    public function search(Request $request) {
-        $location = $request->input('location');
+    public function filteredSearch(Request $request) {
 
         $baseURL = 'https://api.tomtom.com/search/2/';
         $key = 'uh1InUaJszlyTvCRilNBbn0pPm2ktvmD';
@@ -37,7 +18,7 @@ class HomeController extends Controller
         /*get the searched location*/
 
         //apiURL request
-        $URLCoordinartesSearched = $baseURL . 'geocode/' . $location . '.json';
+        $URLCoordinartesSearched = $baseURL . 'geocode/' . $request->locationName . '.json';
 
         //API request
         $responseLocation = Http::get($URLCoordinartesSearched, [
@@ -55,22 +36,38 @@ class HomeController extends Controller
             [
                 'type' => 'CIRCLE',
                 'position' => $searchedPosition ,
-                'radius' => 20000
+                'radius' => $request->query()['radius']
             ]
         ];
 
-        //get all the apartments in the DB
-        $apartments = Apartment::all();
+        //get filtered apartments in the DB
+        $selectedComforts = [];
+        for ($i = 0; $i < strlen($request->query()['comfortIdString']); $i++) {
+            $selectedComforts[] = $request->query()['comfortIdString'][$i];
+        }
+
+        $apartments = Apartment::where([
+            ['sleeps_accomodations', '>=',  $request->query()['minimumSleepsAccomodations']],
+            ['rooms_number', '>=', $request->query()['minimumRooms']]
+        ])->get();
+
         // Array with the positions of all the apartments in the DB
         $poiList=[];
+
         foreach ($apartments as $apartment) {
-            $poiList[] = [
-                'position' => [
-                    "lat" => $apartment->latitude,
-                    "lon" => $apartment->longitude
-                ]
-            ];
+            $rightComfortsNumber = $apartment->comforts->whereIn('id', $selectedComforts)->count();
+            $comfortQuantity = count($selectedComforts);
+
+            if($rightComfortsNumber == count($selectedComforts)) {
+                $poiList[] = [
+                    'position' => [
+                        "lat" => $apartment->latitude,
+                        "lon" => $apartment->longitude
+                    ]
+                ];
+            }
         }
+
 
         //get the pairs of right positions
         $URLFilteredApartments = $baseURL . 'geometryFilter.JSON?key=' . $key;
@@ -93,13 +90,9 @@ class HomeController extends Controller
         //select the apartments where the latitude and longitude are in the arrays
         $filteredApartments = $apartments->whereIn('latitude', $lats)->whereIn('longitude', $lons);
 
-
-        $data = [
-            'apartments' => $filteredApartments,
-            'locationName' => $location,
-            'locationCoordinates' => $searchedPosition,
-            'comforts' => Comfort::all()
-        ];
-        return view('guest.apartments.index', $data);
+        return response()->json([
+            'success' => true,
+            'results' => $filteredApartments
+        ]);
     }
 }
