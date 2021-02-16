@@ -100,7 +100,7 @@
                             <label>Via: </label>
                             <input type="text" name="street_name" class="form-control ml-md-3 mr-md-3" value="{{ old('street_name') }}" required>
                             <label>Numero: </label>
-                            <input type="number" name="street_number" class="form-control ml-md-3 mr-md-3" value="{{ old('street_number') }}" required min="1">
+                            <input type="text" name="street_number" class="form-control ml-md-3 mr-md-3" value="{{ old('street_number') }}" required min="1">
                             <label>Città: </label>
                             <input type="text" name="municipality" class="form-control ml-md-3" value="{{ old('municipality') }}" required>
                         </div>
@@ -176,6 +176,24 @@
                         <label>Descrizione: </label>
                         <textarea name="description" rows="8" cols="80" class="form-control">{{ old('description') }}</textarea>
                         @error ('description')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label>Sponsorizzazione: </label>
+                        <div class="form-check">
+                            <input type="radio" name="sponsorship_types[]" value="0" required {{ !old('sponsorship_types') || old('sponsorship_types') === '0' ? 'checked' : '' }}>
+                            <label>No</label>
+                        </div>
+                        @foreach ($sponsorship_types as $sponsorship_type)
+                            <div class="form-check">
+                                <input type="radio" name="sponsorship_types[]" value="{{ $sponsorship_type->id }}" required {{ in_array($sponsorship_type->id, old('sponsorship_types', [])) ? 'checked' : '' }}>
+                                <label>{{ $sponsorship_type->price }}€ per {{ $sponsorship_type->duration }} ore di sponsorizzazione</label>
+                            </div>
+                        @endforeach
+                        @error ('sponsorship_types')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
