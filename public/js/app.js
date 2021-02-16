@@ -49671,11 +49671,13 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     minimumSleepsAccomodations: 1,
     locationName: null,
     locationCoordinates: null,
-    checkedComfortsId: []
+    checkedComfortsId: [],
+    apartments: null
   },
   methods: {
     getApartmentsFiltered: function getApartmentsFiltered() {
-      console.log('nuovi filtri per gli Appartamenti');
+      var _this = this;
+
       var comfortIdString = '';
       this.checkedComfortsId.forEach(function (id) {
         comfortIdString += id;
@@ -49691,8 +49693,7 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           comfortIdString: comfortIdString
         }
       }).then(function (response) {
-        console.log('success');
-        console.log(response);
+        _this.apartments = response.data.results;
       });
     }
   },

@@ -14,11 +14,11 @@ const advancedResearch = new Vue({
         minimumSleepsAccomodations: 1,
         locationName: null,
         locationCoordinates: null,
-        checkedComfortsId: []
+        checkedComfortsId: [],
+        apartments: null
     },
     methods: {
         getApartmentsFiltered() {
-            console.log('nuovi filtri per gli Appartamenti');
 
             let comfortIdString = '';
             this.checkedComfortsId.forEach(id => {
@@ -36,8 +36,7 @@ const advancedResearch = new Vue({
                     comfortIdString: comfortIdString
                 }
             }).then(response => {
-                console.log('success');
-                console.log(response);
+                this.apartments = response.data.results;
             });
         }
 

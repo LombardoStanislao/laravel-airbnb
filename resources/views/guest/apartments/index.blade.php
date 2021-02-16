@@ -33,7 +33,10 @@
                         <span id="location-data" data-location-coordinates={{ $locationCoordinates }} data-location-name={{ str_replace(' ', '__', $locationName) }} >{{$locationName}}<span>
                     </h1>
 
-                    <ul>
+                    <ul v-if="apartments">
+                        <li v-for="apartment in apartments">@{{ apartment.title }}</li>
+                    </ul>
+                    <ul v-else>
                         @foreach ($apartments as $apartment)
                             <li>
                                 {{ $apartment->title }}
