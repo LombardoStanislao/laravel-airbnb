@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Apartment;
 use App\Comfort;
+use App\SponsorshipType;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +34,8 @@ class ApartmentController extends Controller
     public function create()
     {
         $data = [
-            'comforts' => Comfort::all()
+            'comforts' => Comfort::all(),
+            'sponsorship_types' => SponsorshipType::all()
         ];
         return view('admin.apartments.create', $data);
     }
@@ -48,21 +50,24 @@ class ApartmentController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'rooms_number' => 'required|integer|min:1',
-            'sleeps_accomodations' => 'required|integer|min:1',
-            'bathrooms_number' => 'required|integer|min:1',
-            'mq' => 'required|integer|min:1',
+            'rooms_number' => 'required|integer|min:1|max:255',
+            'sleeps_accomodations' => 'required|integer|min:1|max:255',
+            'bathrooms_number' => 'required|integer|min:1|max:255',
+            'mq' => 'required|integer|min:1|max:255',
             'street_name' => 'required',
-            'street_number' => 'required|integer|min:1',
+            'street_number' => 'required|min:1',
             'municipality' => 'required',
-            'price_per_night' => 'required|numeric|min:0',
-            'image' => 'mimes:jpeg,png,jpg,gif,swg',
+            'price_per_night' => 'required|numeric|min:0|max:9999.99',
+            'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
-            'description' => 'nullable'
+            'description' => 'nullable|max:65535',
+            'sponsorship_types' => 'required',
         ]);
 
         $data = $request->all();
+
+        // dd($data["sponsorship_types"][0]);
 
         $data["user_id"] = Auth::user()->id;
 
@@ -88,7 +93,24 @@ class ApartmentController extends Controller
             $new_apartment->comforts()->sync($data["comforts"]);
         }
 
-        return redirect()->route('admin.apartments.index');
+        if ($data["sponsorship_types"][0]=='0') {
+            return redirect()->route('admin.apartments.index');
+        }else {
+            return redirect()->route('admin.apartments.payments');
+        }
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function payments()
+    {
+        return view('admin.apartments.payments');
     }
 
     /**
@@ -118,12 +140,16 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        $data = [
-            // 'apartment' => Apartment::where('user_id', Auth::user()->id)->get(),
-            'apartment' => Apartment::where('id', $apartment->id)->first(),
-            'comforts' => Comfort::all()
-        ];
-        return view('admin.apartments.edit', $data);
+        if ($apartment && $apartment->user_id == Auth::user()->id) {
+            $data = [
+                'apartment' => Apartment::where('id', $apartment->id)->first(),
+                'comforts' => Comfort::all()
+            ];
+
+            return view('admin.apartments.edit', $data);
+        }
+
+        abort(404);
     }
 
     /**
@@ -137,17 +163,18 @@ class ApartmentController extends Controller
     {
         $request->validate([
             'title' => 'required|max:255',
-            'rooms_number' => 'required|integer|min:1',
-            'sleeps_accomodations' => 'required|integer|min:1',
-            'bathrooms_number' => 'required|integer|min:1',
-            'mq' => 'required|integer|min:1',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'price_per_night' => 'required|numeric|min:0',
-            'image' => 'mimes:jpeg,png,jpg,gif,swg',
+            'rooms_number' => 'required|integer|min:1|max:255',
+            'sleeps_accomodations' => 'required|integer|min:1|max:255',
+            'bathrooms_number' => 'required|integer|min:1|max:255',
+            'mq' => 'required|integer|min:1|max:255',
+            'street_name' => 'required',
+            'street_number' => 'required|min:1',
+            'municipality' => 'required',
+            'price_per_night' => 'required|numeric|min:0|max:9999.99',
+            'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
-            'description' => 'nullable'
+            'description' => 'nullable|max:65535',
         ]);
 
         $data = $request->all();
@@ -171,7 +198,7 @@ class ApartmentController extends Controller
             $main_image = Storage::put('apartment_images', $data["image"]);
             $data["main-image"] = $main_image;
         }
-        
+
         $apartment->update($data);
 
         if (array_key_exists('comforts', $data)) {

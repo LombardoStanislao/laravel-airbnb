@@ -7,19 +7,24 @@
 
     <script type="text/javascript" defer>
 
-        function convertAdress(event) {
-            event.preventDefault();
-            tt.services.geocode({
-                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-                query: document.getElementById('inputAdress').value
-            }).then(response => {
+    function convertAdress(event) {
+        event.preventDefault();
+        tt.services.structuredGeocode({
+            key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+            countryCode: 'IT',
+            streetName: document.querySelector("input[name='street_name']").value,
+            streetNumber: document.querySelector("input[name='street_number']").value,
+            municipality: document.querySelector("input[name='municipality']").value
+        }).then(response => {
+            if (response.results.length) {
                 var latitude = response.results[0].position.lat;
                 document.querySelector("input[name='latitude']").value = latitude;
                 var longitude = response.results[0].position.lng;
                 document.querySelector("input[name='longitude']").value = longitude;
-                document.getElementById('create-apartment').submit();
-            });
-        }
+            }
+            document.getElementById('create-apartment').submit();
+        });
+    }
 
         var longitude_js = "{{$apartment->longitude}}";
         console.log(longitude_js);
@@ -31,9 +36,14 @@
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
                 position: {longitude: longitude_js, latitude: latitude_js}
             }).then(response => {
-                console.log(response.addresses[0].address.freeformAddress);
-                address = response.addresses[0].address.freeformAddress;
-                document.querySelector("input[name='adress']").value = address;
+                console.log(response.addresses[0].address);
+                streetName = response.addresses[0].address.streetName;
+                document.querySelector("input[name='street_name']").value = streetName;
+                streetNumber = response.addresses[0].address.streetNumber;
+                document.querySelector("input[name='street_number']").value = streetNumber;
+                municipality = response.addresses[0].address.municipality;
+                document.querySelector("input[name='municipality']").value = municipality;
+
             })
         }
 
@@ -113,11 +123,39 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label>Indirizzo: </label>
                         <input id="inputAdress" type="text" name="adress" class="form-control" value="{{ old('adress', $apartment->adress) }}" required>
                         <input type="hidden" name="latitude">
                         <input type="hidden" name="longitude">
+                    </div> --}}
+                    <div class="form-group">
+                        <label>Indirizzo:</label>
+                        <div class="d-md-flex">
+                            <label>Via: </label>
+                            <input type="text" name="street_name" class="form-control ml-md-3 mr-md-3" value="{{ old('street_name') }}" required>
+                            <label>Numero: </label>
+                            <input type="text" name="street_number" class="form-control ml-md-3 mr-md-3" value="{{ old('street_number') }}" required min="1">
+                            <label>Città: </label>
+                            <input type="text" name="municipality" class="form-control ml-md-3" value="{{ old('municipality') }}" required>
+                        </div>
+                        <input type="hidden" name="latitude">
+                        <input type="hidden" name="longitude">
+                        @error ('street_name')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        @error ('street_number')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        @error ('municipality')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label>Prezzo per notte: </label>
