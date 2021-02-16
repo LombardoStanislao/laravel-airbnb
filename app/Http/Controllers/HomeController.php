@@ -54,25 +54,30 @@ class HomeController extends Controller
 
         //Area where looking for the apartments
         $geometryList = [
-            'type' => 'CIRCLE',
-            'position' => $searchedPosition ,
-            'radius' => 20000
+            [
+                'type' => 'CIRCLE',
+                'position' => $searchedPosition ,
+                'radius' => 20000
+            ]
         ];
 
         //get all the apartments in the DB
         $apartments = Apartment::all();
         // Array with the positions of all the apartments in the DB
         $poiList=[];
-        foreach ($aparments as $apartment) {
+        foreach ($apartments as $apartment) {
             $poiList[] = [
-                "lat" => $apartment->latitude,
-                "lon" => $apartment->longitude
+                'position' => [
+                    "lat" => $apartment->latitude,
+                    "lon" => $apartment->longitude
+                ]
             ];
         }
 
         //get the pairs of right positions
         $URLFilteredApartments = $baseURL . 'geometryFilter.JSON?key=' . $key;
 
+        $URLFilteredApartments = 'https://api.tomtom.com/search/2/geometryFilter.JSON?key=uh1InUaJszlyTvCRilNBbn0pPm2ktvmD';
         $responseFilteredApartments = Http::post($URLFilteredApartments, [
             'poiList' => $poiList,
             'geometryList' => $geometryList
@@ -81,7 +86,8 @@ class HomeController extends Controller
         //create an array with all the right latitude and one with all the longitudes
         $lats = [];
         $lons = [];
-        foreach ($responseFilteredApartments->json()->results as $result) {
+
+        foreach ($responseFilteredApartments->json()['results'] as $result) {
             $lats[] = $result['position']['lat'];
             $lons[] = $result['position']['lon'];
         }
@@ -92,7 +98,6 @@ class HomeController extends Controller
         $data = [
             'apartments' => $filteredApartments,
             'location' => $location,
-
         ];
         return view('guest.apartments.index', $data);
     }
