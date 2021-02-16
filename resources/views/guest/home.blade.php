@@ -8,5 +8,11 @@
 
 @section('content')
     <h1>Hello</h1>
-    <i class="fas fa-search"> Search</i>
+    <form action="{{ route('search') }}" method="get">
+        <button type="submit">
+            <i class="fas fa-search"> Search</i>
+        </button>
+        <input type="text" name="location" value="" placeholder="Inserisci dove vuoi andare">
+    </form>
+
 @endsection
