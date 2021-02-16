@@ -49671,7 +49671,7 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     minimumSleepsAccomodations: '',
     locationName: null,
     locationCoordinates: null,
-    checkedComforts: []
+    checkedComfortsId: []
   },
   method: {},
   mounted: function mounted() {

@@ -14,7 +14,7 @@ const advancedResearch = new Vue({
         minimumSleepsAccomodations: '',
         locationName: null,
         locationCoordinates: null,
-        checkedComforts: []
+        checkedComfortsId: []
     },
     method: {
 

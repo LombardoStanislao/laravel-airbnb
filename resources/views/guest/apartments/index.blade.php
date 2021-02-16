@@ -12,11 +12,18 @@
                         <label for="minimumRooms">Stanze minime: </label>
                         <input type="number" v-model="minimumRooms" placeholder="es. 1">
 
+
                         <label for="minimumSleepsAccomodations">posti letto: </label>
                         <input type="number" v-model="minimumSleepsAccomodations" placeholder="es. 1">
 
-                        <div class="checkbox-container">
+                        <label for="radius">raggio di ricerca in metri: </label>
+                        <input type="number" v-model="radius" placeholder="es. 1">
 
+                        <div class="checkbox-container">
+                            @foreach ($comforts as $comfort)
+                                <input id="checkbox{{ $comfort->id }}" type="checkbox" v-model="checkedComfortsId" value="{{ $comfort->id }}">
+                                <label for="checkbox{{ $comfort->id }}">{{ $comfort->name }}</label>
+                            @endforeach
                         </div>
                     </section>
                     <h1 id="advanced-research-page">
