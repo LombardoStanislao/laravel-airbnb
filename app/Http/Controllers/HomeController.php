@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
-
+// use Illuminate\Http\Request;
 use App\Apartment;
 
 class HomeController extends Controller
@@ -32,7 +32,8 @@ class HomeController extends Controller
         return view('guest.home');
     }
 
-    public function search($location) {
+    public function search(Request $request) {
+        $location = $request->input('location');
         $baseURL = 'https://api.tomtom.com/search/2/';
         $key = 'uh1InUaJszlyTvCRilNBbn0pPm2ktvmD';
 
