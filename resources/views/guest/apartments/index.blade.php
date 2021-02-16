@@ -25,6 +25,8 @@
                                 <label for="checkbox{{ $comfort->id }}">{{ $comfort->name }}</label>
                             @endforeach
                         </div>
+
+                        <button type="button" @click='getApartmentsFiltered'>Filtra ricerca</button>
                     </section>
                     <h1 id="advanced-research-page">
                         Appartamenti nel raggio di <span v-cloak>@{{ radius/1000 }}</span> Km da

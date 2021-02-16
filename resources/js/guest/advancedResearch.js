@@ -16,7 +16,10 @@ const advancedResearch = new Vue({
         locationCoordinates: null,
         checkedComfortsId: []
     },
-    method: {
+    methods: {
+        getApartmentsFiltered() {
+            console.log('nuovi filtri per gli Appartamenti');
+        }
 
     },
     mounted() {

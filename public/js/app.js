@@ -49673,7 +49673,11 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     locationCoordinates: null,
     checkedComfortsId: []
   },
-  method: {},
+  methods: {
+    getApartmentsFiltered: function getApartmentsFiltered() {
+      console.log('nuovi filtri per gli Appartamenti');
+    }
+  },
   mounted: function mounted() {
     //Get the array of the data attributes of the selected element
     var locationData = document.getElementById('location-data').dataset; //get the index of the comma in the coordinates
