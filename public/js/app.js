@@ -49675,13 +49675,34 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     apartments: null
   },
   methods: {
+    getOriginalLocationName: function getOriginalLocationName() {
+      var locationData = document.getElementById('location-data').dataset;
+      this.locationName = locationData.locationName.replace(/__/g, ' ');
+    },
     getApartmentsFiltered: function getApartmentsFiltered() {
       var _this = this;
 
       var comfortIdString = '';
       this.checkedComfortsId.forEach(function (id) {
         comfortIdString += id;
-      });
+      }); // Validazione
+
+      if (!this.minimumRooms) {
+        this.minimumRooms = 1;
+      } else if (this.minimumRooms > 255) {
+        this.minimumRooms = 255;
+      }
+
+      if (!this.minimumSleepsAccomodations) {
+        this.minimumSleepsAccomodations = 1;
+      } else if (this.minimumSleepsAccomodations > 255) {
+        this.minimumSleepsAccomodations = 255;
+      }
+
+      if (!this.locationName) {
+        this.getOriginalLocationName();
+      }
+
       axios({
         url: 'http://localhost:8000/api/filteredSearch',
         method: 'get',
@@ -49698,11 +49719,11 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     }
   },
   mounted: function mounted() {
-    //Get the array of the data attributes of the selected element
+    this.getOriginalLocationName(); //Get the array of the data attributes of the selected element
+
     var locationData = document.getElementById('location-data').dataset; //get the index of the comma in the coordinates
 
     var commaIndex = locationData.locationCoordinates.indexOf(',');
-    this.locationName = locationData.locationName.replace(/__/g, ' ');
     this.locationCoordinates = {
       lat: locationData.locationCoordinates.substring(0, commaIndex),
       lon: locationData.locationCoordinates.substring(commaIndex + 1)

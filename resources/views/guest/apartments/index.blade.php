@@ -7,17 +7,17 @@
                 <div class="col-md-8">
                     <section class="filters">
                         <label for="locationName">Posto ricercato: </label>
-                        <input type="text" v-model="locationName">
+                        <input type="text" v-model.trim="locationName">
 
                         <label for="minimumRooms">Stanze minime: </label>
-                        <input type="number" v-model="minimumRooms" placeholder="es. 1">
+                        <input type="number" v-model.trim="minimumRooms" placeholder="es. 1">
 
 
                         <label for="minimumSleepsAccomodations">posti letto: </label>
-                        <input type="number" v-model="minimumSleepsAccomodations" placeholder="es. 1">
+                        <input type="number" v-model.trim="minimumSleepsAccomodations" placeholder="es. 1">
 
                         <label for="radius">raggio di ricerca in metri: </label>
-                        <input type="number" v-model="radius" placeholder="es. 1">
+                        <input type="number" v-model.trim="radius" placeholder="es. 1">
 
                         <div class="checkbox-container">
                             @foreach ($comforts as $comfort)

@@ -18,12 +18,32 @@ const advancedResearch = new Vue({
         apartments: null
     },
     methods: {
+        getOriginalLocationName(){
+            const locationData = document.getElementById('location-data').dataset;
+            this.locationName = locationData.locationName.replace(/__/g, ' ');
+        },
         getApartmentsFiltered() {
 
             let comfortIdString = '';
             this.checkedComfortsId.forEach(id => {
                 comfortIdString += id;
             });
+            // Validazione
+            if(!this.minimumRooms) {
+                this.minimumRooms = 1;
+            } else if (this.minimumRooms > 255) {
+                this.minimumRooms = 255
+            }
+
+            if(!this.minimumSleepsAccomodations) {
+                this.minimumSleepsAccomodations = 1;
+            } else if (this.minimumSleepsAccomodations > 255) {
+                this.minimumSleepsAccomodations = 255
+            }
+
+            if(!this.locationName) {
+                this.getOriginalLocationName();
+            }
 
             axios({
                 url: 'http://localhost:8000/api/filteredSearch',
@@ -42,13 +62,11 @@ const advancedResearch = new Vue({
 
     },
     mounted() {
+        this.getOriginalLocationName()
         //Get the array of the data attributes of the selected element
         const locationData = document.getElementById('location-data').dataset;
-
         //get the index of the comma in the coordinates
-        const commaIndex = locationData.locationCoordinates.indexOf(',');
-
-        this.locationName = locationData.locationName.replace(/__/g, ' ');
+        let commaIndex = locationData.locationCoordinates.indexOf(',');
         this.locationCoordinates = {
             lat: locationData.locationCoordinates.substring(0, commaIndex),
             lon: locationData.locationCoordinates.substring(commaIndex + 1)
