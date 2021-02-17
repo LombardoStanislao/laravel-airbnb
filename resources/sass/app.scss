@@ -14,3 +14,9 @@
 @import "~@fortawesome/fontawesome-free/scss/brands";
 
 @import 'partials/common';
+
+@import "./../../node_modules/@tomtom-international/web-sdk-maps/dist/maps.css";
+
+#map {
+    height: 500px;
+}
