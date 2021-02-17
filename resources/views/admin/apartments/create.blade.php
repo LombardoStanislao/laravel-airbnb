@@ -226,24 +226,6 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label>Sponsorizzazione: </label>
-                        <div class="form-check">
-                            <input type="radio" name="sponsorship_types[]" value="0" required {{ !old('sponsorship_types') || old('sponsorship_types') === '0' ? 'checked' : '' }}>
-                            <label>No</label>
-                        </div>
-                        @foreach ($sponsorship_types as $sponsorship_type)
-                            <div class="form-check">
-                                <input type="radio" name="sponsorship_types[]" value="{{ $sponsorship_type->id }}" required {{ in_array($sponsorship_type->id, old('sponsorship_types', [])) ? 'checked' : '' }}>
-                                <label>{{ $sponsorship_type->price }}€ per {{ $sponsorship_type->duration }} ore di sponsorizzazione</label>
-                            </div>
-                        @endforeach
-                        @error ('sponsorship_types')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
                     <button type="submit" class="btn btn-success">
                         Aggiungi appartamento
                     </button>
