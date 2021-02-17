@@ -65,8 +65,7 @@ class ApartmentController extends Controller
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
-            'description' => 'nullable|max:65535',
-            'sponsorship_types' => 'required',
+            'description' => 'nullable|max:65535'
         ]);
 
         $data = $request->all();
@@ -97,12 +96,7 @@ class ApartmentController extends Controller
             $new_apartment->comforts()->sync($data["comforts"]);
         }
 
-        if ($data["sponsorship_types"][0]=='0') {
-            return redirect()->route('admin.apartments.index');
-        }else {
-            return redirect()->route('admin.apartments.payments');
-        }
-
+        return redirect()->route('admin.apartments.show', ['apartment' => $new_apartment->id]);
     }
 
     /**
