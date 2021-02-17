@@ -49631,12 +49631,15 @@ if (document.getElementById('create-apartment')) {
       availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
       comforts: [],
       description: '',
-      errors: []
+      errors: [],
+      submitted: false,
+      fileNotValide: false
     },
     methods: {
       submitForm: function submitForm() {
         var _this = this;
 
+        this.submitted = true;
         this.errors = [];
         window.scrollTo(0, 0);
 
@@ -49701,6 +49704,7 @@ if (document.getElementById('create-apartment')) {
         }
 
         if (!this.availableTypes.includes(this.$refs.inputFile.files[0].type)) {
+          this.fileNotValide = true;
           this.errors.push('L\'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg');
         }
 
@@ -49902,8 +49906,8 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
