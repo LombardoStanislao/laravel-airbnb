@@ -25,10 +25,14 @@ if (document.getElementById('create-apartment')) {
             ],
             comforts: [],
             description: '',
-            errors: []
+            errors: [],
+            submitted: false,
+            fileNotValide: false
         },
         methods: {
             submitForm() {
+                this.submitted = true;
+
                 this.errors = [];
 
                 window.scrollTo(0, 0);
@@ -94,6 +98,7 @@ if (document.getElementById('create-apartment')) {
                 }
 
                 if (!this.availableTypes.includes(this.$refs.inputFile.files[0].type)) {
+                    this.fileNotValide = true;
                     this.errors.push('L\'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg');
                 }
 
