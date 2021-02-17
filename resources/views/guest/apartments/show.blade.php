@@ -96,6 +96,11 @@
                     </li>
                 </ul>
             </div>
+            <div class="col-12">
+                <div id="map">
+
+                </div>
+            </div>
         </div>
     </div>
 @endsection
