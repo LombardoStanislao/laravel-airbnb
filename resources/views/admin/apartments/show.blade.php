@@ -2,6 +2,31 @@
 
 @section('page-title', 'Dettagli appartamento')
 
+@section('scripts')
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/services/services-web.min.js"></script>
+
+    <script type="text/javascript" defer>
+
+        var longitude_js = "{{$apartment->longitude}}";
+        console.log(longitude_js);
+        var latitude_js = "{{$apartment->latitude}}";
+        console.log(latitude_js);
+
+        function callbackFn() {
+            tt.services.reverseGeocode({
+                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                position: {longitude: longitude_js, latitude: latitude_js}
+            }).then(response => {
+                address = response.addresses[0].address.freeformAddress;
+                document.getElementById("adress_id").innerHTML = address;
+            })
+        }
+
+        callbackFn();
+
+    </script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -31,6 +56,10 @@
                     <li>
                         <strong>Prezzo per notte:</strong>
                         <span>€ {{ $apartment->price_per_night }}</span>
+                    </li>
+                    <li>
+                        <strong>Indirizzo:</strong>
+                        <span id="adress_id"></span>
                     </li>
                     <li>
                         <strong>Lat:</strong>

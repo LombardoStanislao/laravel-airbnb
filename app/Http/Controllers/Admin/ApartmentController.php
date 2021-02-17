@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Apartment;
 use App\Comfort;
+use App\Sponsorship;
 use App\SponsorshipType;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,8 @@ class ApartmentController extends Controller
     public function index()
     {
         $data = [
-            'apartments' => Apartment::where('user_id', Auth::user()->id)->get()
+            'apartments' => Apartment::where('user_id', Auth::user()->id)->get(),
+
         ];
         return view('admin.apartments.index', $data);
     }

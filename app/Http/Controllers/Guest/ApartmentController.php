@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Apartment;
 
 class ApartmentController extends Controller
 {
@@ -15,7 +16,16 @@ class ApartmentController extends Controller
 
     public function show($id)
     {
-        return view('guest.apartments.show');
+        $apartment = Apartment::where('id', $id)->first();
+        
+        if(!$apartment){
+            abort(404);
+        }
+        $data = [
+            'apartment' => $apartment
+        ];
+
+        return view('guest.apartments.show', $data);
     }
 
 }
