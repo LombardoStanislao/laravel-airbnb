@@ -15,8 +15,6 @@
             <div class="col-12">
                 <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="submitForm()" v-cloak>
                     @csrf
-                <form id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" onsubmit="convertAdress(event)">
-                    @csrf
                     <div class="form-group">
                         <label>Titolo riepilogativo: </label>
                         <input type="text" name="title" class="form-control" v-model="title" maxlength="255" required>
