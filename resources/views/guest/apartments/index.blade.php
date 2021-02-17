@@ -34,15 +34,31 @@
                     </h1>
 
                     <ul v-if="apartments">
-                        <li v-for="apartment in apartments">@{{ apartment.title }}</li>
+                        <li v-for="apartment in apartments">
+                            {{-- <a href="#" @click="getApartmentsFiltered()"> --}}
+                            <a :href="'/apartments/' + apartment.id">
+                                @{{ apartment.title }}
+                            </a>
+                        </li>
                     </ul>
                     <ul v-else>
                         @foreach ($apartments as $apartment)
-                            <li>
-                                <a href="{{ route('guest.apartments.show', ['param' => $apartment->id]) }}" >
-                                    {{ $apartment->title }}
-                                </a>
-                            </li>
+
+                            <a class="d-block" href="{{ route('guest.apartments.show', ['param' => $apartment->id]) }}" >
+                                <div class="m-2 clearfix bg-secondary">
+                                    <div class="float-left" style="width: 100px; height: 100px;">
+                                        <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" alt="" class="w-100 h-100">
+                                    </div>
+                                    <div class="float-left ml-2 text-dark">
+                                        <p>{{ $apartment->title }}</p>
+                                        <p>{{ $apartment->price_per_night }}€</p>
+                                        <p>Disponibile: {{ $apartment->available ? 'Sì' : 'No' }}</p>
+
+                                    </div>
+                                </div>
+
+                            </a>
+
                         @endforeach
                     </ul>
                 </div>
