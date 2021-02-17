@@ -8,7 +8,9 @@
             <ul>
                 @foreach ($apartments as $apartment)
                     <li>
-                        {{ $apartment->title }}
+                        <a href="{{ route('guest.apartments.show', ['param' => $apartment->id]) }}" >
+                            {{ $apartment->title }}
+                        </a>
                     </li>
                 @endforeach
             </ul>

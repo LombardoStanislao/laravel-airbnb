@@ -3,12 +3,27 @@
 @section('page-title', 'Aggiungi appartamento')
 
 @section('scripts')
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/services/services-web.min.js"></script>
+
     <script type="text/javascript" defer>
-    var streetName = "{{ old('street_name') }}";
-    var streetNumber = "{{ old('street_number') }}";
-    var municipality = "{{ old('municipality') }}";
-    var latitude = "{{ old('latitude') }}";
-    var longitude = "{{ old('longitude') }}";
+        function convertAdress(event) {
+            event.preventDefault();
+            tt.services.structuredGeocode({
+                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                countryCode: 'IT',
+                streetName: document.querySelector("input[name='street_name']").value,
+                streetNumber: document.querySelector("input[name='street_number']").value,
+                municipality: document.querySelector("input[name='municipality']").value
+            }).then(response => {
+                if (response.results.length) {
+                    var latitude = response.results[0].position.lat;
+                    document.querySelector("input[name='latitude']").value = latitude;
+                    var longitude = response.results[0].position.lng;
+                    document.querySelector("input[name='longitude']").value = longitude;
+                }
+                document.getElementById('create-apartment').submit();
+            });
+        }
     </script>
 @endsection
 
@@ -32,7 +47,7 @@
                         </ul>
                     </div>
                 @endif
-                <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="convertAdress()" v-cloak>
+                <form id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" onsubmit="convertAdress(event)">
                     @csrf
                     <div class="form-group">
                         <label>Titolo riepilogativo: </label>
@@ -83,14 +98,14 @@
                         <label>Indirizzo:</label>
                         <div class="d-md-flex">
                             <label>Via: </label>
-                            <input type="text" name="street_name" class="form-control ml-md-3 mr-md-3" v-model="streetName" required>
+                            <input type="text" name="street_name" class="form-control ml-md-3 mr-md-3" value="{{ old('street_name') }}" required>
                             <label>Numero: </label>
                             <input type="text" name="street_number" class="form-control ml-md-3 mr-md-3" value="{{ old('street_number') }}" required min="1">
                             <label>Città: </label>
-                            <input type="text" name="municipality" class="form-control ml-md-3" v-model="municipality" required>
+                            <input type="text" name="municipality" class="form-control ml-md-3" value="{{ old('municipality') }}" required>
                         </div>
-                        <input type="hidden" name="latitude" v-model="latitude">
-                        <input type="hidden" name="longitude" v-model="longitude">
+                        <input type="hidden" name="latitude">
+                        <input type="hidden" name="longitude">
                         @error ('street_name')
                             <div class="alert alert-danger">
                                 {{ $message }}
@@ -106,14 +121,6 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                        @if ($errors->getMessageBag()->has('latitude') || $errors->getMessageBag()->has('longitude'))
-                            <div class="alert alert-danger">
-                                The adress is not valid
-                            </div>
-                        @endif
-                        <div v-if="errorAdress" class="alert alert-danger">
-                            The adress is not valid
-                        </div>
                     </div>
                     <div class="form-group">
                         <label>Prezzo per notte: </label>

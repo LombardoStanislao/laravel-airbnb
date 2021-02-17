@@ -24,6 +24,7 @@
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Titolo riepilogativo</th>
+                                {{-- <th scope="col">Sponsorizzati</th> --}}
                                 <th scope="col">Azioni</th>
                             </tr>
                         </thead>
@@ -31,7 +32,16 @@
                             @foreach ($apartments as $apartment)
                                 <tr>
                                     <td>{{ $apartment->id }}</td>
-                                    <td>{{ $apartment->title }}</td>
+                                    <td>
+                                        {{ $apartment->title }}
+                                    </td>
+                                    {{-- <td>
+                                        @if()
+                                        <i class="far fa-star mr-1 ml-1"></i>
+                                        @else
+                                        <i class="fas fa-star mr-1 ml-1"></i>
+                                        @endif
+                                    </td> --}}
                                     <td>
                                         <a href="{{ route('admin.apartments.show', ['apartment' => $apartment->id]) }}" class="btn btn-info">
                                             Dettagli
@@ -46,6 +56,7 @@
                                                 Elimina
                                             </button>
                                         </form>
+
                                     </td>
                                 </tr>
                             @endforeach
