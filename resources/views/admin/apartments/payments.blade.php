@@ -6,7 +6,11 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Pagina per gestire il pagamento</h1>
+                @if (session('success_message'))
+                    <div class="alert alert-success">
+                        {{ session('success_message') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>

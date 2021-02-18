@@ -131,8 +131,7 @@ class ApartmentController extends Controller
 
             $data = [
                 'apartment' => $apartment,
-                'has_active_sponsorship' => $has_active_sponsorship,
-                'sponsorship_types' => SponsorshipType::all()
+                'has_active_sponsorship' => $has_active_sponsorship
             ];
 
             return view('admin.apartments.show', $data);

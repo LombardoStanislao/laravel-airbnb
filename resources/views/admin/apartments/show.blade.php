@@ -73,26 +73,7 @@
                     </li>
                 </ul>
                 @if (!$has_active_sponsorship)
-                    <strong>Sponsorizzazioni disponibili: </strong>
-                    <div class="d-flex flex-wrap">
-                        @foreach ($sponsorship_types as $sponsorship_type)
-                            <a href="#" class="card m-3" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $sponsorship_type->type_name }}</h5>
-                                    <ul>
-                                        <li>
-                                            <strong>Durata:</strong>
-                                            {{ $sponsorship_type->duration }} ore
-                                        </li>
-                                        <li>
-                                            <strong>Prezzo:</strong>
-                                            € {{ $sponsorship_type->price }}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
+                    <a href="{{ route('admin.apartments.sponsorship', ['id' => $apartment->id]) }}" class="btn btn-success">Sponsorizza il tuo appartamento</a>
                 @endif
             </div>
             <canvas id="chart" width="400" height="200"></canvas>
