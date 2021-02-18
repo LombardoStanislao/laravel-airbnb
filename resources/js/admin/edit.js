@@ -2,20 +2,19 @@ import Vue from 'vue';
 import tt from '@tomtom-international/web-sdk-services';
 
 var create = new Vue({
-    el: '#create-apartment',
+    el: '#edit-apartment',
     data: {
-        title: '',
-        roomsNumber: 1,
-        sleepsAccomodations: 1,
-        bathroomsNumber: 1,
-        mq: null,
+        title,
+        roomsNumber,
+        sleepsAccomodations,
+        bathroomsNumber,
+        mq,
         streetName: '',
         streetNumber: null,
         municipality: '',
-        latitude: null,
-        longitude: null,
-        address: '',
-        pricePerNight: null,
+        latitude,
+        longitude,
+        pricePerNight,
         availableTypes: [
             'image/jpeg',
             'image/png',
@@ -24,10 +23,23 @@ var create = new Vue({
             'image/svg'
         ],
         comforts: [],
-        description: '',
+        description,
         submitted: false,
         noAdressFound: false,
         imageValid: true,
+    },
+    mounted() {
+        tt.services.reverseGeocode({
+            key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+            position: {
+                longitude: this.longitude,
+                latitude: this.latitude
+            }
+        }).then(response => {
+            this.streetName = response.addresses[0].address.streetName;
+            this.streetNumber = response.addresses[0].address.streetNumber;
+            this.municipality = response.addresses[0].address.municipality;
+        })
     },
     methods: {
         submitForm() {
@@ -44,12 +56,12 @@ var create = new Vue({
             var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
             var mucipalityValid = this.municipality;
             var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
-            this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
+            if (this.$refs.inputFile.files[0]) {
+                this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
+            }
             var descriptionValid = this.description.length <= 65535;
-            var addressValid = this.address.length <= 255;
 
             var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
-
 
             tt.services.structuredGeocode({
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
@@ -62,33 +74,14 @@ var create = new Vue({
                 this.noAdressFound = false;
                 this.latitude = response.position.lat;
                 this.longitude = response.position.lng;
-
-                tt.services.reverseGeocode({
-                    key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-                    position: {
-                        longitude: this.longitude,
-                        latitude: this.latitude
+                this.$nextTick(() => {
+                    if (noErrors) {
+                        this.$refs.editApartment.submit();
                     }
-                }).then(response => {
-                    var streetName = response.addresses[0].address.streetName;
-                    var streetNumber = response.addresses[0].address.streetNumber;
-                    var municipality = response.addresses[0].address.municipality;
-
-                    this.address = `${streetName} ${streetNumber}, ${municipality}`;
-
-                    this.$nextTick(() => {
-                        if (noErrors) {
-                            this.$refs.createApartment.submit();
-                        }
-                    });
                 });
-                
             }).catch(error => {
                 this.noAdressFound = true;
             });
-
-
-
         }
     }
 });

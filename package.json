@@ -13,7 +13,7 @@
         "@fortawesome/fontawesome-free": "^5.15.2",
         "axios": "^0.21.1",
         "bootstrap": "^4.0.0",
-        "cross-env": "^7.0",
+        "cross-env": "^7.0.3",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.13",
@@ -26,6 +26,7 @@
     "dependencies": {
         "@tomtom-international/web-sdk-maps": "^6.6.0",
         "@tomtom-international/web-sdk-services": "^6.6.0",
+        "tomtom": "^0.0.0",
         "vue": "^2.6.12"
     }
 }

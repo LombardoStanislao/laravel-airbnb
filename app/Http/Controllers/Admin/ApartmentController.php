@@ -11,6 +11,7 @@ use App\Sponsorship;
 use App\SponsorshipType;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ApartmentController extends Controller
 {
@@ -36,8 +37,7 @@ class ApartmentController extends Controller
     public function create()
     {
         $data = [
-            'comforts' => Comfort::all(),
-            'sponsorship_types' => SponsorshipType::all()
+            'comforts' => Comfort::all()
         ];
         return view('admin.apartments.create', $data);
     }
@@ -61,12 +61,12 @@ class ApartmentController extends Controller
             'municipality' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
-            'description' => 'nullable|max:65535',
-            'sponsorship_types' => 'required',
+            'description' => 'nullable|max:65535'
         ]);
 
         $data = $request->all();
@@ -97,12 +97,7 @@ class ApartmentController extends Controller
             $new_apartment->comforts()->sync($data["comforts"]);
         }
 
-        if ($data["sponsorship_types"][0]=='0') {
-            return redirect()->route('admin.apartments.index');
-        }else {
-            return redirect()->route('admin.apartments.payments');
-        }
-
+        return redirect()->route('admin.apartments.show', ['apartment' => $new_apartment->id]);
     }
 
     /**
@@ -126,8 +121,17 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         if ($apartment && $apartment->user_id == Auth::user()->id) {
+            $last_sponsorship = $apartment->sponsorships->sortByDesc('created_at')->first();
+            if ($last_sponsorship) {
+                $sponsorship_end = $last_sponsorship->created_at->addHours($last_sponsorship->sponsorshipType->duration);
+                $has_active_sponsorship = $sponsorship_end > Carbon::now();
+            } else {
+                $has_active_sponsorship = false;
+            }
+
             $data = [
-                'apartment' => $apartment
+                'apartment' => $apartment,
+                'has_active_sponsorship' => $has_active_sponsorship
             ];
 
             return view('admin.apartments.show', $data);

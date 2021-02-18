@@ -15,13 +15,6 @@
             <div class="col-12">
                 <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="submitForm()" v-cloak>
                     @csrf
-                <div class="alert alert-danger" v-if="errors.length">
-                    <ul class="alert alert-dange">
-                        <li v-for="error in errors">@{{ error }}</li>
-                    </ul>
-                </div>
-                <form id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" onsubmit="convertAdress(event)">
-                    @csrf
                     <div class="form-group">
                         <label>Titolo riepilogativo: </label>
                         <input type="text" name="title" class="form-control" v-model="title" maxlength="255" required>
@@ -121,6 +114,7 @@
                         </div>
                         <input type="hidden" name="latitude" v-model="latitude">
                         <input type="hidden" name="longitude" v-model="longitude">
+                        <input type="hidden" name="address" v-model="address">
                         <div v-if="submitted && !streetName" class="alert alert-danger">
                             Il nome della via è un campo obbligatorio
                         </div>
@@ -148,6 +142,9 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                        <div v-if="noAdressFound" class="alert alert-danger">
+                            L'indirizzo non è valido
+                        </div>
                         @if ($errors->getMessageBag()->has('latitude') || $errors->getMessageBag()->has('longitude'))
                             <div class="alert alert-danger">
                                 The adress is not valid
@@ -175,7 +172,7 @@
                     <div class="form-group">
                         <label>Immagine di copertina: </label>
                         <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*" required>
-                        <div v-if="fileNotValide" class="alert alert-danger">
+                        <div v-if="!imageValid" class="alert alert-danger">
                             L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
                         @error ('image')
@@ -223,24 +220,6 @@
                             L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
                         @error ('description')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label>Sponsorizzazione: </label>
-                        <div class="form-check">
-                            <input type="radio" name="sponsorship_types[]" value="0" required {{ !old('sponsorship_types') || old('sponsorship_types') === '0' ? 'checked' : '' }}>
-                            <label>No</label>
-                        </div>
-                        @foreach ($sponsorship_types as $sponsorship_type)
-                            <div class="form-check">
-                                <input type="radio" name="sponsorship_types[]" value="{{ $sponsorship_type->id }}" required {{ in_array($sponsorship_type->id, old('sponsorship_types', [])) ? 'checked' : '' }}>
-                                <label>{{ $sponsorship_type->price }}€ per {{ $sponsorship_type->duration }} ore di sponsorizzazione</label>
-                            </div>
-                        @endforeach
-                        @error ('sponsorship_types')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>

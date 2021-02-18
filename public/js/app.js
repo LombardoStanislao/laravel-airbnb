@@ -49624,129 +49624,249 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__);
 
 
+var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#create-apartment',
+  data: {
+    title: '',
+    roomsNumber: 1,
+    sleepsAccomodations: 1,
+    bathroomsNumber: 1,
+    mq: null,
+    streetName: '',
+    streetNumber: null,
+    municipality: '',
+    latitude: null,
+    longitude: null,
+    address: '',
+    pricePerNight: null,
+    availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
+    comforts: [],
+    description: '',
+    submitted: false,
+    noAdressFound: false,
+    imageValid: true
+  },
+  methods: {
+    submitForm: function submitForm() {
+      var _this = this;
 
-if (document.getElementById('create-apartment')) {
-  var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-    el: '#create-apartment',
-    data: {
-      title: '',
-      roomsNumber: 1,
-      sleepsAccomodations: 1,
-      bathroomsNumber: 1,
-      mq: null,
-      streetName: '',
-      streetNumber: null,
-      municipality: '',
-      latitude: null,
-      longitude: null,
-      pricePerNight: null,
-      availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
-      comforts: [],
-      description: '',
-      errors: [],
-      submitted: false,
-      fileNotValide: false
-    },
-    methods: {
-      submitForm: function submitForm() {
-        var _this = this;
-
-        this.submitted = true;
-        this.errors = [];
-        window.scrollTo(0, 0);
-
-        if (!this.title) {
-          this.errors.push('Il titolo è un campo obbligatorio');
-        } else if (this.title.length > 255) {
-          this.errors.push('Il titolo non può essere più lungo di 255 caratteri');
-        }
-
-        if (!this.roomsNumber) {
-          this.errors.push('Il numero di stanze è un campo obbligatorio');
-        } else if (this.roomsNumber <= 0) {
-          this.errors.push('Il numero di stanze dev\'essere maggiore di zero');
-        } else if (this.roomsNumber > 255) {
-          this.errors.push('Il numero di stanze non può essere maggiore di 255');
-        }
-
-        if (!this.sleepsAccomodations) {
-          this.errors.push('Il numero di posti letto è un campo obbligatorio');
-        } else if (this.sleepsAccomodations <= 0) {
-          this.errors.push('Il numero di posti letto dev\'essere maggiore di zero');
-        } else if (this.sleepsAccomodations > 255) {
-          this.errors.push('Il numero di posti letto non può essere maggiore di 255');
-        }
-
-        if (!this.bathroomsNumber) {
-          this.errors.push('Il numero di bagni è un campo obbligatorio');
-        } else if (this.bathroomsNumber <= 0) {
-          this.errors.push('Il numero di bagni dev\'essere maggiore di zero');
-        } else if (this.bathroomsNumber > 255) {
-          this.errors.push('Il numero di bagni non può essere maggiore di 255');
-        }
-
-        if (!this.mq) {
-          this.errors.push('Il numero di metri quadrati è un campo obbligatorio');
-        } else if (this.mq <= 0) {
-          this.errors.push('Il numero di metri quadrati dev\'essere maggiore di zero');
-        } else if (this.mq > 255) {
-          this.errors.push('Il numero di metri quadrati non può essere maggiore di 255');
-        }
-
-        if (!this.streetName) {
-          this.errors.push('Il nome della via è un campo obbligatorio');
-        }
-
-        if (!this.streetNumber) {
-          this.errors.push('Il numero della via è un campo obbligatorio');
-        } else if (this.streetNumber <= 0) {
-          this.errors.push('Il numero della via dev\'essere maggiore di zero');
-        }
-
-        if (!this.municipality) {
-          this.errors.push('La città è un campo obbligatorio');
-        }
-
-        if (!this.pricePerNight) {
-          this.errors.push('Il prezzo per notte è un campo obbligatorio');
-        } else if (this.pricePerNight < 0) {
-          this.errors.push('Il prezzo per notte non può essere negativo');
-        } else if (this.pricePerNight > 9999.99) {
-          this.errors.push('Il prezzo per notte non può superare i 9999.99 euro');
-        }
-
-        if (!this.availableTypes.includes(this.$refs.inputFile.files[0].type)) {
-          this.fileNotValide = true;
-          this.errors.push('L\'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg');
-        }
-
-        if (this.description.length > 65535) {
-          this.errors.push('La descrizione non può superare i 65535 caratteri');
-        }
-
-        _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
+      this.submitted = true;
+      window.scrollTo(0, 0);
+      var titleValid = this.title && this.title.length <= 255;
+      var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
+      var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
+      var bathroomsNumberValid = this.bathroomsNumber && this.bathroomsNumber >= 1 && this.bathroomsNumber <= 255;
+      var mqValid = this.mq && this.mq >= 1 && this.mq <= 255;
+      var streetNameValid = this.streetName;
+      var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
+      var mucipalityValid = this.municipality;
+      var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
+      this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
+      var descriptionValid = this.description.length <= 65535;
+      var addressValid = this.address.length <= 255;
+      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
+      _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
+        key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+        countryCode: 'IT',
+        bestResult: true,
+        streetName: this.streetName,
+        streetNumber: this.streetNumber,
+        municipality: this.municipality
+      }).then(function (response) {
+        _this.noAdressFound = false;
+        _this.latitude = response.position.lat;
+        _this.longitude = response.position.lng;
+        _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
           key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-          countryCode: 'IT',
-          bestResult: true,
-          streetName: this.streetName,
-          streetNumber: this.streetNumber,
-          municipality: this.municipality
+          position: {
+            longitude: _this.longitude,
+            latitude: _this.latitude
+          }
         }).then(function (response) {
-          _this.latitude = response.position.lat;
-          _this.longitude = response.position.lng;
+          var streetName = response.addresses[0].address.streetName;
+          var streetNumber = response.addresses[0].address.streetNumber;
+          var municipality = response.addresses[0].address.municipality;
+          _this.address = "".concat(streetName, " ").concat(streetNumber, ", ").concat(municipality);
 
           _this.$nextTick(function () {
-            if (!_this.errors.length) {
+            if (noErrors) {
               _this.$refs.createApartment.submit();
             }
           });
-        })["catch"](function (error) {
-          _this.errors.push('L\'indirizzo non è valido');
         });
-      }
+      })["catch"](function (error) {
+        _this.noAdressFound = true;
+      });
     }
-  });
-}
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/edit.js":
+/*!************************************!*\
+  !*** ./resources/js/admin/edit.js ***!
+  \************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tomtom-international/web-sdk-services */ "./node_modules/@tomtom-international/web-sdk-services/dist/services.min.js");
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#edit-apartment',
+  data: {
+    title: title,
+    roomsNumber: roomsNumber,
+    sleepsAccomodations: sleepsAccomodations,
+    bathroomsNumber: bathroomsNumber,
+    mq: mq,
+    streetName: '',
+    streetNumber: null,
+    municipality: '',
+    latitude: latitude,
+    longitude: longitude,
+    pricePerNight: pricePerNight,
+    availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
+    comforts: [],
+    description: description,
+    submitted: false,
+    noAdressFound: false,
+    imageValid: true
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
+      key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+      position: {
+        longitude: this.longitude,
+        latitude: this.latitude
+      }
+    }).then(function (response) {
+      _this.streetName = response.addresses[0].address.streetName;
+      _this.streetNumber = response.addresses[0].address.streetNumber;
+      _this.municipality = response.addresses[0].address.municipality;
+    });
+  },
+  methods: {
+    submitForm: function submitForm() {
+      var _this2 = this;
+
+      this.submitted = true;
+      window.scrollTo(0, 0);
+      var titleValid = this.title && this.title.length <= 255;
+      var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
+      var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
+      var bathroomsNumberValid = this.bathroomsNumber && this.bathroomsNumber >= 1 && this.bathroomsNumber <= 255;
+      var mqValid = this.mq && this.mq >= 1 && this.mq <= 255;
+      var streetNameValid = this.streetName;
+      var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
+      var mucipalityValid = this.municipality;
+      var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
+
+      if (this.$refs.inputFile.files[0]) {
+        this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
+      }
+
+      var descriptionValid = this.description.length <= 65535;
+      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
+      _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
+        key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+        countryCode: 'IT',
+        bestResult: true,
+        streetName: this.streetName,
+        streetNumber: this.streetNumber,
+        municipality: this.municipality
+      }).then(function (response) {
+        _this2.noAdressFound = false;
+        _this2.latitude = response.position.lat;
+        _this2.longitude = response.position.lng;
+
+        _this2.$nextTick(function () {
+          if (noErrors) {
+            _this2.$refs.editApartment.submit();
+          }
+        });
+      })["catch"](function (error) {
+        _this2.noAdressFound = true;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/show.js":
+/*!************************************!*\
+  !*** ./resources/js/admin/show.js ***!
+  \************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+!(function webpackMissingModule() { var e = new Error("Cannot find module 'chart.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @tomtom-international/web-sdk-services */ "./node_modules/@tomtom-international/web-sdk-services/dist/services.min.js");
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#show-apartment',
+  data: {
+    latitude: latitude,
+    longitude: longitude,
+    adress: ''
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_2___default.a.services.reverseGeocode({
+      key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+      position: {
+        longitude: this.longitude,
+        latitude: this.latitude
+      }
+    }).then(function (response) {
+      var streetName = response.addresses[0].address.streetName;
+      var streetNumber = response.addresses[0].address.streetNumber;
+      var municipality = response.addresses[0].address.municipality;
+      _this.adress = "".concat(streetName, " ").concat(streetNumber, ", ").concat(municipality);
+    });
+    var ctx = document.getElementById('chart').getContext('2d');
+    var Mychart = new !(function webpackMissingModule() { var e = new Error("Cannot find module 'chart.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Data pubblicazione annuncio', '', '', '', 'Oggi'],
+        datasets: [{
+          label: 'visualizzazioni',
+          data: [0, 15, 3, 5, 2, 3],
+          //valori
+          backgroundColor: ['rgba(155, 99, 255, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+          borderColor: ['rgba(155, 99, 255, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  }
+});
 
 /***/ }),
 
@@ -49759,7 +49879,17 @@ if (document.getElementById('create-apartment')) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__(/*! ./admin/create.js */ "./resources/js/admin/create.js");
+if (document.getElementById('create-apartment')) {
+  __webpack_require__(/*! ./admin/create.js */ "./resources/js/admin/create.js");
+}
+
+if (document.getElementById('edit-apartment')) {
+  __webpack_require__(/*! ./admin/edit.js */ "./resources/js/admin/edit.js");
+}
+
+if (document.getElementById('show-apartment')) {
+  __webpack_require__(/*! ./admin/show.js */ "./resources/js/admin/show.js");
+}
 
 if (document.getElementById('advanced-research-page')) {
   __webpack_require__(/*! ./guest/advancedResearch */ "./resources/js/guest/advancedResearch.js");
@@ -49767,6 +49897,10 @@ if (document.getElementById('advanced-research-page')) {
 
 if (document.getElementById('map')) {
   __webpack_require__(/*! ./guest/map */ "./resources/js/guest/map.js");
+}
+
+if (document.getElementById('apartment-page')) {
+  __webpack_require__(/*! ./guest/addView */ "./resources/js/guest/addView.js");
 } // Guest's Homepage
 
 
@@ -49823,6 +49957,36 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/guest/addView.js":
+/*!***************************************!*\
+  !*** ./resources/js/guest/addView.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+console.log('js attivo');
+var userId = document.getElementsByName('user')[0].value;
+console.log(userId);
+
+if (!isNaN(userId) || !userId) {
+  userId = parseInt(userId);
+  var apartmentId = document.getElementsByName('apartment')[0].value;
+
+  if (!isNaN(apartmentId)) {
+    apartmentId = parseInt(apartmentId);
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/api/addView',
+      data: {
+        userId: userId,
+        apartmentId: apartmentId
+      }
+    });
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/js/guest/advancedResearch.js":
 /*!************************************************!*\
   !*** ./resources/js/guest/advancedResearch.js ***!
@@ -49834,12 +49998,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tomtom-international/web-sdk-services */ "./node_modules/@tomtom-international/web-sdk-services/dist/services.min.js");
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__);
 /*
     Numero minimo di stanze
     Numero minimo di posti letto
     Modificare il raggio di default di 20km
     La presenza obbligatoria di uno o più dei servizi aggiuntivi indicat
 */
+
 
 var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#root',
@@ -49853,6 +50020,19 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     apartments: null
   },
   methods: {
+    getAddress: function getAddress(_long, lat) {
+      _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
+        key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+        position: {
+          longitude: _long,
+          latitude: lat
+        }
+      }).then(function (response) {
+        console.log(response.addresses[0].address);
+        address = response.addresses[0].address.freeformAddress;
+        return address;
+      });
+    },
     getOriginalLocationName: function getOriginalLocationName() {
       var locationData = document.getElementById('location-data').dataset;
       this.locationName = locationData.locationName.replace(/__/g, ' ');
