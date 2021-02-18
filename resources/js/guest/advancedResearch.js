@@ -57,6 +57,10 @@ const advancedResearch = new Vue({
                 this.getOriginalLocationName();
             }
 
+            if(!this.radius || this.radius < 0) {
+                this.radius = 500;
+            }
+
             axios({
                 url: 'http://localhost:8000/api/filteredSearch',
                 method: 'get',

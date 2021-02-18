@@ -45,8 +45,8 @@
                         <input type="number" v-model.trim="minimumSleepsAccomodations" placeholder="es. 1">
 
                         <label for="radius">raggio di ricerca in metri: </label>
-                        <input type="number" v-model.trim="radius" placeholder="es. 1">
-
+                        <input type="range" id="radius" v-model="radius" min="500" max="50000" step="500">
+                        <label for="radius">@{{ radius/1000 }} Km</label>
                         <div class="checkbox-container">
                             @foreach ($comforts as $comfort)
                                 <input id="checkbox{{ $comfort->id }}" type="checkbox" v-model="checkedComfortsId" value="{{ $comfort->id }}">

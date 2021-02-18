@@ -3,32 +3,14 @@
 @section('page-title', 'Dettagli appartamento')
 
 @section('scripts')
-    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/services/services-web.min.js"></script>
-
     <script type="text/javascript" defer>
-
-        var longitude_js = "{{$apartment->longitude}}";
-        console.log(longitude_js);
-        var latitude_js = "{{$apartment->latitude}}";
-        console.log(latitude_js);
-
-        function callbackFn() {
-            tt.services.reverseGeocode({
-                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-                position: {longitude: longitude_js, latitude: latitude_js}
-            }).then(response => {
-                address = response.addresses[0].address.freeformAddress;
-                document.getElementById("adress_id").innerHTML = address;
-            })
-        }
-
-        callbackFn();
-
+        var latitude = "{{ $apartment->latitude }}";
+        var longitude = "{{ $apartment->longitude }}";
     </script>
 @endsection
 
 @section('content')
-    <div class="container">
+    <div id="show-apartment" class="container" v-cloak>
         <div class="row">
             <div class="col-12">
                 <h1>{{ $apartment->title }}</h1>
@@ -59,13 +41,7 @@
                     </li>
                     <li>
                         <strong>Indirizzo:</strong>
-                        <span id="adress_id"></span>
-                    </li>
-                    <li>
-                        <strong>Lat:</strong>
-                        <span>{{ $apartment->latitude }},</span>
-                        <strong>Lon:</strong>
-                        <span>{{ $apartment->longitude }}</span>
+                        <span>@{{ adress }}</span>
                     </li>
                     <li>
                         <strong>Disponibile:</strong>
@@ -83,9 +59,9 @@
                             <span>nessuno</span>
                         @endif
                     </li>
-                    <li class="w-50">
+                    <li>
                         <strong>Immagine di copertina:</strong>
-                        <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block mw-100">
+                        <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
                     </li>
                     <li>
                         <strong>Descrizione:</strong>
@@ -96,6 +72,28 @@
                         @endif
                     </li>
                 </ul>
+                @if (!$has_active_sponsorship)
+                    <strong>Sponsorizzazioni disponibili: </strong>
+                    <div class="d-flex flex-wrap">
+                        @foreach ($sponsorship_types as $sponsorship_type)
+                            <a href="#" class="card m-3" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $sponsorship_type->type_name }}</h5>
+                                    <ul>
+                                        <li>
+                                            <strong>Durata:</strong>
+                                            {{ $sponsorship_type->duration }} ore
+                                        </li>
+                                        <li>
+                                            <strong>Prezzo:</strong>
+                                            € {{ $sponsorship_type->price }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>
