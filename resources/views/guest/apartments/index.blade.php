@@ -64,7 +64,7 @@
                     <ul v-if="apartments">
                         <li v-for="apartment in apartments">
 
-                            <a :href="'/apartments/' + apartment.id">
+                            <a :href="'/apartments/' + apartment.slug">
 
                                 <div class="m-2 clearfix bg-secondary">
                                     <div class="float-left" style="width: 100px; height: 100px;">
@@ -83,7 +83,7 @@
                     <ul v-else>
                         @foreach ($apartments as $key => $apartment)
 
-                            <a class="d-block" href="{{ route('guest.apartments.show', ['param' => $apartment->id]) }}" >
+                            <a class="d-block" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" >
                                 <div class="m-2 clearfix bg-secondary">
                                     <div class="float-left" style="width: 100px; height: 100px;">
                                         <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" alt="" class="w-100 h-100">
