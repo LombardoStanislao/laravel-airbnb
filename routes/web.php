@@ -31,6 +31,9 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
     Route::get('/', 'HomeController@index')->name('index');
     Route::get('/apartments/payments', 'ApartmentController@payments')->name('apartments.payments');
 
+    Route::get('/messages', 'MessageController@index')->name('messages.index');
+    Route::get('/messages/{id}', 'MessageController@show')->name('messages.show');
+
     Route::get('/apartments/{id}/sponsorship', function ($id) {
         $gateway = new Braintree\Gateway([
             'environment' => 'sandbox',
