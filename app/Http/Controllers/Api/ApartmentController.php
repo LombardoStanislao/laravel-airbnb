@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Http;
 use App\Apartment;
 use App\View;
 use App\User;
+use Carbon\Carbon;
+
 
 class ApartmentController extends Controller
 {
@@ -129,6 +131,21 @@ class ApartmentController extends Controller
 
         return response()->json([
             'success' => false
+        ]);
+    }
+
+    public function showViews(Request $request) {
+        $apartment = Apartment::where('id', $request->id)->first();
+
+        $views = $apartment->views->groupBy(function ($view) {
+            return Carbon::parse($view->created_at)->format('Y m');
+        })->map(function($item) {
+            return $item->count();
+        });
+
+        return response()->json([
+            'success' => true,
+            'results' => $views
         ]);
     }
 }

@@ -6,6 +6,7 @@
     <script type="text/javascript" defer>
         var latitude = "{{ $apartment->latitude }}";
         var longitude = "{{ $apartment->longitude }}";
+        var apartmentId = "{{ $apartment->id }}";
     </script>
 @endsection
 
