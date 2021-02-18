@@ -18,6 +18,7 @@ class Apartment extends Model
         'mq',
         'latitude',
         'longitude',
+        'address',
         'available',
         'price_per_night'
     ];

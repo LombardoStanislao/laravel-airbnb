@@ -14,6 +14,7 @@ var create = new Vue({
         municipality: '',
         latitude: null,
         longitude: null,
+        address: '',
         pricePerNight: null,
         availableTypes: [
             'image/jpeg',
@@ -45,8 +46,10 @@ var create = new Vue({
             var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
             this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
             var descriptionValid = this.description.length <= 65535;
+            var addressValid = this.address.length <= 255;
 
             var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
+
 
             tt.services.structuredGeocode({
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
@@ -59,14 +62,33 @@ var create = new Vue({
                 this.noAdressFound = false;
                 this.latitude = response.position.lat;
                 this.longitude = response.position.lng;
-                this.$nextTick(() => {
-                    if (noErrors) {
-                        this.$refs.createApartment.submit();
+
+                tt.services.reverseGeocode({
+                    key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                    position: {
+                        longitude: this.longitude,
+                        latitude: this.latitude
                     }
+                }).then(response => {
+                    var streetName = response.addresses[0].address.streetName;
+                    var streetNumber = response.addresses[0].address.streetNumber;
+                    var municipality = response.addresses[0].address.municipality;
+
+                    this.address = `${streetName} ${streetNumber}, ${municipality}`;
+
+                    this.$nextTick(() => {
+                        if (noErrors) {
+                            this.$refs.createApartment.submit();
+                        }
+                    });
                 });
+                
             }).catch(error => {
                 this.noAdressFound = true;
             });
+
+
+
         }
     }
 });

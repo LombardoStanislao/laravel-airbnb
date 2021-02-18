@@ -61,6 +61,7 @@ class ApartmentController extends Controller
             'municipality' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
