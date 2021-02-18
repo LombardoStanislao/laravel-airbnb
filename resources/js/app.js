@@ -9,3 +9,12 @@ if(document.getElementById('advanced-research-page')) {
 if(document.getElementById('map')) {
     require('./guest/map');
 }
+
+// Guest's Homepage
+
+document.getElementById('user-icon').addEventListener("click", openMenu);
+
+
+function openMenu() {
+    document.getElementById('user-dropdown-menu').classList.toggle("open");
+}
