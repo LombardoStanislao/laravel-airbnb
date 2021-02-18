@@ -87578,11 +87578,25 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   data: {
     latitude: latitude,
     longitude: longitude,
-    adress: ''
+    adress: '',
+    apartmentId: apartmentId
   },
   mounted: function mounted() {
     var _this = this;
 
+    axios.get('/api/showViews', {
+      params: {
+        id: this.apartmentId
+      }
+    }).then(function (response) {
+      console.log(response.data.results); // var startingDate = new Date();
+      //
+      // startingDate.setMonth(startingDate.getMonth() - 5);
+      //
+      // startingDate = startingDate.getFullYear() + " " + ("0" + (startingDate.getMonth() + 1)).slice(-2);
+      //
+      // console.log(startingDate);
+    });
     _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_2___default.a.services.reverseGeocode({
       key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
       position: {
@@ -87597,12 +87611,12 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     });
     var ctx = document.getElementById('chart').getContext('2d');
     var Mychart = new chart_js__WEBPACK_IMPORTED_MODULE_1___default.a(ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
-        labels: ['Data pubblicazione annuncio', '', '', '', 'Oggi'],
+        labels: ['Settembre', 'Ottobre', 'Novembre', 'Dicembre', 'Gennaio', 'Febbraio'],
         datasets: [{
           label: 'visualizzazioni',
-          data: [0, 15, 3, 5, 2, 3],
+          data: [8, 15, 3, 5, 9, 3],
           //valori
           backgroundColor: ['rgba(155, 99, 255, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
           borderColor: ['rgba(155, 99, 255, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],

@@ -7,9 +7,28 @@ var show = new Vue({
     data: {
         latitude,
         longitude,
-        adress: ''
+        adress: '',
+        apartmentId
     },
     mounted() {
+        axios
+        .get('/api/showViews', {
+            params : {
+                id : this.apartmentId
+            }
+        })
+        .then((response) => {
+            console.log(response.data.results);
+
+            // var startingDate = new Date();
+            //
+            // startingDate.setMonth(startingDate.getMonth() - 5);
+            //
+            // startingDate = startingDate.getFullYear() + " " + ("0" + (startingDate.getMonth() + 1)).slice(-2);
+            //
+            // console.log(startingDate);
+        });
+
         tt.services.reverseGeocode({
             key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
             position: {
@@ -26,12 +45,19 @@ var show = new Vue({
 
         var ctx = document.getElementById('chart').getContext('2d');
         var Mychart = new Chart(ctx, {
-            type: 'line',
+            type: 'bar',
             data: {
-                labels: ['Data pubblicazione annuncio', '','','', 'Oggi'],
+                labels: [
+                    'Settembre',
+                    'Ottobre',
+                    'Novembre',
+                    'Dicembre',
+                    'Gennaio',
+                    'Febbraio'
+                ],
                 datasets: [{
                     label: 'visualizzazioni',
-                    data: [0, 15, 3, 5, 2, 3],//valori
+                    data: [8, 15, 3, 5, 9, 3],//valori
                     backgroundColor: [
                         'rgba(155, 99, 255, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
