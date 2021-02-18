@@ -3,11 +3,11 @@
 @section('header')
     <header>
         @include('guest.partials.navbar-top')
+
     </header>
 @endsection
 
 @section('content')
-    <h1>Hello</h1>
     <form action="{{ route('search') }}" method="get">
         <button type="submit">
             <i class="fas fa-search"> Search</i>
