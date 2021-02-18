@@ -13,7 +13,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
-    @yield('scripts')
     <script src="{{ asset('js/app.js') }}" charset="utf-8" defer></script>
 </head>
 <body>
@@ -68,5 +67,8 @@
             </main>
         </div>
     </div>
+
+    {{-- Scripts --}}
+    @yield('scripts')
 </body>
 </html>
