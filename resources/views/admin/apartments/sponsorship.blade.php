@@ -18,21 +18,20 @@
         }, function(createErr, instance) {
             if (createErr) {
                 console.log('Create Error', createErr);
-                return;
-            }
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
+            } else {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
 
-                instance.requestPaymentMethod(function(err, payload) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-
-                    document.getElementById('nonce').value = payload.nonce;
-                    form.submit();
+                    instance.requestPaymentMethod(function(err, payload) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            document.getElementById('nonce').value = payload.nonce;
+                            form.submit();
+                        }
+                    });
                 });
-            });
+            }
         });
     </script>
 @endsection
@@ -70,12 +69,7 @@
                 <form id="payment-form" action="{{ route('admin.checkout', ['apartment_id' => $apartment_id]) }}" method="POST">
                     @csrf
                     <section>
-                        <label for="amount">
-                            <span class="input-label">Amount</span>
-                            <div class="input-wrapper amount-wrapper">
-                                <input id="amount" type="tel" name="amount" placeholder="Amount">
-                            </div>
-                        </label>
+                        <input id="amount" type="hidden" name="amount" placeholder="Amount">
 
                         <div class="bt-drop-in-wrapper">
                             <div id="bt-dropin"></div>
