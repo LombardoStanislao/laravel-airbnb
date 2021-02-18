@@ -49637,6 +49637,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     municipality: '',
     latitude: null,
     longitude: null,
+    address: '',
     pricePerNight: null,
     availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
     comforts: [],
@@ -49662,6 +49663,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
       this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
       var descriptionValid = this.description.length <= 65535;
+      var addressValid = this.address.length <= 255;
       var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
@@ -49674,11 +49676,23 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         _this.noAdressFound = false;
         _this.latitude = response.position.lat;
         _this.longitude = response.position.lng;
-
-        _this.$nextTick(function () {
-          if (noErrors) {
-            _this.$refs.createApartment.submit();
+        _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
+          key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+          position: {
+            longitude: _this.longitude,
+            latitude: _this.latitude
           }
+        }).then(function (response) {
+          var streetName = response.addresses[0].address.streetName;
+          var streetNumber = response.addresses[0].address.streetNumber;
+          var municipality = response.addresses[0].address.municipality;
+          _this.address = "".concat(streetName, " ").concat(streetNumber, ", ").concat(municipality);
+
+          _this.$nextTick(function () {
+            if (noErrors) {
+              _this.$refs.createApartment.submit();
+            }
+          });
         });
       })["catch"](function (error) {
         _this.noAdressFound = true;

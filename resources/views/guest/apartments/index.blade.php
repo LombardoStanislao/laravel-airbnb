@@ -64,17 +64,17 @@
                     <ul v-if="apartments">
                         <li v-for="apartment in apartments">
 
-                            <a :href="'/apartments/' + apartment.slug">
+                            <a class="card mb-2" :href="'/apartments/' + apartment.slug">
 
-                                <div class="m-2 clearfix bg-secondary">
+                                <div class="m-2 clearfix">
                                     <div class="float-left" style="width: 100px; height: 100px;">
                                         <img :src="'storage/' + apartment['main-image'] " alt="" class="w-100 h-100">
                                     </div>
                                     <div class="float-left ml-2 text-dark">
-                                        <p>@{{ apartment.title }}</p>
-                                        <p>@{{ apartment.price_per_night }}€</p>
-                                        {{-- <p>@{{ apartment.address}}</p> --}}
-                                        <p>Disponibile: @{{apartment.available? 'Sì' : 'No' }}</p>
+                                        <p class="mt-0 mb-0">@{{ apartment.title }}</p>
+                                        <p class="mt-0 mb-0">@{{ apartment.price_per_night }}€</p>
+                                        <p class="mt-0 mb-0">Indirizzo: @{{ apartment.address}}</p>
+                                        <p class="mt-0 mb-0">Disponibile: @{{apartment.available? 'Sì' : 'No' }}</p>
                                     </div>
                                 </div>
                             </a>
@@ -83,16 +83,16 @@
                     <ul v-else>
                         @foreach ($apartments as $key => $apartment)
 
-                            <a class="d-block" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" >
-                                <div class="m-2 clearfix bg-secondary">
+                            <a class="card mb-2" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" >
+                                <div class="m-2 clearfix">
                                     <div class="float-left" style="width: 100px; height: 100px;">
                                         <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" alt="" class="w-100 h-100">
                                     </div>
                                     <div class="float-left ml-2 text-dark">
-                                        <p>{{ $apartment->title }}</p>
-                                        <p>{{ $apartment->price_per_night }}€</p>
-                                        {{-- <p>{{ $apartment->address }}</p> --}}
-                                        <p>Disponibile: {{ $apartment->available ? 'Sì' : 'No' }}</p>
+                                        <p class="mt-0 mb-0">{{ $apartment->title }}</p>
+                                        <p class="mt-0 mb-0">{{ $apartment->price_per_night }}€</p>
+                                        <p class="mt-0 mb-0">Indirizzo: {{ $apartment->address }}</p>
+                                        <p class="mt-0 mb-0">Disponibile: {{ $apartment->available ? 'Sì' : 'No' }}</p>
 
                                     </div>
                                 </div>
