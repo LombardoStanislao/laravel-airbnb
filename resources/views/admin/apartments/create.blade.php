@@ -15,8 +15,6 @@
             <div class="col-12">
                 <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="submitForm()" v-cloak>
                     @csrf
-                <form id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" onsubmit="convertAdress(event)">
-                    @csrf
                     <div class="form-group">
                         <label>Titolo riepilogativo: </label>
                         <input type="text" name="title" class="form-control" v-model="title" maxlength="255" required>
@@ -221,24 +219,6 @@
                             L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
                         @error ('description')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label>Sponsorizzazione: </label>
-                        <div class="form-check">
-                            <input type="radio" name="sponsorship_types[]" value="0" required {{ !old('sponsorship_types') || old('sponsorship_types') === '0' ? 'checked' : '' }}>
-                            <label>No</label>
-                        </div>
-                        @foreach ($sponsorship_types as $sponsorship_type)
-                            <div class="form-check">
-                                <input type="radio" name="sponsorship_types[]" value="{{ $sponsorship_type->id }}" required {{ in_array($sponsorship_type->id, old('sponsorship_types', [])) ? 'checked' : '' }}>
-                                <label>{{ $sponsorship_type->price }}€ per {{ $sponsorship_type->duration }} ore di sponsorizzazione</label>
-                            </div>
-                        @endforeach
-                        @error ('sponsorship_types')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
