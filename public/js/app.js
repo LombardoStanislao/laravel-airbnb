@@ -49917,12 +49917,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tomtom-international/web-sdk-services */ "./node_modules/@tomtom-international/web-sdk-services/dist/services.min.js");
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__);
 /*
     Numero minimo di stanze
     Numero minimo di posti letto
     Modificare il raggio di default di 20km
     La presenza obbligatoria di uno o più dei servizi aggiuntivi indicat
 */
+
 
 var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#root',
@@ -49936,6 +49939,19 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     apartments: null
   },
   methods: {
+    getAddress: function getAddress(_long, lat) {
+      _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
+        key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+        position: {
+          longitude: _long,
+          latitude: lat
+        }
+      }).then(function (response) {
+        console.log(response.addresses[0].address);
+        address = response.addresses[0].address.freeformAddress;
+        return address;
+      });
+    },
     getOriginalLocationName: function getOriginalLocationName() {
       var locationData = document.getElementById('location-data').dataset;
       this.locationName = locationData.locationName.replace(/__/g, ' ');
@@ -50091,8 +50107,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
