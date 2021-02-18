@@ -49859,6 +49859,10 @@ if (document.getElementById('map')) {
   __webpack_require__(/*! ./guest/map */ "./resources/js/guest/map.js");
 }
 
+if (document.getElementById('apartment-page')) {
+  __webpack_require__(/*! ./guest/addView */ "./resources/js/guest/addView.js");
+}
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -49903,6 +49907,36 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/guest/addView.js":
+/*!***************************************!*\
+  !*** ./resources/js/guest/addView.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+console.log('js attivo');
+var userId = document.getElementsByName('user')[0].value;
+console.log(userId);
+
+if (!isNaN(userId) || !userId) {
+  userId = parseInt(userId);
+  var apartmentId = document.getElementsByName('apartment')[0].value;
+
+  if (!isNaN(apartmentId)) {
+    apartmentId = parseInt(apartmentId);
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/api/addView',
+      data: {
+        userId: userId,
+        apartmentId: apartmentId
+      }
+    });
+  }
+}
 
 /***/ }),
 

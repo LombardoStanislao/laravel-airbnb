@@ -20,3 +20,7 @@ if(document.getElementById('advanced-research-page')) {
 if(document.getElementById('map')) {
     require('./guest/map');
 }
+
+if(document.getElementById('apartment-page')) {
+    require('./guest/addView')
+}
