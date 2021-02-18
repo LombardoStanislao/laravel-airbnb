@@ -14,10 +14,10 @@ class ApartmentController extends Controller
         return view('guest.apartments.index');
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $apartment = Apartment::where('id', $id)->first();
-        
+        $apartment = Apartment::where('slug', $slug)->first();
+
         if(!$apartment){
             abort(404);
         }
