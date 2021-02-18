@@ -114,6 +114,7 @@
                         </div>
                         <input type="hidden" name="latitude" v-model="latitude">
                         <input type="hidden" name="longitude" v-model="longitude">
+                        <input type="hidden" name="address" v-model="address">
                         <div v-if="submitted && !streetName" class="alert alert-danger">
                             Il nome della via è un campo obbligatorio
                         </div>

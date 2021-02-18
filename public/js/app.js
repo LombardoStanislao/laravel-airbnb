@@ -49637,6 +49637,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     municipality: '',
     latitude: null,
     longitude: null,
+    address: '',
     pricePerNight: null,
     availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
     comforts: [],
@@ -49662,6 +49663,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
       this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
       var descriptionValid = this.description.length <= 65535;
+      var addressValid = this.address.length <= 255;
       var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
@@ -49674,11 +49676,23 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         _this.noAdressFound = false;
         _this.latitude = response.position.lat;
         _this.longitude = response.position.lng;
-
-        _this.$nextTick(function () {
-          if (noErrors) {
-            _this.$refs.createApartment.submit();
+        _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
+          key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+          position: {
+            longitude: _this.longitude,
+            latitude: _this.latitude
           }
+        }).then(function (response) {
+          var streetName = response.addresses[0].address.streetName;
+          var streetNumber = response.addresses[0].address.streetNumber;
+          var municipality = response.addresses[0].address.municipality;
+          _this.address = "".concat(streetName, " ").concat(streetNumber, ", ").concat(municipality);
+
+          _this.$nextTick(function () {
+            if (noErrors) {
+              _this.$refs.createApartment.submit();
+            }
+          });
         });
       })["catch"](function (error) {
         _this.noAdressFound = true;
@@ -49917,12 +49931,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tomtom-international/web-sdk-services */ "./node_modules/@tomtom-international/web-sdk-services/dist/services.min.js");
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__);
 /*
     Numero minimo di stanze
     Numero minimo di posti letto
     Modificare il raggio di default di 20km
     La presenza obbligatoria di uno o più dei servizi aggiuntivi indicat
 */
+
 
 var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#root',
@@ -49936,6 +49953,19 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     apartments: null
   },
   methods: {
+    getAddress: function getAddress(_long, lat) {
+      _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
+        key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+        position: {
+          longitude: _long,
+          latitude: lat
+        }
+      }).then(function (response) {
+        console.log(response.addresses[0].address);
+        address = response.addresses[0].address.freeformAddress;
+        return address;
+      });
+    },
     getOriginalLocationName: function getOriginalLocationName() {
       var locationData = document.getElementById('location-data').dataset;
       this.locationName = locationData.locationName.replace(/__/g, ' ');
