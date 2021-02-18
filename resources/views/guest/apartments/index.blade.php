@@ -1,5 +1,33 @@
 @extends('layouts.app')
 
+{{-- @section('scripts')
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/services/services-web.min.js"></script>
+
+    <script type="text/javascript" defer>
+
+            var longitude_js = "{{$apartment->longitude}}";
+            console.log(longitude_js);
+            var latitude_js = "{{$apartment->latitude}}";
+            console.log(latitude_js);
+
+            function callbackFn() {
+                tt.services.reverseGeocode({
+                    key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                    position: {longitude: longitude_js, latitude: latitude_js}
+                }).then(response => {
+                    console.log(response.addresses[0].address);
+                    address = response.addresses[0].address.freeformAddress;
+                    // document.getElementById("adress_id").innerHTML = address;
+                    return address;
+                })
+            }
+
+
+        callbackFn();
+
+    </script>
+@endsection --}}
+
 @section('content')
     <div id="root">
         <div class="container">
@@ -35,14 +63,25 @@
 
                     <ul v-if="apartments">
                         <li v-for="apartment in apartments">
-                            {{-- <a href="#" @click="getApartmentsFiltered()"> --}}
+
                             <a :href="'/apartments/' + apartment.id">
-                                @{{ apartment.title }}
+
+                                <div class="m-2 clearfix bg-secondary">
+                                    <div class="float-left" style="width: 100px; height: 100px;">
+                                        <img :src="'storage/' + apartment['main-image'] " alt="" class="w-100 h-100">
+                                    </div>
+                                    <div class="float-left ml-2 text-dark">
+                                        <p>@{{ apartment.title }}</p>
+                                        <p>@{{ apartment.price_per_night }}€</p>
+                                        {{-- <p>@{{ apartment.address}}</p> --}}
+                                        <p>Disponibile: @{{apartment.available? 'Sì' : 'No' }}</p>
+                                    </div>
+                                </div>
                             </a>
                         </li>
                     </ul>
                     <ul v-else>
-                        @foreach ($apartments as $apartment)
+                        @foreach ($apartments as $key => $apartment)
 
                             <a class="d-block" href="{{ route('guest.apartments.show', ['param' => $apartment->id]) }}" >
                                 <div class="m-2 clearfix bg-secondary">
@@ -52,6 +91,7 @@
                                     <div class="float-left ml-2 text-dark">
                                         <p>{{ $apartment->title }}</p>
                                         <p>{{ $apartment->price_per_night }}€</p>
+                                        {{-- <p>{{ $apartment->address }}</p> --}}
                                         <p>Disponibile: {{ $apartment->available ? 'Sì' : 'No' }}</p>
 
                                     </div>

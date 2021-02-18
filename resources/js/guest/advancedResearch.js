@@ -4,7 +4,8 @@
     Modificare il raggio di default di 20km
     La presenza obbligatoria di uno o più dei servizi aggiuntivi indicat
 */
-import Vue from 'vue'
+import Vue from 'vue';
+import tt from '@tomtom-international/web-sdk-services';
 
 const advancedResearch = new Vue({
     el: '#root',
@@ -18,6 +19,17 @@ const advancedResearch = new Vue({
         apartments: null
     },
     methods: {
+        getAddress(long,lat){
+            tt.services.reverseGeocode({
+                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                position: {longitude: long, latitude: lat}
+            }).then(response => {
+                console.log(response.addresses[0].address);
+                address = response.addresses[0].address.freeformAddress;
+                return address;
+            })
+
+        },
         getOriginalLocationName(){
             const locationData = document.getElementById('location-data').dataset;
             this.locationName = locationData.locationName.replace(/__/g, ' ');
