@@ -22,6 +22,8 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/apartments/{slug}', 'Guest\ApartmentController@show')->name('guest.apartments.show');
+Route::get('/apartments/{slug}/message', 'Guest\ApartmentController@message')->name('guest.apartments.message');
+Route::post('/apartments/{slug}/message', 'Guest\ApartmentController@sendMessage')->name('guest.apartments.sendMessage');
 
 Auth::routes();
 
