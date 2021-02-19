@@ -122,13 +122,14 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         if ($apartment && $apartment->user_id == Auth::user()->id) {
-                    $active_sponsorship = null;
             $active_sponsorship = $apartment->sponsorships->sortBy('created_at')->last();
             if ($active_sponsorship) {
                 $last_payment = $active_sponsorship->payments->sortBy('created_at')->last();
                 if (!$last_payment->accepted) {
+                    $active_sponsorship = null;
                 } else {
                     $sponsorship_end = $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration);
+
                     if ($sponsorship_end <= Carbon::now()) {
                         $active_sponsorship = null;
                     }
@@ -137,8 +138,7 @@ class ApartmentController extends Controller
 
             $data = [
                 'apartment' => $apartment,
-                'has_active_sponsorship' => $has_active_sponsorship,
-                'sponsorship_types' => SponsorshipType::all(),
+                'active_sponsorship' => $active_sponsorship,
                 'views' => View::where('apartment_id', $apartment->id)->get(),
             ];
             // dd(View::where('apartment_id', $apartment->id)->get());

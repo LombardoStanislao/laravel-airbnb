@@ -87641,10 +87641,6 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     monthsOnChart: function monthsOnChart(yearSelected) {
       var _this2 = this;
 
-      if (yearSelected == undefined) {
-        yearSelected = this.chartselected;
-      }
-
       this.views_data_month = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.apartmentViews.forEach(function (view, i) {
         var year = parseInt(view.date_view.substr(0, 4));
@@ -87802,7 +87798,8 @@ var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#payment-form',
   data: {
     nonce: '',
-    dropin: null
+    dropin: null,
+    loaded: false
   },
   mounted: function mounted() {
     var self = this;
@@ -87813,6 +87810,7 @@ var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         selector: '#bt-dropin'
       }, function (createErr, instance) {
         self.dropin = instance;
+        self.loaded = true;
       });
     });
   },

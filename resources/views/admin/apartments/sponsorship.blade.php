@@ -50,7 +50,7 @@
                     </div>
 
                     <input id="nonce" v-model="nonce" type="hidden" name="payment_method_nonce">
-                    <button type="submit" class="btn btn-success">
+                    <button v-if="loaded" type="submit" class="btn btn-success">
                         <span>Conferma pagamento</span>
                     </button>
                 </form>
