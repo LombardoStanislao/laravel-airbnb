@@ -7,6 +7,7 @@
         var latitude = "{{ $apartment->latitude }}";
         var longitude = "{{ $apartment->longitude }}";
         var views = "{{ $views }}";
+        var apartmentId = "{{ $apartment->id }}";
     </script>
 @endsection
 
@@ -74,27 +75,20 @@
                         @endif
                     </li>
                 </ul>
-                @if (!$has_active_sponsorship)
-                    <strong>Sponsorizzazioni disponibili: </strong>
-                    <div class="d-flex flex-wrap">
-                        @foreach ($sponsorship_types as $sponsorship_type)
-                            <a href="#" class="card m-3" style="width: 18rem;">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $sponsorship_type->type_name }}</h5>
-                                    <ul>
-                                        <li>
-                                            <strong>Durata:</strong>
-                                            {{ $sponsorship_type->duration }} ore
-                                        </li>
-                                        <li>
-                                            <strong>Prezzo:</strong>
-                                            € {{ $sponsorship_type->price }}
-                                        </li>
-                                    </ul>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
+                @if ($active_sponsorship)
+                    <h5>Sponsorizzazione attiva:</h5>
+                    <ul>
+                        <li>
+                            <strong>Tipologia:</strong>
+                            {{ $active_sponsorship->sponsorshipType->type_name }}
+                        </li>
+                        <li>
+                            <strong>Scadenza:</strong>
+                            {{$active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration)}}
+                        </li>
+                    </ul>
+                @else
+                    <a href="{{ route('admin.apartments.sponsorship', ['id' => $apartment->id]) }}" class="btn btn-success">Sponsorizza il tuo appartamento</a>
                 @endif
             </div>
             <canvas id="chart" width="400" height="200"></canvas>

@@ -122,12 +122,12 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         if ($apartment && $apartment->user_id == Auth::user()->id) {
-            $last_sponsorship = $apartment->sponsorships->sortByDesc('created_at')->first();
-            if ($last_sponsorship) {
-                $sponsorship_end = $last_sponsorship->created_at->addHours($last_sponsorship->sponsorshipType->duration);
-                $has_active_sponsorship = $sponsorship_end > Carbon::now();
-            } else {
-                $has_active_sponsorship = false;
+            $active_sponsorship = $apartment->sponsorships->sortBy('created_at')->first();
+            if ($active_sponsorship) {
+                $sponsorship_end = $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration);
+                if ($sponsorship_end <= Carbon::now()) {
+                    $active_sponsorship = null;
+                }
             }
 
             $data = [
