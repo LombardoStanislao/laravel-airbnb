@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\View;
 use App\Apartment;
+use Carbon\Carbon;
 
 class ViewsTableSeeder extends Seeder
 {
@@ -26,6 +27,9 @@ class ViewsTableSeeder extends Seeder
 
             $newView = new View();
             $newView->apartment_id = $apartment->id;
+            // simulating a date between now and 3 years ago
+            $simulatedDate = Carbon::now()->sub('years', rand(0, 2))->sub('months', rand(0, 11))->sub('days', rand(0, 31));
+            $newView->date_view = $simulatedDate;
 
             $newView->save();
         }
