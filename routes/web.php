@@ -40,7 +40,7 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
         $apartment = Apartment::where('id', $id)->first();
 
         if ($apartment) {
-            $active_sponsorship = $apartment->sponsorships->sortByDesc('created_at')->first();
+            $active_sponsorship = $apartment->sponsorships->sortBy('created_at')->first();
 
             if ($active_sponsorship) {
                 $sponsorship_end = $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration);
