@@ -35,7 +35,7 @@
                 <div class="col-10">
                     <h1>{{ $apartment->title }}</h1>
                 </div>
-                @if (Auth::user()->id != $apartment->user_id)
+                @if (!Auth::user() || Auth::user()->id != $apartment->user_id)
                     <div class="col-2">
                         <a class="btn btn-primary d-block" href="{{ route('guest.apartments.message', [ 'slug' => $apartment->slug]) }}">
                             Contatta host
