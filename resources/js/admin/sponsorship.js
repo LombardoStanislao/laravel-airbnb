@@ -4,7 +4,8 @@ var payment = new Vue({
     el: '#payment-form',
     data: {
         nonce: '',
-        dropin: null
+        dropin: null,
+        loaded: false
     },
     mounted() {
         var self = this;
@@ -15,6 +16,7 @@ var payment = new Vue({
                 selector: '#bt-dropin'
             }, function(createErr, instance) {
                 self.dropin = instance;
+                self.loaded = true;
             });
         });
     },
