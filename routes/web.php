@@ -84,6 +84,10 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 
 
     Route::post('/checkout/{apartment_id}', function($apartment_id, Request $request) {
+        $request->validate([
+            'sponsorship_type_id' => 'required|exists:sponsorship_types,id'
+        ]);
+
         $gateway = new Braintree\Gateway([
             'environment' => 'sandbox',
             'merchantId' => 'n67d8y97gr57bny4',
