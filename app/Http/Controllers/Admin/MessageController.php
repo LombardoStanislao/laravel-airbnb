@@ -24,10 +24,13 @@ class MessageController extends Controller
         return view('admin.messages.index', $data);
     }
 
-    public function show(Message $message) {
+    public function show($id) {
+        $message = Message::find($id);
+
         if($message) {
             $data = [
-                'message' => $message
+                'message' => $message,
+                'apartment' => $message->apartment
             ];
             return view('admin.messages.show', $data);
         } else {

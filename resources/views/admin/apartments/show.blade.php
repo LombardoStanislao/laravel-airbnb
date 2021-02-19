@@ -14,7 +14,13 @@
 @section('content')
     <div id="show-apartment" class="container" v-cloak>
         <div class="row">
+
             <div class="col-12">
+                @if (session('success_message'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success_message') }}
+                    </div>
+                @endif
                 <h1>{{ $apartment->title }}</h1>
             </div>
         </div>

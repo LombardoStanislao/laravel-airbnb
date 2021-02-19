@@ -43,12 +43,17 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
         $apartment = Apartment::where('id', $id)->first();
 
         if ($apartment) {
-            $active_sponsorship = $apartment->sponsorships->sortBy('created_at')->first();
+            $active_sponsorship = $apartment->sponsorships->sortBy('created_at')->last();
 
             if ($active_sponsorship) {
-                $sponsorship_end = $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration);
-                if ($sponsorship_end <= Carbon::now()) {
+                $last_payment = $active_sponsorship->payments->sortBy('created_at')->last();
+                if (!$last_payment->accepted) {
                     $active_sponsorship = null;
+                } else {
+                    $sponsorship_end = $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration);
+                    if ($sponsorship_end <= Carbon::now()) {
+                        $active_sponsorship = null;
+                    }
                 }
             }
 
@@ -78,7 +83,11 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 
 
 
-    Route::post('/checkout/{apartment_id}', function($id, Request $request) {
+    Route::post('/checkout/{apartment_id}', function($apartment_id, Request $request) {
+        $request->validate([
+            'sponsorship_type_id' => 'required|exists:sponsorship_types,id'
+        ]);
+
         $gateway = new Braintree\Gateway([
             'environment' => 'sandbox',
             'merchantId' => 'n67d8y97gr57bny4',
@@ -92,34 +101,51 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 
         $nonce = $request->payment_method_nonce;
 
+        $apartment = Apartment::where('id', $apartment_id)->first();
+
+        $customer = $apartment->user;
+
         $result = $gateway->transaction()->sale([
             'amount' => $amount,
             'paymentMethodNonce' => $nonce,
             'options' => [
                 'submitForSettlement' => true
+            ],
+            'customer' => [
+                'firstName' => $customer->name,
+                'lastName' => $customer->lastname,
+                'email' => $customer->email
             ]
         ]);
 
+        $new_sponsorship = new Sponsorship();
+
+        $new_sponsorship->apartment_id = $apartment_id;
+
+        $new_sponsorship->sponsorship_type_id = $sponsorship_type->id;
+
+        $new_sponsorship->save();
+
+        $new_payment = new Payment();
+
+        $new_payment->sponsorship_id = $new_sponsorship->id;
+
         if ($result->success) {
-            $apartment_id = $id;
 
-            $new_sponsorship = new Sponsorship();
-
-            $new_sponsorship->apartment_id = $apartment_id;
-
-            $new_sponsorship->sponsorship_type_id = $sponsorship_type->id;
-
-            $new_sponsorship->save();
-
-            $new_payment = new Payment();
-
-            $new_payment->sponsorship_id = $new_sponsorship->id;
+            $new_payment->accepted = 1;
 
             $new_payment->save();
 
             $transaction = $result->transaction;
 
-            return redirect()->route('admin.apartments.show', ['apartment' => $apartment_id]);
+            return redirect()->route('admin.apartments.show', ['apartment' => $apartment_id])->with('success_message', 'La transazione è avvenuta con successo. Id transazione: ' . $transaction->id);
+        } else {
+            $new_payment->accepted = 0;
+
+            $new_payment->save();
+
+            return back()->with('error_message', 'La transazione è fallita');
         }
+
     })->name('checkout');
 });

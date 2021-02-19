@@ -40,6 +40,16 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                @if (session('error_message'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('error_message') }}
+                    </div>
+                @endif
+                @error ('sponsorship_type_id')
+                    <div class="alert alert-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <form id="payment-form" action="{{ route('admin.checkout', ['apartment_id' => $apartment_id]) }}" method="POST">
                     @csrf
                     <h1>Sponsorizza appartamento {{$apartment_id}}</h1>
