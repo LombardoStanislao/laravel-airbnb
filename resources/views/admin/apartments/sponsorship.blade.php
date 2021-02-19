@@ -4,36 +4,6 @@
 
 @section('scripts')
     <script src="https://js.braintreegateway.com/web/dropin/1.26.0/js/dropin.min.js"></script>
-    <script type="text/javascript">
-        function setSponsorshipType(type) {
-            document.getElementById('sponsorship_type_id').value = type;
-        }
-
-        var form = document.getElementById('payment-form');
-        var client_token = '{{ $token }}';
-
-        braintree.dropin.create({
-            authorization: client_token,
-            selector: '#bt-dropin'
-        }, function(createErr, instance) {
-            if (createErr) {
-                console.log('Create Error', createErr);
-            } else {
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault();
-
-                    instance.requestPaymentMethod(function(err, payload) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            document.getElementById('nonce').value = payload.nonce;
-                            form.submit();
-                        }
-                    });
-                });
-            }
-        });
-    </script>
 @endsection
 
 @section('content')
@@ -50,7 +20,7 @@
                         {{ $message }}
                     </div>
                 @enderror
-                <form id="payment-form" action="{{ route('admin.checkout', ['apartment_id' => $apartment_id]) }}" method="POST">
+                <form ref="paymentForm" id="payment-form" action="{{ route('admin.checkout', ['apartment_id' => $apartment_id]) }}" method="POST" @submit.prevent="submitForm()" v-cloak>
                     @csrf
                     <h1>Sponsorizza appartamento {{$apartment_id}}</h1>
                     <strong>Sponsorizzazioni disponibili: </strong>
@@ -79,9 +49,9 @@
                         <div id="bt-dropin"></div>
                     </div>
 
-                    <input id="nonce" type="hidden" name="payment_method_nonce">
-                    <button type="submit" class="button">
-                        <span>Test Transaction</span>
+                    <input id="nonce" v-model="nonce" type="hidden" name="payment_method_nonce">
+                    <button type="submit" class="btn btn-success">
+                        <span>Conferma pagamento</span>
                     </button>
                 </form>
             </div>

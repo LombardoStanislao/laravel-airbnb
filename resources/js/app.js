@@ -13,6 +13,10 @@ if(document.getElementById('show-apartment')) {
     require('./admin/show.js');
 }
 
+if(document.getElementById('payment-form')) {
+    require('./admin/sponsorship.js');
+}
+
 if(document.getElementById('advanced-research-page')) {
     require('./guest/advancedResearch');
 }
