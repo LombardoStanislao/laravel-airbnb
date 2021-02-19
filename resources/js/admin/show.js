@@ -9,29 +9,131 @@ var show = new Vue({
         longitude,
         adress: '',
         views,
+        apartmentViews: [],
         views_labels: [],
         views_data: [],
-        apartmentId
+        data: [],
+        chartselected: '',
+        views_data_month: [],
+        chartType: 'line',
+    },
+    methods: {
+        yearOnChart(){
+            //ANNO
+            this.views_labels=[];
+            this.views_data=[];
+            this.data=[];
+
+            this.apartmentViews.forEach((view, i) => {
+                var year = parseInt(view.date_view.substr(0, 4));
+                if (this.views_labels.includes(year)) {
+                    var yearPosition = this.views_labels.indexOf(year);
+                    this.views_data[yearPosition] = this.views_data[yearPosition]+1;
+                }else{
+                    this.views_labels.push(year);
+                    var yearPosition = this.views_labels.indexOf(year);
+                    this.views_data[yearPosition]= 1;
+                }
+            });
+
+            var currentYear = new Date().getFullYear();
+            if (!this.views_labels.includes(currentYear)) {
+                this.views_labels.push(currentYear);
+                this.views_data.push(0);
+            }
+
+            for (var i = 0; i < this.views_labels.length; i++) {
+                for (var j = 0; j < this.views_labels.length-1; j++) {
+                    if(this.views_labels[j + 1] < this.views_labels[j]) {
+                        let tempYear = this.views_labels[j + 1];
+                        let tempData = this.views_data[j + 1]
+                        this.views_labels[j + 1]=this.views_labels[j];
+                        this.views_data[j + 1]=this.views_data[j];
+                        this.views_labels[j]=tempYear;
+                        this.views_data[j]=tempData;
+                    }
+                }
+            }
+
+            console.log(this.views_labels);
+            console.log(this.views_data);
+            this.data = this.views_data.map(function(view_data){
+                return view_data;
+            });
+            console.log(this.data);
+        },
+
+        monthsOnChart(yearSelected){            
+            this.views_data_month=[0,0,0,0,0,0,0,0,0,0,0,0];
+            this.apartmentViews.forEach((view, i) => {
+                var year = parseInt(view.date_view.substr(0, 4));
+                console.log('year' + year);
+                if (yearSelected==year) {
+                    console.log('uguali');
+                    let monthPosition = parseInt(view.date_view.substr(5, 7));
+                    console.log('position:' + monthPosition);
+                    this.views_data_month[monthPosition-1]++;
+                }
+
+            });
+            console.log('prova');
+            console.log(this.views_data_month);
+
+            var data = this.views_data_month.map(function(view_data_month){
+                return view_data_month;
+            });
+
+            var ctx_2 = document.getElementById('monthchart').getContext('2d');
+            var Mychart = new Chart(ctx_2, {
+                type: this.chartType,
+                data: {
+                    labels: [ "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre","Ottobre", "Novembre", "Dicembre" ],
+                    datasets: [
+                        {
+                        label: 'visualizzazioni',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(155, 255, 55, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(155, 255, 55, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                        },
+                    ],
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        },
+
+        ChangeChartFilter(event) {
+           console.log(event.target.value);
+           if(event.target.value==''){
+               this.yearOnChart();
+           }else{
+               this.monthsOnChart(event.target.value)
+           }
+        }
     },
     mounted() {
-        axios
-        .get('/api/showViews', {
-            params : {
-                id : this.apartmentId
-            }
-        })
-        .then((response) => {
-            console.log(response.data.results);
-
-            // var startingDate = new Date();
-            //
-            // startingDate.setMonth(startingDate.getMonth() - 5);
-            //
-            // startingDate = startingDate.getFullYear() + " " + ("0" + (startingDate.getMonth() + 1)).slice(-2);
-            //
-            // console.log(startingDate);
-        });
-
         tt.services.reverseGeocode({
             key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
             position: {
@@ -48,46 +150,46 @@ var show = new Vue({
 
         //SEZIONE STATISTICHE
 
-        var apartmentViews = JSON.parse(this.views.replace(/&quot;/g,'"'));
-        console.log(apartmentViews);
+        this.apartmentViews = JSON.parse(this.views.replace(/&quot;/g,'"'));
+        console.log(this.apartmentViews);
 
-        var months = [ "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre","Ottobre", "Novembre", "Dicembre" ];
+        this.yearOnChart();
 
-        apartmentViews.forEach((view, i) => {
 
-            var monthNumber = parseInt(view.created_at.substr(5, 2));
-            var viewMonth = months[monthNumber-1];
+        //MESE
+        // var months = [ "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre","Ottobre", "Novembre", "Dicembre" ];
+        //
+        // apartmentViews.forEach((view, i) => {
+        //
+        //     var monthNumber = parseInt(view.created_at.substr(5, 2));
+        //     var viewMonth = months[monthNumber-1];
+        //
+        //     if (this.views_labels.includes(viewMonth)) {
+        //
+        //         var monthPosition = this.views_labels.indexOf(viewMonth);
+        //         this.views_data[monthPosition] = this.views_data[monthPosition]+1;
+        //
+        //     }else{
+        //
+        //         this.views_labels.push(viewMonth);
+        //         var monthPosition = this.views_labels.indexOf(viewMonth);
+        //         this.views_data[monthPosition]= 1;
+        //
+        //     }
+        //
+        // });
 
-            if (this.views_labels.includes(viewMonth)) {
 
-                var monthPosition = this.views_labels.indexOf(viewMonth);
-                this.views_data[monthPosition] = this.views_data[monthPosition]+1;
-
-            }else{
-
-                this.views_labels.push(viewMonth);
-                var monthPosition = this.views_labels.indexOf(viewMonth);
-                this.views_data[monthPosition]= 1;
-
-            }
-
-        });
-
-        console.log(this.views_labels);
-        console.log(this.views_data);
-        var data = this.views_data.map(function(view_data){
-            return view_data;
-        });
-        console.log(data);
 
         var ctx = document.getElementById('chart').getContext('2d');
         var Mychart = new Chart(ctx, {
-            type: 'bar',
+            type: this.chartType,
             data: {
-                labels: ['Data pubblicazione annuncio', '','','', 'Oggi'],
-                datasets: [{
+                labels: this.views_labels,
+                datasets: [
+                    {
                     label: 'visualizzazioni',
-                    data: [0, 15, 3, 5, 2, 3],//valori
+                    data: this.data,
                     backgroundColor: [
                         'rgba(155, 255, 55, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -129,8 +231,7 @@ var show = new Vue({
                     // }
                 ],
             },
-            options: {                
-                onClick: console.log('cliccato'),
+            options: {
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -140,5 +241,6 @@ var show = new Vue({
                 }
             }
         });
+
     }
 });

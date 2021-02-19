@@ -7,7 +7,6 @@
         var latitude = "{{ $apartment->latitude }}";
         var longitude = "{{ $apartment->longitude }}";
         var views = "{{ $views }}";
-        var apartmentId = "{{ $apartment->id }}";
     </script>
 @endsection
 
@@ -75,23 +74,47 @@
                         @endif
                     </li>
                 </ul>
-                @if ($active_sponsorship)
-                    <h5>Sponsorizzazione attiva:</h5>
-                    <ul>
-                        <li>
-                            <strong>Tipologia:</strong>
-                            {{ $active_sponsorship->sponsorshipType->type_name }}
-                        </li>
-                        <li>
-                            <strong>Scadenza:</strong>
-                            {{$active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration)}}
-                        </li>
-                    </ul>
-                @else
-                    <a href="{{ route('admin.apartments.sponsorship', ['id' => $apartment->id]) }}" class="btn btn-success">Sponsorizza il tuo appartamento</a>
+                @if (!$has_active_sponsorship)
+                    <strong>Sponsorizzazioni disponibili: </strong>
+                    <div class="d-flex flex-wrap">
+                        @foreach ($sponsorship_types as $sponsorship_type)
+                            <a href="#" class="card m-3" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $sponsorship_type->type_name }}</h5>
+                                    <ul>
+                                        <li>
+                                            <strong>Durata:</strong>
+                                            {{ $sponsorship_type->duration }} ore
+                                        </li>
+                                        <li>
+                                            <strong>Prezzo:</strong>
+                                            € {{ $sponsorship_type->price }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
                 @endif
             </div>
-            <canvas id="chart" width="400" height="200"></canvas>
+            {{-- <div v-if="chartselected==''" >
+                <canvas id="chart" width="800" height="400"></canvas>
+            </div>
+            <div v-else>
+                <canvas id="monthchart" width="800" height="400"></canvas>
+            </div> --}}
+            <canvas id="chart" width="800" height="400" :class="chartselected=='' ? 'd-block' : 'd-none'"></canvas>
+            <canvas id="monthchart" width="800" height="400" :class="chartselected!='' ? 'd-block' : 'd-none'"></canvas>
+            <div>
+                <select name="" @change="ChangeChartFilter($event)" v-model="chartselected">
+                    <option value="">Da sempre</option>
+                    <option v-for="view_labels in views_labels" :value="view_labels">@{{view_labels}}</option>
+                </select>
+                {{-- <select class="" name="" @change="ChangeChartFilter()" v-model="chartType">
+                    <option value="line">Linea</option>
+                    <option value="bar">Barra</option>
+                </select> --}}
+            </div>
         </div>
     </div>
 @endsection
