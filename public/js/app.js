@@ -87638,6 +87638,51 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
+/***/ "./resources/js/admin/sponsorship.js":
+/*!*******************************************!*\
+  !*** ./resources/js/admin/sponsorship.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#payment-form',
+  data: {
+    nonce: '',
+    dropin: null
+  },
+  mounted: function mounted() {
+    var self = this;
+    axios.get('/api/clientToken').then(function (response) {
+      var clientToken = response.data.results;
+      braintree.dropin.create({
+        authorization: clientToken,
+        selector: '#bt-dropin'
+      }, function (createErr, instance) {
+        self.dropin = instance;
+      });
+    });
+  },
+  methods: {
+    submitForm: function submitForm() {
+      var self = this;
+      self.dropin.requestPaymentMethod(function (err, payload) {
+        self.nonce = payload.nonce;
+        self.$nextTick(function () {
+          self.$refs.paymentForm.submit();
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -87657,6 +87702,10 @@ if (document.getElementById('edit-apartment')) {
 
 if (document.getElementById('show-apartment')) {
   __webpack_require__(/*! ./admin/show.js */ "./resources/js/admin/show.js");
+}
+
+if (document.getElementById('payment-form')) {
+  __webpack_require__(/*! ./admin/sponsorship.js */ "./resources/js/admin/sponsorship.js");
 }
 
 if (document.getElementById('advanced-research-page')) {
