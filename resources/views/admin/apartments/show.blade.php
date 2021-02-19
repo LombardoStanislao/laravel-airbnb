@@ -6,8 +6,10 @@
     <script type="text/javascript" defer>
         var latitude = "{{ $apartment->latitude }}";
         var longitude = "{{ $apartment->longitude }}";
+        var views = "{{ $views }}";
     </script>
 @endsection
+
 
 @section('content')
     <div id="show-apartment" class="container" v-cloak>
