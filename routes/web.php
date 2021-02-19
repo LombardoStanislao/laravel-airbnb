@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\SponsorshipType;
 use App\Sponsorship;
+use App\Apartment;
 use App\Payment;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,29 +32,51 @@ Auth::routes();
 
 Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function() {
     Route::get('/', 'HomeController@index')->name('index');
-    Route::get('/apartments/payments', 'ApartmentController@payments')->name('apartments.payments');
+    Route::resource('/apartments', 'ApartmentController');
 
     Route::get('/messages', 'MessageController@index')->name('messages.index');
     Route::get('/messages/{id}', 'MessageController@show')->name('messages.show');
 
+
+    // *********** Braintree ***********
     Route::get('/apartments/{id}/sponsorship', function ($id) {
-        $gateway = new Braintree\Gateway([
-            'environment' => 'sandbox',
-            'merchantId' => 'n67d8y97gr57bny4',
-            'publicKey' => 'dbwbwtn4jctgmjx4',
-            'privateKey' => '6b780d616cd41773c6d2c21692b694a0'
-        ]);
+        $apartment = Apartment::where('id', $id)->first();
 
-        $token = $gateway->ClientToken()->generate();
+        if ($apartment) {
+            $active_sponsorship = $apartment->sponsorships->sortBy('created_at')->first();
 
-        $data = [
-            'sponsorship_types' => SponsorshipType::all(),
-            'apartment_id' => $id,
-            'token' => $token
-        ];
+            if ($active_sponsorship) {
+                $sponsorship_end = $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration);
+                if ($sponsorship_end <= Carbon::now()) {
+                    $active_sponsorship = null;
+                }
+            }
 
-        return view('admin.apartments.sponsorship', $data);
+            if (!$active_sponsorship) {
+                $gateway = new Braintree\Gateway([
+                    'environment' => 'sandbox',
+                    'merchantId' => 'n67d8y97gr57bny4',
+                    'publicKey' => 'dbwbwtn4jctgmjx4',
+                    'privateKey' => '6b780d616cd41773c6d2c21692b694a0'
+                ]);
+
+                $token = $gateway->ClientToken()->generate();
+
+                $data = [
+                    'sponsorship_types' => SponsorshipType::all(),
+                    'apartment_id' => $id,
+                    'token' => $token
+                ];
+
+                return view('admin.apartments.sponsorship', $data);
+            }
+        }
+
+        abort(404);
+
     })->name('apartments.sponsorship');
+
+
 
     Route::post('/checkout/{apartment_id}', function($id, Request $request) {
         $gateway = new Braintree\Gateway([
@@ -61,7 +86,10 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
             'privateKey' => '6b780d616cd41773c6d2c21692b694a0'
         ]);
 
-        $amount = $request->amount;
+        $sponsorship_type = SponsorshipType::where('id', $request->sponsorship_type_id)->first();
+
+        $amount = $sponsorship_type->price;
+
         $nonce = $request->payment_method_nonce;
 
         $result = $gateway->transaction()->sale([
@@ -74,8 +102,6 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 
         if ($result->success) {
             $apartment_id = $id;
-
-            $sponsorship_type = SponsorshipType::where('price', $amount)->first();
 
             $new_sponsorship = new Sponsorship();
 
@@ -93,9 +119,7 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
 
             $transaction = $result->transaction;
 
-            return redirect()->route('admin.apartments.payments')->with('success_message', 'Transazione avvenuta con successo. Id transazione: ' . $transaction->id);
+            return redirect()->route('admin.apartments.show', ['apartment' => $apartment_id]);
         }
     })->name('checkout');
-
-    Route::resource('/apartments', 'ApartmentController');
 });

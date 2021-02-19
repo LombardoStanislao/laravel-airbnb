@@ -6,6 +6,7 @@
     <script type="text/javascript" defer>
         var latitude = "{{ $apartment->latitude }}";
         var longitude = "{{ $apartment->longitude }}";
+        var apartmentId = "{{ $apartment->id }}";
     </script>
 @endsection
 
@@ -72,7 +73,19 @@
                         @endif
                     </li>
                 </ul>
-                @if (!$has_active_sponsorship)
+                @if ($active_sponsorship)
+                    <h5>Sponsorizzazione attiva:</h5>
+                    <ul>
+                        <li>
+                            <strong>Tipologia:</strong>
+                            {{ $active_sponsorship->sponsorshipType->type_name }}
+                        </li>
+                        <li>
+                            <strong>Scadenza:</strong>
+                            {{$active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration)}}
+                        </li>
+                    </ul>
+                @else
                     <a href="{{ route('admin.apartments.sponsorship', ['id' => $apartment->id]) }}" class="btn btn-success">Sponsorizza il tuo appartamento</a>
                 @endif
             </div>

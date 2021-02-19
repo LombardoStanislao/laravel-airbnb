@@ -5,8 +5,8 @@
 @section('scripts')
     <script src="https://js.braintreegateway.com/web/dropin/1.26.0/js/dropin.min.js"></script>
     <script type="text/javascript">
-        function setAmount(price) {
-            document.getElementById('amount').value = price;
+        function setSponsorshipType(type) {
+            document.getElementById('sponsorship_type_id').value = type;
         }
 
         var form = document.getElementById('payment-form');
@@ -40,41 +40,34 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Sponsorizza appartamento {{$apartment_id}}</h1>
-                <strong>Sponsorizzazioni disponibili: </strong>
-                <div class="d-flex flex-wrap">
-                    @foreach ($sponsorship_types as $sponsorship_type)
-                        <div class="card m-3" style="width: 18rem;">
-                            <div class="card-body">
-                                <label>{{ $sponsorship_type->type_name }}</label>
-                                <input onchange="setAmount({{ $sponsorship_type->price }})" type="radio" name="sponsorship" value="{{$sponsorship_type->id}}">
-                                <ul>
-                                    <li>
-                                        <strong>Durata:</strong>
-                                        {{ $sponsorship_type->duration }} ore
-                                    </li>
-                                    <li>
-                                        <strong>Prezzo:</strong>
-                                        € {{ $sponsorship_type->price }}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
                 <form id="payment-form" action="{{ route('admin.checkout', ['apartment_id' => $apartment_id]) }}" method="POST">
                     @csrf
-                    <section>
-                        <input id="amount" type="hidden" name="amount" placeholder="Amount">
+                    <h1>Sponsorizza appartamento {{$apartment_id}}</h1>
+                    <strong>Sponsorizzazioni disponibili: </strong>
+                    <div class="d-flex flex-wrap">
+                        @foreach ($sponsorship_types as $sponsorship_type)
+                            <div class="card m-3" style="width: 18rem;">
+                                <div class="card-body">
+                                    <label>{{ $sponsorship_type->type_name }}</label>
+                                    <input type="radio" name="sponsorship_type_id" value="{{$sponsorship_type->id}}">
+                                    <ul>
+                                        <li>
+                                            <strong>Durata:</strong>
+                                            {{ $sponsorship_type->duration }} ore
+                                        </li>
+                                        <li>
+                                            <strong>Prezzo:</strong>
+                                            € {{ $sponsorship_type->price }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
 
-                        <div class="bt-drop-in-wrapper">
-                            <div id="bt-dropin"></div>
-                        </div>
-                    </section>
+                    <div class="bt-drop-in-wrapper">
+                        <div id="bt-dropin"></div>
+                    </div>
 
                     <input id="nonce" type="hidden" name="payment_method_nonce">
                     <button type="submit" class="button">
