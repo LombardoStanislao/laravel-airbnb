@@ -51,7 +51,7 @@ class HomeController extends Controller
 
         $data = [
             'sponsored_apartments' => $sponsored_apartments,
-            '$non_sponsored_apartments' => $non_sponsored_apartments
+            'non_sponsored_apartments' => $non_sponsored_apartments
         ];
 
         return view('guest.home', $data);
