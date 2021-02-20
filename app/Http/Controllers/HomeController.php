@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Http;
 
 use App\Apartment;
 use App\Comfort;
+use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -24,8 +26,35 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $apartments = Apartment::all();
 
-        return view('guest.home');
+        $sponsored_apartments = $apartments->filter(function($apartment) {
+            $is_sponsored = false;
+            $last_sponsorship = $apartment->sponsorships->sortBy('created_at')->last();
+
+            if ($last_sponsorship) {
+                $last_payment = $last_sponsorship->payments->sortBy('created_at')->last();
+
+                if ($last_payment->accepted) {
+                    $sponsorship_end = $last_sponsorship->created_at->addHours($last_sponsorship->sponsorshipType->duration);
+
+                    $is_sponsored = $sponsorship_end > Carbon::now();
+                }
+            }
+
+        return $is_sponsored;
+        });
+
+        $non_sponsored_apartments = $apartments->filter(function($apartment) use ($sponsored_apartments) {
+            return !$sponsored_apartments->contains($apartment);
+        });
+
+        $data = [
+            'sponsored_apartments' => $sponsored_apartments,
+            '$non_sponsored_apartments' => $non_sponsored_apartments
+        ];
+
+        return view('guest.home', $data);
     }
 
     public function search(Request $request) {
