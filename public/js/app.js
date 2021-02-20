@@ -87836,6 +87836,10 @@ if (document.getElementById('apartment-page')) {
   __webpack_require__(/*! ./guest/addView */ "./resources/js/guest/addView.js");
 }
 
+if (document.getElementById('home')) {
+  __webpack_require__(/*! ./guest/home */ "./resources/js/guest/home.js");
+}
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -88016,6 +88020,28 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       lat: locationData.locationCoordinates.substring(0, commaIndex),
       lon: locationData.locationCoordinates.substring(commaIndex + 1)
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/guest/home.js":
+/*!************************************!*\
+  !*** ./resources/js/guest/home.js ***!
+  \************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+var home = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#home',
+  data: {
+    showMore: false,
+    noSponsoredApartments: noSponsoredApartments
   }
 });
 
