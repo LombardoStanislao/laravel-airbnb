@@ -71,6 +71,7 @@
                                         <img :src="'storage/' + apartment['main-image'] " alt="" class="w-100 h-100">
                                     </div>
                                     <div class="float-left ml-2 text-dark">
+                                        <p class="mt-0 mb-0">@{{ apartment.id }}</p>
                                         <p class="mt-0 mb-0">@{{ apartment.title }}</p>
                                         <p class="mt-0 mb-0">@{{ apartment.price_per_night }}€</p>
                                         <p class="mt-0 mb-0">Indirizzo: @{{ apartment.address}}</p>
@@ -89,6 +90,8 @@
                                         <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" alt="" class="w-100 h-100">
                                     </div>
                                     <div class="float-left ml-2 text-dark">
+                                        <p class="mt-0 mb-0">Id: {{ $apartment->id }}</p>
+                                        <p class="mt-0 mb-0">Sponsorizzazione attiva: {{ isSponsored($apartment) ? 'Sì' : 'No' }}</p>
                                         <p class="mt-0 mb-0">{{ $apartment->title }}</p>
                                         <p class="mt-0 mb-0">{{ $apartment->price_per_night }}€</p>
                                         <p class="mt-0 mb-0">Indirizzo: {{ $apartment->address }}</p>
