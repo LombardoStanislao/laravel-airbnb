@@ -20,6 +20,8 @@ Route::post('/addView', 'Api\ApartmentController@addView');
 
 Route::get('/showViews', 'Api\ApartmentController@showViews');
 
+Route::post('/viewedMessage', 'Api\MessageController@viewedMessage');
+
 Route::get('/clientToken', function() {
     $gateway = new Gateway([
         'environment' => 'sandbox',

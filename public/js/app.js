@@ -87698,7 +87698,14 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
             backgroundColor: 'rgba(155, 255, 55, 0.2)',
             borderColor: 'rgba(155, 255, 55, 1)',
             borderWidth: 1
-          }]
+          } // {
+          //     label: 'messaggi',
+          //     data: [0, 15, 3, 5, 2, 3],
+          //     backgroundColor:'rgba(155, 99, 255, 0.2)',
+          //     borderColor:'rgba(155, 99, 255, 1)',
+          //     borderWidth: 1
+          // },
+          ]
         },
         options: {
           scales: {
@@ -87799,6 +87806,27 @@ var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
+/***/ "./resources/js/admin/viewedMessage.js":
+/*!*********************************************!*\
+  !*** ./resources/js/admin/viewedMessage.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var messageId = document.getElementById('message-page').dataset.messageId;
+console.log(messageId);
+axios({
+  method: 'post',
+  url: 'http://localhost:8000/api/viewedMessage',
+  data: {
+    messageId: messageId
+  }
+}).then(function (response) {
+  console.log(response.data);
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -87838,6 +87866,10 @@ if (document.getElementById('apartment-page')) {
 
 if (document.getElementById('home')) {
   __webpack_require__(/*! ./guest/home */ "./resources/js/guest/home.js");
+}
+
+if (document.getElementById('message-page')) {
+  __webpack_require__(/*! ./admin/viewedMessage */ "./resources/js/admin/viewedMessage.js");
 }
 
 /***/ }),
@@ -88140,8 +88172,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

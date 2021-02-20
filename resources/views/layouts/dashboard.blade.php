@@ -61,6 +61,9 @@
                         <li class="nav-item">
                             <h5>
                                 <a class="nav-link" href="{{ route('admin.messages.index') }}">
+                                    @if (App\Message::where('is_new', 1)->get()->count())
+                                        <span class="badge badge-success">NEW</span> 
+                                    @endif
                                     I tuoi messaggi
                                 </a>
                             </h5>
