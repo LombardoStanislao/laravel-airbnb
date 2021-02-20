@@ -32,3 +32,7 @@ if(document.getElementById('apartment-page')) {
 if(document.getElementById('home')) {
     require('./guest/home')
 }
+
+if(document.getElementById('message-page')) {
+    require('./admin/viewedMessage')
+}

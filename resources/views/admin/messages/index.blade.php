@@ -26,6 +26,9 @@
                             @foreach ($messages as $message)
                                 <tr>
                                     <td>
+                                        @if ($message->is_new)
+                                            <span class="badge badge-success">new</span>
+                                        @endif
                                         {{ $message->mail_sender }}
                                     </td>
                                     <td class="overflow-hidden">
