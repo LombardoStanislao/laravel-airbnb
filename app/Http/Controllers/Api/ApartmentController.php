@@ -94,6 +94,14 @@ class ApartmentController extends Controller
         //select the apartments where the latitude and longitude are in the arrays
         $filteredApartments = $apartments->whereIn('latitude', $lats)->whereIn('longitude', $lons);
 
+        // sort the apartments so that those having an active sponsorship come before
+        $filteredApartments = $filteredApartments->sort(function($a, $b) {
+            return isSponsored($b) - isSponsored($a);
+        });
+
+        // this is necessary in order to preserve the order when the collection is converted into a json
+        $filteredApartments = array_values($filteredApartments->toArray());
+
         return response()->json([
             'success' => true,
             'results' => $filteredApartments

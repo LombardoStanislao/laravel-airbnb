@@ -29,24 +29,11 @@ class HomeController extends Controller
         $apartments = Apartment::all();
 
         $sponsored_apartments = $apartments->filter(function($apartment) {
-            $is_sponsored = false;
-            $last_sponsorship = $apartment->sponsorships->sortBy('created_at')->last();
-
-            if ($last_sponsorship) {
-                $last_payment = $last_sponsorship->payments->sortBy('created_at')->last();
-
-                if ($last_payment->accepted) {
-                    $sponsorship_end = $last_sponsorship->created_at->addHours($last_sponsorship->sponsorshipType->duration);
-
-                    $is_sponsored = $sponsorship_end > Carbon::now();
-                }
-            }
-
-        return $is_sponsored;
+            return isSponsored($apartment);
         });
 
-        $non_sponsored_apartments = $apartments->filter(function($apartment) use ($sponsored_apartments) {
-            return !$sponsored_apartments->contains($apartment);
+        $non_sponsored_apartments = $apartments->filter(function($apartment) {
+            return !isSponsored($apartment);
         });
 
         $data = [
@@ -122,6 +109,10 @@ class HomeController extends Controller
         //select the apartments where the latitude and longitude are in the arrays
         $filteredApartments = $apartments->whereIn('latitude', $lats)->whereIn('longitude', $lons);
 
+        // sort the apartments so that those having an active sponsorship come before
+        $filteredApartments = $filteredApartments->sort(function($a, $b) {
+            return isSponsored($b) - isSponsored($a);
+        });
 
         $data = [
             'apartments' => $filteredApartments,
