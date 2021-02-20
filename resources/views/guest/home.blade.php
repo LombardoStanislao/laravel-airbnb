@@ -38,6 +38,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Id: {{$apartment->id}}</h5>
                             <p class="card-text">{{ $apartment->title }}</p>
+                            <p class="card-text">Sponsorizzazione attiva: {{ isSponsored($apartment) ? 'Sì' : 'No' }}</p>
                         </div>
                     </a>
                 </div>
@@ -60,6 +61,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Id: {{$apartment->id}}</h5>
                                     <p class="card-text">{{ $apartment->title }}</p>
+                                    <p class="card-text">Sponsorizzazione attiva: {{ isSponsored($apartment) ? 'Sì' : 'No' }}</p>
                                 </div>
                             </a>
                         </div>

@@ -17,27 +17,15 @@ class PaymentController extends Controller
     public function pay($id) {
         $apartment = Apartment::where('id', $id)->first();
 
-        if ($apartment && $apartment->user_id == Auth::user()->id) {
-            $active_sponsorship = $apartment->sponsorships->sortBy('created_at')->last();
-            if ($active_sponsorship) {
-                $last_payment = $active_sponsorship->payments->sortBy('created_at')->last();
-                if (!$last_payment->accepted) {
-                    $active_sponsorship = null;
-                } else {
-                    $sponsorship_end = $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration);
+        if ($apartment && $apartment->user_id == Auth::user()->id && !isSponsored($apartment)) {
+            $data = [
+                'sponsorship_types' => SponsorshipType::all(),
+                'apartment_id' => $id
+            ];
 
-                    $active_sponsorship = $sponsorship_end > Carbon::now();
-                }
-            }
-            if (!$active_sponsorship) {
-                $data = [
-                    'sponsorship_types' => SponsorshipType::all(),
-                    'apartment_id' => $id
-                ];
-
-                return view('admin.apartments.sponsorship', $data);
-            }
+            return view('admin.apartments.sponsorship', $data);
         }
+
         abort(404);
     }
 
