@@ -96,23 +96,21 @@
                     <a href="{{ route('admin.apartments.sponsorship', ['id' => $apartment->id]) }}" class="btn btn-success">Sponsorizza il tuo appartamento</a>
                 @endif
             </div>
-            {{-- <div v-if="chartselected==''" >
-                <canvas id="chart" width="800" height="400"></canvas>
-            </div>
-            <div v-else>
-                <canvas id="monthchart" width="800" height="400"></canvas>
-            </div> --}}
+
             <canvas id="chart" width="800" height="400" :class="chartselected=='' ? 'd-block' : 'd-none'"></canvas>
             <canvas id="monthchart" width="800" height="400" :class="chartselected!='' ? 'd-block' : 'd-none'"></canvas>
             <div>
+                <label>Periodo:</label>
                 <select name="" @change="ChangeChartFilter($event)" v-model="chartselected">
                     <option value="">Da sempre</option>
                     <option v-for="view_labels in views_labels" :value="view_labels">@{{view_labels}}</option>
                 </select>
-                {{-- <select class="" name="" @change="ChangeChartFilter()" v-model="chartType">
+                <label>Tipo:</label>
+                <select class="" name="" @change="changeChartType()"           v-model="chartType">
                     <option value="line">Linea</option>
                     <option value="bar">Barra</option>
-                </select> --}}
+                    <option value="radar">Radar</option>
+                </select>
             </div>
         </div>
     </div>
