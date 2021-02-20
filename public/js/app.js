@@ -87592,7 +87592,6 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     yearOnChart: function yearOnChart() {
       var _this = this;
 
-      //ANNO
       this.views_labels = [];
       this.views_data = [];
       this.data = [];
@@ -87631,12 +87630,10 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         }
       }
 
-      console.log(this.views_labels);
-      console.log(this.views_data);
       this.data = this.views_data.map(function (view_data) {
         return view_data;
       });
-      console.log(this.data);
+      this.yearChart();
     },
     monthsOnChart: function monthsOnChart(yearSelected) {
       var _this2 = this;
@@ -87644,30 +87641,62 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       this.views_data_month = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.apartmentViews.forEach(function (view, i) {
         var year = parseInt(view.date_view.substr(0, 4));
-        console.log('year' + year);
 
         if (yearSelected == year) {
-          console.log('uguali');
           var monthPosition = parseInt(view.date_view.substr(5, 7));
-          console.log('position:' + monthPosition);
           _this2.views_data_month[monthPosition - 1]++;
         }
       });
-      console.log('prova');
-      console.log(this.views_data_month);
       var data = this.views_data_month.map(function (view_data_month) {
         return view_data_month;
       });
+      this.monthChart(data);
+    },
+    yearChart: function yearChart() {
+      var ctx = document.getElementById('chart').getContext('2d');
+      if (window.bar != undefined) window.bar.destroy();
+      window.bar = new chart_js__WEBPACK_IMPORTED_MODULE_1___default.a(ctx, {
+        type: this.chartType,
+        data: {
+          labels: this.views_labels,
+          datasets: [{
+            label: 'visualizzazioni',
+            data: this.data,
+            backgroundColor: 'rgba(155, 255, 55, 0.2)',
+            borderColor: 'rgba(155, 255, 55, 1)',
+            borderWidth: 1
+          } // {
+          //     label: 'messaggi',
+          //     data: [0, 15, 3, 5, 2, 3],
+          //     backgroundColor:'rgba(155, 99, 255, 0.2)',
+          //     borderColor:'rgba(155, 99, 255, 1)',
+          //     borderWidth: 1
+          // }
+          ]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    },
+    monthChart: function monthChart(data) {
       var ctx_2 = document.getElementById('monthchart').getContext('2d');
-      var Mychart = new chart_js__WEBPACK_IMPORTED_MODULE_1___default.a(ctx_2, {
+      if (window.bar != undefined) window.bar.destroy();
+      window.bar = new chart_js__WEBPACK_IMPORTED_MODULE_1___default.a(ctx_2, {
         type: this.chartType,
         data: {
           labels: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
           datasets: [{
             label: 'visualizzazioni',
             data: data,
-            backgroundColor: ['rgba(155, 255, 55, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-            borderColor: ['rgba(155, 255, 55, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+            backgroundColor: 'rgba(155, 255, 55, 0.2)',
+            borderColor: 'rgba(155, 255, 55, 1)',
             borderWidth: 1
           }]
         },
@@ -87690,6 +87719,13 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       } else {
         this.monthsOnChart(event.target.value);
       }
+    },
+    changeChartType: function changeChartType() {
+      if (this.chartselected == '') {
+        this.yearChart();
+      } else {
+        this.monthsOnChart(this.chartselected);
+      }
     }
   },
   mounted: function mounted() {
@@ -87710,73 +87746,7 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
     this.apartmentViews = JSON.parse(this.views.replace(/&quot;/g, '"'));
     console.log(this.apartmentViews);
-    this.yearOnChart(); //MESE
-    // var months = [ "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre","Ottobre", "Novembre", "Dicembre" ];
-    //
-    // apartmentViews.forEach((view, i) => {
-    //
-    //     var monthNumber = parseInt(view.created_at.substr(5, 2));
-    //     var viewMonth = months[monthNumber-1];
-    //
-    //     if (this.views_labels.includes(viewMonth)) {
-    //
-    //         var monthPosition = this.views_labels.indexOf(viewMonth);
-    //         this.views_data[monthPosition] = this.views_data[monthPosition]+1;
-    //
-    //     }else{
-    //
-    //         this.views_labels.push(viewMonth);
-    //         var monthPosition = this.views_labels.indexOf(viewMonth);
-    //         this.views_data[monthPosition]= 1;
-    //
-    //     }
-    //
-    // });
-
-    var ctx = document.getElementById('chart').getContext('2d');
-    var Mychart = new chart_js__WEBPACK_IMPORTED_MODULE_1___default.a(ctx, {
-      type: this.chartType,
-      data: {
-        labels: this.views_labels,
-        datasets: [{
-          label: 'visualizzazioni',
-          data: this.data,
-          backgroundColor: ['rgba(155, 255, 55, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-          borderColor: ['rgba(155, 255, 55, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
-          borderWidth: 1
-        } // {
-        //     label: 'messaggi',
-        //     data: [0, 15, 3, 5, 2, 3],
-        //     backgroundColor: [
-        //         'rgba(155, 99, 255, 0.2)',
-        //         'rgba(54, 162, 235, 0.2)',
-        //         'rgba(255, 206, 86, 0.2)',
-        //         'rgba(75, 192, 192, 0.2)',
-        //         'rgba(153, 102, 255, 0.2)',
-        //         'rgba(255, 159, 64, 0.2)'
-        //     ],
-        //     borderColor: [
-        //         'rgba(155, 99, 255, 1)',
-        //         'rgba(54, 162, 235, 1)',
-        //         'rgba(255, 206, 86, 1)',
-        //         'rgba(75, 192, 192, 1)',
-        //         'rgba(153, 102, 255, 1)',
-        //         'rgba(255, 159, 64, 1)'
-        //     ],
-        //     borderWidth: 1
-        // }
-        ]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
+    this.yearOnChart();
   }
 });
 
