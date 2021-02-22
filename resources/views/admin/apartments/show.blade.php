@@ -96,6 +96,9 @@
                 @else
                     <a href="{{ route('admin.apartments.sponsorship', ['id' => $apartment->id]) }}" class="btn btn-success">Sponsorizza il tuo appartamento</a>
                 @endif
+                <a class="btn btn-success" href="{{ route('admin.messages.index', ['apartment_id' => $apartment->id]) }}">
+                    Messaggi
+                </a>
             </div>
 
             <canvas id="chart" width="800" height="400" :class="chartselected=='' ? 'd-block' : 'd-none'"></canvas>

@@ -4,40 +4,34 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6">
+        <div class="row mt-4 mb-4">
+            <div class="col-12 mb-2">
                 <h1>
-                    {{ $messages->count() ? 'I tuoi messaggi' : 'Nessun messaggio presente' }}
+                    {{ $messages->count() ? 'Messaggi appartamento ' . $apartment_id : 'Nessun messaggio relativo all\'appartamento ' . $apartment_id }}
                 </h1>
             </div>
         </div>
         @if ($messages->count())
             <div class="row">
-                <div class="col-12">
-                    <table class="table">
+                <div class="col-12" style="overflow-x:auto;">
+                    <table id="messages-table" class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Mittente</th>
-                                <th scope="col">Preview messaggio</th>
-                                <th scope="col">Vedi messaggio</th>
+                                <th scope="col">Messaggio</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($messages as $message)
-                                <tr>
+                                <tr >
                                     <td>
-                                        @if ($message->is_new)
+                                        {{-- @if ($message->is_new)
                                             <span class="badge badge-success">new</span>
-                                        @endif
+                                        @endif --}}
                                         {{ $message->mail_sender }}
                                     </td>
-                                    <td class="overflow-hidden">
-                                        {{ $message->body_message }}
-                                    </td>
                                     <td>
-                                        <a href="{{ route('admin.messages.show', ['id' => $message->id]) }}" class="btn btn-info">
-                                            Dettagli
-                                        </a>
+                                        {{ $message->body_message }}
                                     </td>
                                 </tr>
                             @endforeach

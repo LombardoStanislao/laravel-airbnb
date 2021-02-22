@@ -33,7 +33,7 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
     Route::get('/', 'HomeController@index')->name('index');
     Route::resource('/apartments', 'ApartmentController');
 
-    Route::get('/messages', 'MessageController@index')->name('messages.index');
+    Route::get('/messages/{apartment_id}', 'MessageController@index')->name('messages.index');
     Route::get('/messages/{id}', 'MessageController@show')->name('messages.show');
 
 

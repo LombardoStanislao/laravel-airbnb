@@ -17104,3 +17104,11 @@ readers do not read off random characters that represent icons */
   min-width: 0;
 }
 
+.sidebar .active {
+  color: #11079d;
+}
+
+#messages-table {
+  min-width: 520px;
+}
+

@@ -4,13 +4,13 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6">
+        <div class="row mt-4 mb-4">
+            <div class="col-12 col-sm-6 mb-2">
                 <h1>
                     {{ count($apartments) ? 'I tuoi appartamenti' : 'Nessun appartamento presente' }}
                 </h1>
             </div>
-            <div class="col-12 col-md-6 text-right">
+            <div class="col-12 col-sm-6 text-sm-right">
                 <a href="{{ route('admin.apartments.create') }}" class="btn btn-primary">
                     Aggiungi appartamento
                 </a>
@@ -36,8 +36,8 @@
                                     </td>
                                     <td>
                                         <div class="dropdown d-lg-none mw-0">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Azioni
+                                            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Azioni
                                             </button>
                                             <div class="dropdown-menu text-center" aria-labelledby="dropdownMenu2">
                                                 <a href="{{ route('admin.apartments.show', ['apartment' => $apartment->id]) }}" class="btn btn-info mb-1">
@@ -57,16 +57,16 @@
                                         </div>
                                         <div class="d-none d-lg-block">
                                             <a href="{{ route('admin.apartments.show', ['apartment' => $apartment->id]) }}" class="btn btn-info">
-                                                <i class="fas fa-eye"></i>
+                                                Dettagli
                                             </a>
                                             <a href="{{ route('admin.apartments.edit', ['apartment' => $apartment->id]) }}" class="btn btn-warning">
-                                                <i class="fas fa-edit"></i>
+                                                Modifica
                                             </a>
                                             <form class="d-inline-block" method="post" action="{{ route('admin.apartments.destroy', ['apartment'=> $apartment->id])}}" >
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger" type="submit" name="button">
-                                                    <i class="fas fa-trash-alt"></i>
+                                                    Elimina
                                                 </button>
                                             </form>
                                         </div>

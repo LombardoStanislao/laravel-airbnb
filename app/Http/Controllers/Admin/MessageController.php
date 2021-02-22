@@ -11,17 +11,21 @@ use App\Apartment;
 
 class MessageController extends Controller
 {
-    public function index() {
-        $user = Auth::user();
-        $apartmentIds = $user->apartments()->pluck('id');
+    public function index($apartment_id) {
 
-        $userMessages = Message::whereIn('apartment_id', $apartmentIds)->get();
+        $apartment = Apartment::where('id', $apartment_id)->first();
 
-        $data = [
-            'messages' => $userMessages
-        ];
+        if ($apartment && $apartment->user_id == Auth::user()->id) {
+            $messages = Message::where('apartment_id', $apartment->id)->get();
 
-        return view('admin.messages.index', $data);
+            $data = [
+                'messages' => $messages,
+                'apartment_id' => $apartment->id
+            ];
+            return view('admin.messages.index', $data);
+        }
+
+        abort(404);
     }
 
     public function show($id) {
