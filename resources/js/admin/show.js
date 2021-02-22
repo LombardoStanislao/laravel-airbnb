@@ -9,6 +9,7 @@ var show = new Vue({
         longitude,
         adress: '',
         views,
+        messages,
         apartmentViews: [],
         views_labels: [],
         views_data: [],
@@ -16,6 +17,9 @@ var show = new Vue({
         chartselected: '',
         views_data_month: [],
         chartType: 'line',
+        apartmentMessages: [],
+        messages_labels: [],
+        messages_data: [],
     },
     methods: {
 
@@ -99,13 +103,13 @@ var show = new Vue({
                         borderColor:'rgba(155, 255, 55, 1)',
                         borderWidth: 1
                         },
-                        // {
-                        //     label: 'messaggi',
-                        //     data: [0, 15, 3, 5, 2, 3],
-                        //     backgroundColor:'rgba(155, 99, 255, 0.2)',
-                        //     borderColor:'rgba(155, 99, 255, 1)',
-                        //     borderWidth: 1
-                        // }
+                        {
+                            label: 'messaggi',
+                            data: [0, 15, 3, 5, 2, 3],
+                            backgroundColor:'rgba(155, 99, 255, 0.2)',
+                            borderColor:'rgba(155, 99, 255, 1)',
+                            borderWidth: 1
+                        }
                     ],
                 },
                 options: {
@@ -194,6 +198,8 @@ var show = new Vue({
 
         this.apartmentViews = JSON.parse(this.views.replace(/&quot;/g,'"'));
         console.log(this.apartmentViews);
+        this.apartmentMessages= JSON.parse(this.messages.replace(/&quot;/g,'"'));
+        console.log(this.apartmentMessages);
 
         this.yearOnChart();
     }

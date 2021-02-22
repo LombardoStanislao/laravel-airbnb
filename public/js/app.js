@@ -87580,13 +87580,15 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     longitude: longitude,
     adress: '',
     views: views,
+    messages: messages,
     apartmentViews: [],
     views_labels: [],
     views_data: [],
     data: [],
     chartselected: '',
     views_data_month: [],
-    chartType: 'line'
+    chartType: 'line',
+    apartmentMessages: []
   },
   methods: {
     yearOnChart: function yearOnChart() {
@@ -87665,14 +87667,13 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
             backgroundColor: 'rgba(155, 255, 55, 0.2)',
             borderColor: 'rgba(155, 255, 55, 1)',
             borderWidth: 1
-          } // {
-          //     label: 'messaggi',
-          //     data: [0, 15, 3, 5, 2, 3],
-          //     backgroundColor:'rgba(155, 99, 255, 0.2)',
-          //     borderColor:'rgba(155, 99, 255, 1)',
-          //     borderWidth: 1
-          // }
-          ]
+          }, {
+            label: 'messaggi',
+            data: [0, 15, 3, 5, 2, 3],
+            backgroundColor: 'rgba(155, 99, 255, 0.2)',
+            borderColor: 'rgba(155, 99, 255, 1)',
+            borderWidth: 1
+          }]
         },
         options: {
           scales: {
@@ -87753,6 +87754,8 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
     this.apartmentViews = JSON.parse(this.views.replace(/&quot;/g, '"'));
     console.log(this.apartmentViews);
+    this.apartmentMessages = JSON.parse(this.messages.replace(/&quot;/g, '"'));
+    console.log(this.apartmentMessages);
     this.yearOnChart();
   }
 });
@@ -88172,8 +88175,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

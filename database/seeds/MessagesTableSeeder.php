@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Message;
 use App\Apartment;
+use Carbon\Carbon;
 
 class MessagesTableSeeder extends Seeder
 {
@@ -26,6 +27,9 @@ class MessagesTableSeeder extends Seeder
             }
 
             $newMessage->apartment_id = $apartment->id;
+            // simulating a date between now and 3 years ago
+            $simulatedDate = Carbon::now()->sub('years', rand(0, 2))->sub('months', rand(0, 11))->sub('days', rand(0, 31));
+            $newMessage->date_message = $simulatedDate;
 
             $newMessage->save();
         }
