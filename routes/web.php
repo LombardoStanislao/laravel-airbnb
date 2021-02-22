@@ -36,6 +36,8 @@ Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->
     Route::get('/messages/{apartment_id}', 'MessageController@index')->name('messages.index');
     Route::get('/messages/{id}', 'MessageController@show')->name('messages.show');
 
+    Route::get('/statistics/{apartment_id}', 'ApartmentController@statistics')->name('statistics');
+
 
     // *********** Pagamenti ***********
     Route::get('/apartments/{id}/sponsorship', 'PaymentController@pay')->name('apartments.sponsorship');

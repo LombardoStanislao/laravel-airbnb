@@ -4,13 +4,8 @@ if (document.getElementById('create-apartment')) {
     require('./admin/create.js');
 }
 
-
 if(document.getElementById('edit-apartment')) {
     require('./admin/edit.js');
-}
-
-if(document.getElementById('show-apartment')) {
-    require('./admin/show.js');
 }
 
 if(document.getElementById('payment-form')) {
@@ -35,4 +30,8 @@ if(document.getElementById('home')) {
 
 if(document.getElementById('message-page')) {
     require('./admin/viewedMessage')
+}
+
+if(document.getElementById('statistics')) {
+    require('./admin/statistics')
 }
