@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 use App\Apartment;
 use App\Message;
+
 
 class ApartmentController extends Controller
 {
@@ -52,6 +55,7 @@ class ApartmentController extends Controller
 
         $newMessage = new Message();
         $newMessage->fill($request->all());
+        $newMessage->date_message = Carbon::now();
         $newMessage->save();
 
         $apartment = Apartment::find($request->input('apartment_id'));

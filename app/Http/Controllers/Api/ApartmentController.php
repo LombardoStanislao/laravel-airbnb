@@ -125,7 +125,8 @@ class ApartmentController extends Controller
                     if($apartment->user_id != $userId) {
                         $newView = new View();
                         $newView->apartment_id = $apartmentId;
-
+                        $newView->date_view = Carbon::now();
+                        
                         $newView->save();
                         return response()->json([
                             'success' => true
