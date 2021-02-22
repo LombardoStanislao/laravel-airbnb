@@ -14,6 +14,7 @@ var create = new Vue({
         municipality: '',
         latitude,
         longitude,
+        address,
         pricePerNight,
         availableTypes: [
             'image/jpeg',
@@ -22,7 +23,6 @@ var create = new Vue({
             'image/gif',
             'image/svg'
         ],
-        comforts: [],
         description,
         submitted: false,
         noAdressFound: false,
@@ -74,11 +74,27 @@ var create = new Vue({
                 this.noAdressFound = false;
                 this.latitude = response.position.lat;
                 this.longitude = response.position.lng;
-                this.$nextTick(() => {
-                    if (noErrors) {
-                        this.$refs.editApartment.submit();
+
+                tt.services.reverseGeocode({
+                    key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                    position: {
+                        longitude: this.longitude,
+                        latitude: this.latitude
                     }
+                }).then(response => {
+                    var streetName = response.addresses[0].address.streetName;
+                    var streetNumber = response.addresses[0].address.streetNumber;
+                    var municipality = response.addresses[0].address.municipality;
+
+                    this.address = `${streetName} ${streetNumber}, ${municipality}`;
+
+                    this.$nextTick(() => {
+                        if (noErrors) {
+                            this.$refs.editApartment.submit();
+                        }
+                    });
                 });
+
             }).catch(error => {
                 this.noAdressFound = true;
             });

@@ -82,13 +82,10 @@ var create = new Vue({
                         }
                     });
                 });
-                
+
             }).catch(error => {
                 this.noAdressFound = true;
             });
-
-
-
         }
     }
 });

@@ -13,6 +13,15 @@
         </div>
         <div class="row">
             <div class="col-12">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="submitForm()" v-cloak>
                     @csrf
                     <div class="form-group">
@@ -217,7 +226,7 @@
                         <label>Descrizione: </label>
                         <textarea name="description" rows="8" cols="80" class="form-control" max="65535">@{{ description }}</textarea>
                         <div v-if="description.length > 65535" class="alert alert-danger">
-                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                            La descrizione non può superare i 65535 caratteri
                         </div>
                         @error ('description')
                             <div class="alert alert-danger">
