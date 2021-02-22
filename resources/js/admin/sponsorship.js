@@ -22,6 +22,7 @@ var payment = new Vue({
     },
     methods: {
         submitForm() {
+            document.getElementById("submitButton").setAttribute('disabled', 'disabled');
             var self = this;
             self.dropin.requestPaymentMethod(function(err, payload) {
                 self.nonce = payload.nonce;
