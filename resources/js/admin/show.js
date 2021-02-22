@@ -20,13 +20,19 @@ var show = new Vue({
         apartmentMessages: [],
         messages_labels: [],
         messages_data: [],
+        data_m: [],
+        messages_data_month: [],
     },
     methods: {
 
         yearOnChart(){
+
             this.views_labels=[];
             this.views_data=[];
             this.data=[];
+
+            this.messages_labels=[];
+            this.messages_data=[];
 
             this.apartmentViews.forEach((view, i) => {
                 var year = parseInt(view.date_view.substr(0, 4));
@@ -63,11 +69,32 @@ var show = new Vue({
                 return view_data;
             });
 
+            this.apartmentMessages.forEach((message, i) => {
+                var year = parseInt(message.date_message.substr(0, 4));
+                var yearPosition = this.views_labels.indexOf(year);
+                if (this.messages_data[yearPosition] == null) {
+                    this.messages_data[yearPosition] = 1;
+                }else{
+                    this.messages_data[yearPosition] = this.messages_data[yearPosition]+1;
+                }
+
+            });
+
+            for (var i = 0; i < this.views_labels.length; i++) {
+                if(this.messages_data[i]==null){
+                    this.messages_data[i]=0;
+                }
+            }
+            this.data_m = this.messages_data.map(function(message_data){
+                    return message_data;
+            });
+
             this.yearChart();
         },
 
         monthsOnChart(yearSelected){
             this.views_data_month=[0,0,0,0,0,0,0,0,0,0,0,0];
+            this.messages_data_month=[0,0,0,0,0,0,0,0,0,0,0,0];
 
             this.apartmentViews.forEach((view, i) => {
                 var year = parseInt(view.date_view.substr(0, 4));
@@ -77,11 +104,22 @@ var show = new Vue({
                 }
             });
 
-            var data = this.views_data_month.map(function(view_data_month){
-                return view_data_month;
+            this.apartmentMessages.forEach((message, i) => {
+                var year = parseInt(message.date_message.substr(0, 4));
+                if (yearSelected==year) {
+                    let monthPosition = parseInt(message.date_message.substr(5, 7));
+                    this.messages_data_month[monthPosition-1]++;
+                }
             });
 
-            this.monthChart(data);
+            var data_views = this.views_data_month.map(function(view_data_month){
+                return view_data_month;
+            });
+            var data_messages = this.messages_data_month.map(function(message_data_month){
+                return message_data_month;
+            });
+
+            this.monthChart(data_views, data_messages);
         },
 
         yearChart(){
@@ -105,7 +143,7 @@ var show = new Vue({
                         },
                         {
                             label: 'messaggi',
-                            data: [0, 15, 3, 5, 2, 3],
+                            data: this.data_m,
                             backgroundColor:'rgba(155, 99, 255, 0.2)',
                             borderColor:'rgba(155, 99, 255, 1)',
                             borderWidth: 1
@@ -124,7 +162,7 @@ var show = new Vue({
             });
         },
 
-        monthChart(data){
+        monthChart(data_views, data_messages){
 
             var ctx_2 = document.getElementById('monthchart').getContext('2d');
             if(window.bar != undefined)
@@ -136,18 +174,18 @@ var show = new Vue({
                     datasets: [
                         {
                         label: 'visualizzazioni',
-                        data: data,
+                        data: data_views,
                         backgroundColor:'rgba(155, 255, 55, 0.2)',
                         borderColor:'rgba(155, 255, 55, 1)',
                         borderWidth: 1
                         },
-                        // {
-                        //     label: 'messaggi',
-                        //     data: [0, 15, 3, 5, 2, 3],
-                        //     backgroundColor:'rgba(155, 99, 255, 0.2)',
-                        //     borderColor:'rgba(155, 99, 255, 1)',
-                        //     borderWidth: 1
-                        // },
+                        {
+                            label: 'messaggi',
+                            data: data_messages,
+                            backgroundColor:'rgba(155, 99, 255, 0.2)',
+                            borderColor:'rgba(155, 99, 255, 1)',
+                            borderWidth: 1
+                        },
                     ],
                 },
                 options: {
