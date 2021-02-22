@@ -87484,9 +87484,9 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     municipality: '',
     latitude: latitude,
     longitude: longitude,
+    address: address,
     pricePerNight: pricePerNight,
     availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
-    comforts: [],
     description: description,
     submitted: false,
     noAdressFound: false,
@@ -87540,11 +87540,23 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         _this2.noAdressFound = false;
         _this2.latitude = response.position.lat;
         _this2.longitude = response.position.lng;
-
-        _this2.$nextTick(function () {
-          if (noErrors) {
-            _this2.$refs.editApartment.submit();
+        _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
+          key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+          position: {
+            longitude: _this2.longitude,
+            latitude: _this2.latitude
           }
+        }).then(function (response) {
+          var streetName = response.addresses[0].address.streetName;
+          var streetNumber = response.addresses[0].address.streetNumber;
+          var municipality = response.addresses[0].address.municipality;
+          _this2.address = "".concat(streetName, " ").concat(streetNumber, ", ").concat(municipality);
+
+          _this2.$nextTick(function () {
+            if (noErrors) {
+              _this2.$refs.editApartment.submit();
+            }
+          });
         });
       })["catch"](function (error) {
         _this2.noAdressFound = true;
@@ -88172,8 +88184,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
