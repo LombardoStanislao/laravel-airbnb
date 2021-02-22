@@ -87567,10 +87567,58 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
-/***/ "./resources/js/admin/show.js":
-/*!************************************!*\
-  !*** ./resources/js/admin/show.js ***!
-  \************************************/
+/***/ "./resources/js/admin/sponsorship.js":
+/*!*******************************************!*\
+  !*** ./resources/js/admin/sponsorship.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
+var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#payment-form',
+  data: {
+    nonce: '',
+    dropin: null,
+    loaded: false
+  },
+  mounted: function mounted() {
+    var self = this;
+    axios.get('/api/clientToken').then(function (response) {
+      var clientToken = response.data.results;
+      braintree.dropin.create({
+        authorization: clientToken,
+        selector: '#bt-dropin'
+      }, function (createErr, instance) {
+        self.dropin = instance;
+        self.loaded = true;
+      });
+    });
+  },
+  methods: {
+    submitForm: function submitForm() {
+      document.getElementById("submitButton").setAttribute('disabled', 'disabled');
+      var self = this;
+      self.dropin.requestPaymentMethod(function (err, payload) {
+        self.nonce = payload.nonce;
+        self.$nextTick(function () {
+          self.$refs.paymentForm.submit();
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/statistics.js":
+/*!******************************************!*\
+  !*** ./resources/js/admin/statistics.js ***!
+  \******************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -87585,12 +87633,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  el: '#show-apartment',
+var statistics = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#statistics',
   data: {
-    latitude: latitude,
-    longitude: longitude,
-    adress: '',
     views: views,
     messages: messages,
     apartmentViews: [],
@@ -87787,74 +87832,11 @@ var show = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
-
-    _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_2___default.a.services.reverseGeocode({
-      key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-      position: {
-        longitude: this.longitude,
-        latitude: this.latitude
-      }
-    }).then(function (response) {
-      var streetName = response.addresses[0].address.streetName;
-      var streetNumber = response.addresses[0].address.streetNumber;
-      var municipality = response.addresses[0].address.municipality;
-      _this3.adress = "".concat(streetName, " ").concat(streetNumber, ", ").concat(municipality);
-    }); //SEZIONE STATISTICHE
-
     this.apartmentViews = JSON.parse(this.views.replace(/&quot;/g, '"'));
     console.log(this.apartmentViews);
     this.apartmentMessages = JSON.parse(this.messages.replace(/&quot;/g, '"'));
     console.log(this.apartmentMessages);
     this.yearOnChart();
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/admin/sponsorship.js":
-/*!*******************************************!*\
-  !*** ./resources/js/admin/sponsorship.js ***!
-  \*******************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-
-var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  el: '#payment-form',
-  data: {
-    nonce: '',
-    dropin: null,
-    loaded: false
-  },
-  mounted: function mounted() {
-    var self = this;
-    axios.get('/api/clientToken').then(function (response) {
-      var clientToken = response.data.results;
-      braintree.dropin.create({
-        authorization: clientToken,
-        selector: '#bt-dropin'
-      }, function (createErr, instance) {
-        self.dropin = instance;
-        self.loaded = true;
-      });
-    });
-  },
-  methods: {
-    submitForm: function submitForm() {
-      document.getElementById("submitButton").setAttribute('disabled', 'disabled');
-      var self = this;
-      self.dropin.requestPaymentMethod(function (err, payload) {
-        self.nonce = payload.nonce;
-        self.$nextTick(function () {
-          self.$refs.paymentForm.submit();
-        });
-      });
-    }
   }
 });
 
@@ -87898,10 +87880,6 @@ if (document.getElementById('edit-apartment')) {
   __webpack_require__(/*! ./admin/edit.js */ "./resources/js/admin/edit.js");
 }
 
-if (document.getElementById('show-apartment')) {
-  __webpack_require__(/*! ./admin/show.js */ "./resources/js/admin/show.js");
-}
-
 if (document.getElementById('payment-form')) {
   __webpack_require__(/*! ./admin/sponsorship.js */ "./resources/js/admin/sponsorship.js");
 }
@@ -87924,6 +87902,10 @@ if (document.getElementById('home')) {
 
 if (document.getElementById('message-page')) {
   __webpack_require__(/*! ./admin/viewedMessage */ "./resources/js/admin/viewedMessage.js");
+}
+
+if (document.getElementById('statistics')) {
+  __webpack_require__(/*! ./admin/statistics */ "./resources/js/admin/statistics.js");
 }
 
 /***/ }),

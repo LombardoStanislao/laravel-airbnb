@@ -2,18 +2,8 @@
 
 @section('page-title', 'Dettagli appartamento')
 
-@section('scripts')
-    <script type="text/javascript" defer>
-        var latitude = "{{ $apartment->latitude }}";
-        var longitude = "{{ $apartment->longitude }}";
-        var views = "{{ $views }}";
-        var messages = "{{ $messages }}";
-    </script>
-@endsection
-
-
 @section('content')
-    <div id="show-apartment" class="container" v-cloak>
+    <div id="show-apartment" class="container">
         <div class="row">
 
             <div class="col-12">
@@ -50,7 +40,7 @@
                     </li>
                     <li>
                         <strong>Indirizzo:</strong>
-                        <span>@{{ adress }}</span>
+                        <span>{{ $apartment->adress }}</span>
                     </li>
                     <li>
                         <strong>Disponibile:</strong>
@@ -99,22 +89,9 @@
                 <a class="btn btn-success" href="{{ route('admin.messages.index', ['apartment_id' => $apartment->id]) }}">
                     Messaggi
                 </a>
-            </div>
-
-            <canvas id="chart" width="800" height="400" :class="chartselected=='' ? 'd-block' : 'd-none'"></canvas>
-            <canvas id="monthchart" width="800" height="400" :class="chartselected!='' ? 'd-block' : 'd-none'"></canvas>
-            <div>
-                <label>Periodo:</label>
-                <select name="" @change="ChangeChartFilter($event)" v-model="chartselected">
-                    <option value="">Da sempre</option>
-                    <option v-for="view_labels in views_labels" :value="view_labels">@{{view_labels}}</option>
-                </select>
-                <label>Tipo:</label>
-                <select class="" name="" @change="changeChartType()"           v-model="chartType">
-                    <option value="line">Linea</option>
-                    <option value="bar">Barra</option>
-                    <option value="radar">Radar</option>
-                </select>
+                <a class="btn btn-success" href="{{ route('admin.statistics', ['apartment_id' => $apartment->id]) }}">
+                    Statistiche
+                </a>
             </div>
         </div>
     </div>

@@ -139,11 +139,8 @@ class ApartmentController extends Controller
 
             $data = [
                 'apartment' => $apartment,
-                'active_sponsorship' => $active_sponsorship,
-                'views' => View::where('apartment_id', $apartment->id)->get(),
-                'messages' => Message::where('apartment_id', $apartment->id)->get(),
+                'active_sponsorship' => $active_sponsorship
             ];
-            // dd(View::where('apartment_id', $apartment->id)->get());
 
             return view('admin.apartments.show', $data);
         }
@@ -245,5 +242,21 @@ class ApartmentController extends Controller
         $apartment->delete();
 
         return redirect()->route('admin.apartments.index');
+    }
+
+    public function statistics($apartment_id) {
+        $apartment = Apartment::where('id', $apartment_id)->first();
+
+        if ($apartment && $apartment->user_id == Auth::user()->id) {
+            $data = [
+                'views' => View::where('apartment_id', $apartment->id)->get(),
+                'messages' => Message::where('apartment_id', $apartment->id)->get(),
+                'apartment_id' => $apartment_id
+            ];
+
+            return view('admin.apartments.statistics', $data);
+        }
+
+        abort(404);
     }
 }
