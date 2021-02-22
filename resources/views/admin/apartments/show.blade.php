@@ -7,6 +7,7 @@
         var latitude = "{{ $apartment->latitude }}";
         var longitude = "{{ $apartment->longitude }}";
         var views = "{{ $views }}";
+        var messages = "{{ $messages }}";
     </script>
 @endsection
 

@@ -10,6 +10,7 @@ use App\Comfort;
 use App\Sponsorship;
 use App\SponsorshipType;
 use App\View;
+use App\Message;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -140,6 +141,7 @@ class ApartmentController extends Controller
                 'apartment' => $apartment,
                 'active_sponsorship' => $active_sponsorship,
                 'views' => View::where('apartment_id', $apartment->id)->get(),
+                'messages' => Message::where('apartment_id', $apartment->id)->get(),
             ];
             // dd(View::where('apartment_id', $apartment->id)->get());
 
