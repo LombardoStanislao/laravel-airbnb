@@ -4,6 +4,8 @@
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/services/services-web.min.js"></script>
     <script type="text/javascript" defer>
 
+        var nummberOfImages = "{{ $apartment->images->count()+1 }}";
+
         var longitude_js = "{{$apartment->longitude}}";
         // console.log(longitude_js);
         var latitude_js = "{{$apartment->latitude}}";
@@ -29,9 +31,21 @@
 @endsection
 
 @section('content')
-    <div id="apartment-page">
-        <div class="d-md-none">
-            <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block w-100">
+    <div id="apartment-page" v-cloak>
+        <div class="slider d-lg-none">
+            <img v-if="imgIndex == 0" src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block w-100">
+            @foreach ($apartment->images as $index => $image)
+                <img v-if="imgIndex == {{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="w-100">
+            @endforeach
+            <div v-if="nummberOfImages>1" class="prev" @click="prev()">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div v-if="nummberOfImages>1" class="next" @click="next()">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            <div v-if="nummberOfImages>1" class="counter">
+                @{{ imgIndex+1 }}/@{{ nummberOfImages }}
+            </div>
         </div>
         <div class="container">
             <div class="row mt-4 mb-4">
@@ -54,14 +68,18 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-6 mb-2 d-none d-md-block">
-                    <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block main-image">
+                <div class="col-6 mb-2 d-none d-lg-block">
+                    <div class="overflow-hidden rounded">
+                        <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block main-image">
+                    </div>
                 </div>
-                <div class="col-6 mb-2 d-none d-md-block">
+                <div class="col-6 mb-2 d-none d-lg-block">
                     <div class="row">
                         @foreach ($apartment->images as $index => $image)
-                            <div class="col-6 {{ $index > 4 ? 'd-none' : '' }}">
-                                <img id="secondary-image-{{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="d-block secondary-image">
+                            <div class="col-6">
+                                <div class="overflow-hidden rounded">
+                                    <img id="secondary-image-{{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="d-block secondary-image">
+                                </div>
                             </div>
                         @endforeach
                     </div>
@@ -157,7 +175,7 @@
                 <div class="col-12">
                     <h3 class="border-top pt-4 pb-4 mb-0">Posizione:</h3>
                     <span>{{ $apartment->address }}</span>
-                    <div id="map" class="mt-4 mb-4 mb-0">
+                    <div id="map" class="mt-4 mb-4 mb-0 overflow-hidden rounded">
 
                     </div>
                 </div>
