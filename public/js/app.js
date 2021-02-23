@@ -87393,6 +87393,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     address: '',
     pricePerNight: null,
     availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
+    // images: [],
     comforts: [],
     description: '',
     submitted: false,
@@ -87451,6 +87452,13 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         _this.noAdressFound = true;
       });
     }
+  },
+  mounted: function mounted() {// let dropArea = document.getElementById('drop-area');
+    //
+    // dropArea.addEventListener('dragenter', handlerFunction, false);
+    // dropArea.addEventListener('dragleave', handlerFunction, false);
+    // dropArea.addEventListener('dragover', handlerFunction, false);
+    // dropArea.addEventListener('drop', handlerFunction, false);
   }
 });
 

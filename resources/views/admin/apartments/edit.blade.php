@@ -195,7 +195,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Immagine di copertina: </label>
+                        <label class="d-block">Immagine principale: </label>
                         <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
                         <label>Scegli un'altra immagine: </label>
                         <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*">
@@ -207,6 +207,24 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="d-block">Immagini secondarie: </label>
+                        @foreach ($images as $image)
+                            <div class="w-25 h-25 d-inline-block">
+                                <img src="{{ asset("storage/" . $image->url) }}" class="mw-100 mh-100">
+                            </div>
+                        @endforeach
+                        <input ref="inputFile" type="file" multiple accept="image/*" class="form-control-file " name="images[]" accept="image/*">
+                        <div v-if="!imageValid" class="alert alert-danger">
+                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        @error ('image')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+
                     </div>
                     <div class="form-group">
                         <label>Comforts:</label>

@@ -179,7 +179,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Immagine di copertina: </label>
+                        <label>Immagine principale: </label>
                         <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*" required>
                         <div v-if="!imageValid" class="alert alert-danger">
                             L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
@@ -189,6 +189,20 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                    </div>
+                    <div class="form-group">
+                        <label>Immagini secondarie: </label>
+                        {{-- <div id="drop-area" class="border border-success w-100" style="height: 120px;"> --}}
+                        <input ref="inputFile" type="file" multiple accept="image/*" class="form-control-file " name="images[]" accept="image/*">
+                        <div v-if="!imageValid" class="alert alert-danger">
+                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        @error ('image')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                        {{-- </div> --}}
                     </div>
                     <div class="form-group">
                         <label>Comforts: </label>

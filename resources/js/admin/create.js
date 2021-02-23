@@ -23,6 +23,7 @@ var create = new Vue({
             'image/gif',
             'image/svg'
         ],
+        // images: [],
         comforts: [],
         description: '',
         submitted: false,
@@ -87,5 +88,13 @@ var create = new Vue({
                 this.noAdressFound = true;
             });
         }
+    },
+    mounted() {
+        // let dropArea = document.getElementById('drop-area');
+        //
+        // dropArea.addEventListener('dragenter', handlerFunction, false);
+        // dropArea.addEventListener('dragleave', handlerFunction, false);
+        // dropArea.addEventListener('dragover', handlerFunction, false);
+        // dropArea.addEventListener('drop', handlerFunction, false);
     }
 });
