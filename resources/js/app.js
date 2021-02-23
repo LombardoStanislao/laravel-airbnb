@@ -20,10 +20,6 @@ if(document.getElementById('map')) {
     require('./guest/map');
 }
 
-if(document.getElementById('apartment-page')) {
-    require('./guest/addView')
-}
-
 if(document.getElementById('home')) {
     require('./guest/home')
 }

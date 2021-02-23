@@ -87898,11 +87898,10 @@ if (document.getElementById('advanced-research-page')) {
 
 if (document.getElementById('map')) {
   __webpack_require__(/*! ./guest/map */ "./resources/js/guest/map.js");
-}
+} // if(document.getElementById('apartment-page')) {
+//     require('./guest/addView')
+// }
 
-if (document.getElementById('apartment-page')) {
-  __webpack_require__(/*! ./guest/addView */ "./resources/js/guest/addView.js");
-}
 
 if (document.getElementById('home')) {
   __webpack_require__(/*! ./guest/home */ "./resources/js/guest/home.js");
@@ -87960,36 +87959,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/guest/addView.js":
-/*!***************************************!*\
-  !*** ./resources/js/guest/addView.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-console.log('js attivo');
-var userId = document.getElementsByName('user')[0].value;
-console.log(userId);
-
-if (!isNaN(userId) || !userId) {
-  userId = parseInt(userId);
-  var apartmentId = document.getElementsByName('apartment')[0].value;
-
-  if (!isNaN(apartmentId)) {
-    apartmentId = parseInt(apartmentId);
-    axios({
-      method: 'post',
-      url: 'http://localhost:8000/api/addView',
-      data: {
-        userId: userId,
-        apartmentId: apartmentId
-      }
-    });
-  }
-}
 
 /***/ }),
 
@@ -88216,8 +88185,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

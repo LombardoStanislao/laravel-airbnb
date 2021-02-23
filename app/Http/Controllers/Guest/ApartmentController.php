@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 use App\Apartment;
 use App\Message;
+use App\View;
 
 
 class ApartmentController extends Controller
@@ -18,13 +20,16 @@ class ApartmentController extends Controller
         return view('guest.apartments.index');
     }
 
-    public function show($slug)
+    public function show($slug, Request $request)
     {
         $apartment = Apartment::where('slug', $slug)->first();
 
         if(!$apartment){
             abort(404);
         }
+
+        $this->addViewIfCorrect($apartment->id, $request->session());
+
         $data = [
             'apartment' => $apartment
         ];
@@ -62,5 +67,39 @@ class ApartmentController extends Controller
 
         return redirect()->route('guest.apartments.show', [ 'slug' => $apartment->slug ]);
 
+    }
+
+    private function addViewIfCorrect($apartmentId, $session) {
+        //controlla se l'utente è loggato
+        if(Auth::check()) {
+            $userId = Auth::user()->id;
+
+            // Controlla che l'appartamento trovato appartenga all'utente loggato
+            if($apartment->user_id != $userId) {
+                $this->addView($apartmentId);
+            }
+        } else {
+            //Controllo che la variabile dedicata alla visualizzazione degli appartamenti esista
+            if ($session->has('viewedApartments')) {
+                $viewedApartments = $session->get('viewedApartments');
+                if(!in_array($apartmentId, $viewedApartments)) {
+                    $this->addView($apartmentId);
+                    $viewedApartments[] = $apartmentId;
+                    $session->put('viewedApartments', $viewedApartments);
+                }
+            } else {
+                $this->addView($apartmentId);
+                $session->put('viewedApartments', [ $apartmentId ]);
+            }
+        }
+
+    }
+
+    private function addView($apartmentId) {
+        $newView = new View();
+        $newView->apartment_id = $apartmentId;
+        $newView->date_view = Carbon::now();
+
+        $newView->save();
     }
 }
