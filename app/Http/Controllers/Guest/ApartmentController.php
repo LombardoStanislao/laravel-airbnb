@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\Apartment;
 use App\Message;
 use App\View;
-
+use App\Image;
 
 class ApartmentController extends Controller
 {
@@ -31,7 +31,8 @@ class ApartmentController extends Controller
         $this->addViewIfCorrect($apartment->id, $request->session());
 
         $data = [
-            'apartment' => $apartment
+            'apartment' => $apartment,
+            'images' => Image::where('apartment_id', $apartment->id)->get(),
         ];
 
         return view('guest.apartments.show', $data);
