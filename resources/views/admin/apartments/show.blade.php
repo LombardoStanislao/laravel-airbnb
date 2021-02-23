@@ -31,6 +31,13 @@
                 <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
             </div>
         </div>
+        <div class="row mt-2 mb-2">
+            @foreach ($images as $image)
+                <div class="w-25 h-25 d-inline-block">
+                    <img src="{{ asset("storage/" . $image->url) }}" class="mw-100 mh-100">
+                </div>
+            @endforeach
+        </div>
         <div class="row">
             <div class="col-12">
                 <ul class="list-unstyled">
