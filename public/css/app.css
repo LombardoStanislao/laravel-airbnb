@@ -17191,6 +17191,37 @@ body [v-cloak] {
   content: "\F773";
 }
 
+#apartment-page .main-image {
+  height: 360px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media only screen and (min-width: 1200px) {
+  #apartment-page .main-image {
+    height: 500px;
+  }
+}
+
+#apartment-page .secondary-image {
+  height: 178px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media only screen and (min-width: 1200px) {
+  #apartment-page .secondary-image {
+    height: 248px;
+  }
+}
+
+#apartment-page #secondary-image-1,
+#apartment-page #secondary-image-2 {
+  margin-bottom: 4px;
+}
+
 #apartment-page #map {
   height: 500px;
 }

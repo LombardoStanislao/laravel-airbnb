@@ -55,13 +55,13 @@
                     </div>
                 </div>
                 <div class="col-6 mb-2 d-none d-md-block">
-                    <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block w-100">
+                    <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block main-image">
                 </div>
                 <div class="col-6 mb-2 d-none d-md-block">
                     <div class="row">
                         @foreach ($apartment->images as $index => $image)
                             <div class="col-6 {{ $index > 4 ? 'd-none' : '' }}">
-                                <img src="{{ asset("storage/" . $image->url) }}" class="d-block w-100">
+                                <img id="secondary-image-{{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="d-block secondary-image">
                             </div>
                         @endforeach
                     </div>
@@ -96,7 +96,7 @@
                                 <i class="fas fa-toilet fa-2x"></i>
                             </div>
                             <div class="info">
-                                <strong>Numero di bagni:</strong>
+                                <strong>Numero bagni:</strong>
                                 <span>{{ $apartment->bathrooms_number }}</span>
                             </div>
                         </li>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="col-12 pt-4 pb-4">
                     <h3 class="mb-4">Descrizione:</h3>
-                    <p class="mb-4">
+                    <p class="mb-0">
                         @if ($apartment->description)
                             <span>{{ $apartment->description }}</span>
                         @else
@@ -130,7 +130,7 @@
                         @endif
                     </p>
                     @if (!Auth::user() || Auth::user()->id != $apartment->user_id)
-                        <a class="btn btn-primary" href="{{ route('guest.apartments.message', [ 'slug' => $apartment->slug]) }}">
+                        <a class="btn btn-primary mt-4" href="{{ route('guest.apartments.message', [ 'slug' => $apartment->slug]) }}">
                             Contatta l'host
                         </a>
                     @endif
@@ -151,7 +151,7 @@
                             @endforeach
                         </ul>
                     @else
-                        <span>Nessun comfort disponibile</span>
+                        <div class="pb-4">Nessun comfort disponibile</div>
                     @endif
                 </div>
                 <div class="col-12">

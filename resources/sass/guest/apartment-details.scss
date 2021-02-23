@@ -29,7 +29,42 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
         }
     }
 
+    .main-image {
+        height: 360px;
+        width: 100%;
+        object-fit: cover;
+
+        @media only screen and (min-width: 1200px) {
+            height: 500px;
+        }
+    }
+
+    .secondary-image {
+        height: 178px;
+        width: 100%;
+        object-fit: cover;
+
+        @media only screen and (min-width: 1200px) {
+            height: 248px;
+        }
+    }
+
+    #secondary-image-1,
+    #secondary-image-2 {
+        margin-bottom: 4px;
+    }
+
     #map {
         height: 500px;
     }
 }
+
+// @media screen and (min-width: 1200px) {
+//     .main-image {
+//         height: 500px;
+//     }
+//
+//     .secondary-image {
+//         height: 248px;
+//     }
+// }
