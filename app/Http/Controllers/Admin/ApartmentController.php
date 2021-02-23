@@ -87,7 +87,6 @@ class ApartmentController extends Controller
             $slug_found = Apartment::where('slug', $new_slug)->first();
         }
         $data["slug"] = $new_slug;
-        //dd($data["images"]);
         $main_image = Storage::put('apartment_images', $data["image"]);
         $data["main-image"] = $main_image;
 
@@ -95,12 +94,14 @@ class ApartmentController extends Controller
         $new_apartment->fill($data);
         $new_apartment->save();
 
-        for ($i=0; $i < count($data["images"]) ; $i++) {
-            $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
-            $new_apartment_image = new Image();
-            $new_apartment_image->apartment_id = $new_apartment->id;
-            $new_apartment_image->url = $secondary_images;
-            $new_apartment_image->save();
+        if (array_key_exists('images', $data)) {
+            for ($i=0; $i < count($data["images"]) ; $i++) {
+                $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
+                $new_apartment_image = new Image();
+                $new_apartment_image->apartment_id = $new_apartment->id;
+                $new_apartment_image->url = $secondary_images;
+                $new_apartment_image->save();
+            }
         }
 
         if (array_key_exists('comforts', $data)) {
@@ -234,7 +235,7 @@ class ApartmentController extends Controller
             $oldImage->delete();
         }
 
-        for ($i=0; $i < count($data["images"]) ; $i++) {    
+        for ($i=0; $i < count($data["images"]) ; $i++) {
             $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
             $new_apartment_image = new Image();
             $new_apartment_image->apartment_id = $apartment->id;
