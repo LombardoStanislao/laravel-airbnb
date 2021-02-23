@@ -4,13 +4,17 @@
 
 @section('content')
     <div id="show-apartment" class="container">
-        <div class="row">
-            <div class="col-12 col-sm-6 mb-2">
-                @if (session('success_message'))
+        @if (session('success_message'))
+            <div class="row">
+                <div class="col-12">
                     <div class="alert alert-success" role="alert">
                         {{ session('success_message') }}
                     </div>
-                @endif
+                </div>
+            </div>
+        @endif
+        <div class="row">
+            <div class="col-12 col-sm-6 mb-2">
                 <h1>{{ $apartment->title }}</h1>
             </div>
             <div class="col-12 col-sm-6 text-sm-right">
