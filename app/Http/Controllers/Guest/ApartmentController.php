@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 use App\Apartment;
 use App\Message;
-
+use App\Image;
 
 class ApartmentController extends Controller
 {
@@ -26,7 +26,8 @@ class ApartmentController extends Controller
             abort(404);
         }
         $data = [
-            'apartment' => $apartment
+            'apartment' => $apartment,
+            'images' => Image::where('apartment_id', $apartment->id)->get(),
         ];
 
         return view('guest.apartments.show', $data);

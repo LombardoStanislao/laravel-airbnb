@@ -97,6 +97,13 @@
                             <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block mw-100">
                         </li>
                         <li>
+                            @foreach ($images as $image)
+                                <div class="w-25 h-25 d-inline-block">
+                                    <img src="{{ asset("storage/" . $image->url) }}" class="mw-100 mh-100">
+                                </div>
+                            @endforeach                        
+                        </li>
+                        <li>
                             <strong>Descrizione:</strong>
                             @if ($apartment->description)
                                 <span>{{ $apartment->description }}</span>
