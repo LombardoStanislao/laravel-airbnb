@@ -4,11 +4,30 @@ import tt from '@tomtom-international/web-sdk-maps';
 const APIKEY = 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC';
 
 var app = new Vue({
-    el: '#map',
+    el: '#apartment-page',
     data: {
         home: [longitude_js, latitude_js],
         map : {},
         marker: {},
+        imgIndex: 0,
+        nummberOfImages
+    },
+
+    methods: {
+        prev() {
+            this.imgIndex--;
+
+            if (this.imgIndex < 0) {
+                this.imgIndex = this.nummberOfImages-1;
+            }
+        },
+        next() {
+            this.imgIndex++;
+
+            if (this.imgIndex > this.nummberOfImages-1) {
+                this.imgIndex = 0;
+            }
+        }
     },
     // methods: {
     //     moveMap(lnglat) {

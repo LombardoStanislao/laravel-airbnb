@@ -16,8 +16,8 @@ if(document.getElementById('advanced-research-page')) {
     require('./guest/advancedResearch');
 }
 
-if(document.getElementById('map')) {
-    require('./guest/map');
+if(document.getElementById('apartment-page')) {
+    require('./guest/apartmentDetails');
 }
 
 if(document.getElementById('home')) {
