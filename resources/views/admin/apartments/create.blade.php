@@ -179,10 +179,28 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Immagine di copertina: </label>
-                        <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*" required>
-                        <div v-if="!imageValid" class="alert alert-danger">
-                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        <label>Immagine principale: </label>
+                        <input ref="mainImage" type="file" class="form-control-file" name="image" accept="image/*" required>
+                        <div v-if="submitted && !mainImageType" class="alert alert-danger">
+                            L'immagine principale è obbligatoria
+                        </div>
+                        <div v-else-if="!mainImageValid" class="alert alert-danger">
+                            L'immagine principale deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        @error ('image')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label>Immagini secondarie: </label>
+                        <input ref="secondaryImages" type="file" multiple accept="image/*" class="form-control-file " name="images[]" accept="image/*">
+                        <div v-if="!secondaryImagesValid" class="alert alert-danger">
+                            Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        <div v-if="numSecondaryImages > 4" class="alert alert-danger">
+                            Puoi caricare al massimo 4 immagini secondarie
                         </div>
                         @error ('image')
                             <div class="alert alert-danger">

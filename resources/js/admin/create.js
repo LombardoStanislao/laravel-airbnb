@@ -27,7 +27,10 @@ var create = new Vue({
         description: '',
         submitted: false,
         noAdressFound: false,
-        imageValid: true,
+        mainImageType: null,
+        mainImageValid: true,
+        secondaryImagesValid: true,
+        numSecondaryImages: 0
     },
     methods: {
         submitForm() {
@@ -44,11 +47,29 @@ var create = new Vue({
             var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
             var mucipalityValid = this.municipality;
             var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
-            this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
+
+            if (this.$refs.mainImage.files[0]) {
+                this.mainImageType = this.$refs.mainImage.files[0].type;
+                this.mainImageValid = this.availableTypes.includes(this.mainImageType);
+            } else {
+                this.mainImageType = null;
+                this.mainImageValid = true;
+            }
+
+            this.numSecondaryImages = this.$refs.secondaryImages.files.length;
+
+            if (this.numSecondaryImages) {
+                Array.from(this.$refs.secondaryImages.files).forEach(file => {
+                    this.secondaryImagesValid = this.availableTypes.includes(file.type);
+                });
+            }
+
+            var mainImageValid = this.mainImageType && this.mainImageValid;
+
             var descriptionValid = this.description.length <= 65535;
             var addressValid = this.address.length <= 255;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && descriptionValid;
 
 
             tt.services.structuredGeocode({
@@ -87,5 +108,13 @@ var create = new Vue({
                 this.noAdressFound = true;
             });
         }
+    },
+    mounted() {
+        // let dropArea = document.getElementById('drop-area');
+        //
+        // dropArea.addEventListener('dragenter', handlerFunction, false);
+        // dropArea.addEventListener('dragleave', handlerFunction, false);
+        // dropArea.addEventListener('dragover', handlerFunction, false);
+        // dropArea.addEventListener('drop', handlerFunction, false);
     }
 });

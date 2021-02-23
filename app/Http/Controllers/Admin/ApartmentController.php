@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Apartment;
 use App\Comfort;
+use App\Image;
 use App\Sponsorship;
 use App\SponsorshipType;
 use App\View;
@@ -66,14 +67,13 @@ class ApartmentController extends Controller
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
+            'images' => 'nullable|max:4',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535'
         ]);
 
         $data = $request->all();
-
-        // dd($data["sponsorship_types"][0]);
 
         $data["user_id"] = Auth::user()->id;
 
@@ -87,13 +87,22 @@ class ApartmentController extends Controller
             $slug_found = Apartment::where('slug', $new_slug)->first();
         }
         $data["slug"] = $new_slug;
-
         $main_image = Storage::put('apartment_images', $data["image"]);
         $data["main-image"] = $main_image;
 
         $new_apartment = new Apartment();
         $new_apartment->fill($data);
         $new_apartment->save();
+
+        if (array_key_exists('images', $data)) {
+            for ($i=0; $i < count($data["images"]) ; $i++) {
+                $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
+                $new_apartment_image = new Image();
+                $new_apartment_image->apartment_id = $new_apartment->id;
+                $new_apartment_image->url = $secondary_images;
+                $new_apartment_image->save();
+            }
+        }
 
         if (array_key_exists('comforts', $data)) {
             $new_apartment->comforts()->sync($data["comforts"]);
@@ -139,7 +148,8 @@ class ApartmentController extends Controller
 
             $data = [
                 'apartment' => $apartment,
-                'active_sponsorship' => $active_sponsorship
+                'active_sponsorship' => $active_sponsorship,
+                'images' => Image::where('apartment_id', $apartment->id)->get(),
             ];
 
             return view('admin.apartments.show', $data);
@@ -159,7 +169,8 @@ class ApartmentController extends Controller
         if ($apartment && $apartment->user_id == Auth::user()->id) {
             $data = [
                 'apartment' => Apartment::where('id', $apartment->id)->first(),
-                'comforts' => Comfort::all()
+                'images' => Image::where('apartment_id', $apartment->id)->get(),
+                'comforts' => Comfort::all(),
             ];
 
             return view('admin.apartments.edit', $data);
@@ -191,6 +202,7 @@ class ApartmentController extends Controller
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
+            'images' => 'nullable|max:4',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535',
@@ -216,6 +228,19 @@ class ApartmentController extends Controller
         if(array_key_exists('image',$data)){
             $main_image = Storage::put('apartment_images', $data["image"]);
             $data["main-image"] = $main_image;
+        }
+
+        $oldImages = Image::where('apartment_id', $apartment->id)->get();
+        foreach ($oldImages as $oldImage) {
+            $oldImage->delete();
+        }
+
+        for ($i=0; $i < count($data["images"]) ; $i++) {
+            $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
+            $new_apartment_image = new Image();
+            $new_apartment_image->apartment_id = $apartment->id;
+            $new_apartment_image->url = $secondary_images;
+            $new_apartment_image->save();
         }
 
         $apartment->update($data);

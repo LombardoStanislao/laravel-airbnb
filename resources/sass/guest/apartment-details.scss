@@ -1,0 +1,100 @@
+$comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\f593', '6': '\f773');
+
+#apartment-page {
+    .address {
+        color: rgb(113, 113, 113);
+    }
+
+    .availability {
+        .red {
+            color: red
+        }
+
+        .green {
+            color: green;
+        }
+    }
+
+    .icon {
+        width: 50px;
+    }
+
+    @each $index, $icon in $comfort-icons {
+        .icon-comfort-#{$index}:before {
+            font-family: "Font Awesome 5 Free";
+            display: inline-block;
+            font-weight: 900;
+            font-size: 35px;
+            content: $icon;
+        }
+    }
+
+    .main-image {
+        height: 360px;
+        width: 100%;
+        object-fit: cover;
+
+        @media only screen and (min-width: 1200px) {
+            height: 500px;
+        }
+    }
+
+    .secondary-image {
+        height: 178px;
+        width: 100%;
+        object-fit: cover;
+
+        @media only screen and (min-width: 1200px) {
+            height: 248px;
+        }
+    }
+
+    #secondary-image-1,
+    #secondary-image-2 {
+        margin-bottom: 4px;
+    }
+
+    .slider {
+        position: relative;
+        height: 350px;
+
+        img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 5px 10px;
+            border-radius: 100%;
+            cursor: pointer;
+            background-color: #000000ad;
+            color: white;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 10px;
+            background-color: #000000ad;
+            color: white;
+        }
+    }
+
+    #map {
+        height: 500px;
+    }
+}

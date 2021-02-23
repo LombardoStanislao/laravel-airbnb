@@ -108,41 +108,6 @@ class ApartmentController extends Controller
         ]);
     }
 
-    public function addView(Request $request) {
-        $userId = $request->all()['userId'];
-        //controlla se l'utente è loggato
-        // if($userId) {
-            //Controlla se l'id dell'utente esiste
-            if(!(User::find($userId) === null) || $userId === null) {
-
-                $apartmentId = $request->all()['apartmentId'];
-                //ricava l'appartamento con l'id inviato
-                $apartment = Apartment::find($apartmentId);
-
-                //Controlla che l'apartamento esista
-                if(!($apartment === null)) {
-                    // Controlla che l'appartamento trovato appartenga all'utente loggato
-                    if($apartment->user_id != $userId) {
-                        $newView = new View();
-                        $newView->apartment_id = $apartmentId;
-                        $newView->date_view = Carbon::now();
-                        
-                        $newView->save();
-                        return response()->json([
-                            'success' => true
-                        ]);
-                    }
-                }
-
-            // }
-
-        }
-
-        return response()->json([
-            'success' => false
-        ]);
-    }
-
     public function showViews(Request $request) {
         $apartment = Apartment::where('id', $request->id)->first();
 

@@ -4,13 +4,17 @@
 
 @section('content')
     <div id="show-apartment" class="container">
-        <div class="row">
-            <div class="col-12 col-sm-6 mb-2">
-                @if (session('success_message'))
+        @if (session('success_message'))
+            <div class="row">
+                <div class="col-12">
                     <div class="alert alert-success" role="alert">
                         {{ session('success_message') }}
                     </div>
-                @endif
+                </div>
+            </div>
+        @endif
+        <div class="row">
+            <div class="col-12 col-sm-6 mb-2">
                 <h1>{{ $apartment->title }}</h1>
             </div>
             <div class="col-12 col-sm-6 text-sm-right">
@@ -26,6 +30,13 @@
             <div class="col-12 col-xl-8">
                 <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
             </div>
+        </div>
+        <div class="row mt-2 mb-2">
+            @foreach ($images as $image)
+                <div class="w-25 h-25 d-inline-block">
+                    <img src="{{ asset("storage/" . $image->url) }}" class="mw-100 mh-100">
+                </div>
+            @endforeach
         </div>
         <div class="row">
             <div class="col-12">

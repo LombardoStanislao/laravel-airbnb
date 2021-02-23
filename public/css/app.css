@@ -17088,12 +17088,27 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
 }
 
-[v-cloak] {
-  display: none;
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
 }
 
-#map {
-  height: 500px;
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  font-weight: 500;
+}
+
+body a {
+  font-weight: 500;
+}
+
+body [v-cloak] {
+  display: none;
 }
 
 #bt-dropin [data-braintree-id=toggle] {
@@ -17110,5 +17125,145 @@ readers do not read off random characters that represent icons */
 
 #messages-table {
   min-width: 520px;
+}
+
+#apartment-page .address {
+  color: #717171;
+}
+
+#apartment-page .availability .red {
+  color: red;
+}
+
+#apartment-page .availability .green {
+  color: green;
+}
+
+#apartment-page .icon {
+  width: 50px;
+}
+
+#apartment-page .icon-comfort-1:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F1EB";
+}
+
+#apartment-page .icon-comfort-2:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F1B9";
+}
+
+#apartment-page .icon-comfort-3:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F5C5";
+}
+
+#apartment-page .icon-comfort-4:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F52B";
+}
+
+#apartment-page .icon-comfort-5:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F593";
+}
+
+#apartment-page .icon-comfort-6:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F773";
+}
+
+#apartment-page .main-image {
+  height: 360px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media only screen and (min-width: 1200px) {
+  #apartment-page .main-image {
+    height: 500px;
+  }
+}
+
+#apartment-page .secondary-image {
+  height: 178px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media only screen and (min-width: 1200px) {
+  #apartment-page .secondary-image {
+    height: 248px;
+  }
+}
+
+#apartment-page #secondary-image-1,
+#apartment-page #secondary-image-2 {
+  margin-bottom: 4px;
+}
+
+#apartment-page .slider {
+  position: relative;
+  height: 350px;
+}
+
+#apartment-page .slider img {
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#apartment-page .slider .prev,
+#apartment-page .slider .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 10px;
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: #000000ad;
+  color: white;
+}
+
+#apartment-page .slider .prev {
+  left: 10px;
+}
+
+#apartment-page .slider .next {
+  right: 10px;
+}
+
+#apartment-page .slider .counter {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: #000000ad;
+  color: white;
+}
+
+#apartment-page #map {
+  height: 500px;
 }
 
