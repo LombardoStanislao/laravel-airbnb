@@ -229,11 +229,12 @@ class ApartmentController extends Controller
             $data["main-image"] = $main_image;
         }
 
-        for ($i=0; $i < count($data["images"]) ; $i++) {
-            $oldImages = Image::where('apartment_id', $apartment->id)->get();
-            foreach ($oldImages as $oldImage) {
-                $oldImage->delete();
-            }
+        $oldImages = Image::where('apartment_id', $apartment->id)->get();
+        foreach ($oldImages as $oldImage) {
+            $oldImage->delete();
+        }
+
+        for ($i=0; $i < count($data["images"]) ; $i++) {    
             $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
             $new_apartment_image = new Image();
             $new_apartment_image->apartment_id = $apartment->id;
