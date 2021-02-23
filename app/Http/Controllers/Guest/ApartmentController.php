@@ -74,7 +74,8 @@ class ApartmentController extends Controller
         //controlla se l'utente è loggato
         if(Auth::check()) {
             $userId = Auth::user()->id;
-
+            
+            $apartment = Apartment::find($apartmentId);
             // Controlla che l'appartamento trovato appartenga all'utente loggato
             if($apartment->user_id != $userId) {
                 $this->addView($apartmentId);
