@@ -1,3 +1,35 @@
-#map {
-    height: 500px;
+$comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\f593', '6': '\f773');
+
+#apartment-page {
+    .address {
+        color: rgb(113, 113, 113);
+    }
+
+    .availability {
+        .red {
+            color: red
+        }
+
+        .green {
+            color: green;
+        }
+    }
+
+    .icon {
+        width: 50px;
+    }
+
+    @each $index, $icon in $comfort-icons {
+        .icon-comfort-#{$index}:before {
+            font-family: "Font Awesome 5 Free";
+            display: inline-block;
+            font-weight: 900;
+            font-size: 35px;
+            content: $icon;
+        }
+    }
+
+    #map {
+        height: 500px;
+    }
 }

@@ -17088,7 +17088,26 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
 }
 
-[v-cloak] {
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  font-weight: 500;
+}
+
+body a {
+  font-weight: 500;
+}
+
+body [v-cloak] {
   display: none;
 }
 
@@ -17108,7 +17127,71 @@ readers do not read off random characters that represent icons */
   min-width: 520px;
 }
 
-#map {
+#apartment-page .address {
+  color: #717171;
+}
+
+#apartment-page .availability .red {
+  color: red;
+}
+
+#apartment-page .availability .green {
+  color: green;
+}
+
+#apartment-page .icon {
+  width: 50px;
+}
+
+#apartment-page .icon-comfort-1:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F1EB";
+}
+
+#apartment-page .icon-comfort-2:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F1B9";
+}
+
+#apartment-page .icon-comfort-3:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F5C5";
+}
+
+#apartment-page .icon-comfort-4:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F52B";
+}
+
+#apartment-page .icon-comfort-5:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F593";
+}
+
+#apartment-page .icon-comfort-6:before {
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  font-weight: 900;
+  font-size: 35px;
+  content: "\F773";
+}
+
+#apartment-page #map {
   height: 500px;
 }
 
