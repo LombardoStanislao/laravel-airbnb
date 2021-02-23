@@ -17092,10 +17092,6 @@ readers do not read off random characters that represent icons */
   display: none;
 }
 
-#map {
-  height: 500px;
-}
-
 #bt-dropin [data-braintree-id=toggle] {
   display: none;
 }
@@ -17110,5 +17106,9 @@ readers do not read off random characters that represent icons */
 
 #messages-table {
   min-width: 520px;
+}
+
+#map {
+  height: 500px;
 }
 

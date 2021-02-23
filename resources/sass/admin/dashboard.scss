@@ -1,0 +1,20 @@
+#bt-dropin {
+    [data-braintree-id='toggle'] {
+        display: none;
+    }
+}
+
+.dropdown-menu {
+    min-width: 0;
+}
+
+.sidebar {
+
+    .active {
+        color: #11079d;
+    }
+}
+
+#messages-table {
+    min-width: 520px;
+}
