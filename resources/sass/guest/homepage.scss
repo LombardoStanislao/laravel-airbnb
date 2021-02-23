@@ -1,0 +1,68 @@
+body {
+     min-height: 200vh ;
+}
+header {
+    position: fixed;
+    top: 0;
+    left:0 ;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.6s ;
+    padding: 30px 100px;
+    z-index: 5;
+    &.sticky  {
+        padding: 20px 100px;
+        background: blue;
+    }
+    .input-menu {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        background-color: black;
+        border-radius: 30px;
+        transition: all 1s;
+        input {
+            border: 0;
+            background-color: transparent;
+            &:focus {
+                outline: 0;
+            }
+
+            &:hover {
+                border-radius: 30px;
+                background-color: #ccc ;
+                }
+            }
+    }
+
+    form {
+        margin: 45px 100px;
+        &.sticky {
+            margin: 5px 100px;
+        }
+    }
+
+    .navbar .container, .navbar .container-fluid, .navbar .container-sm, .navbar .container-md, .navbar .container-lg, .navbar .container-xl {
+
+        align-items: flex-start;
+
+    }
+
+    button {
+        display: inline-block;
+        border-radius: 30px;
+        transition: all 1s;
+    }
+    button:hover {
+        content: 'Search';
+        width: 145px;
+    }
+
+}
+
+main {
+    position: relative;
+    padding: 200px 100px;
+}

@@ -14,6 +14,16 @@
 
             </ul>
 
+
+            <form  class="input-menu" action="{{ route('search') }}" method="get">
+                <input type="text" name="location" value=""  placeholder="Inserisci dove vuoi andare">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search">
+
+                    </i>
+                </button>
+            </form>
+
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
