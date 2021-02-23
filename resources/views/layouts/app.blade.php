@@ -11,6 +11,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Scripts -->
     @yield('scripts')
@@ -24,7 +25,7 @@
     <div id="app">
         @yield('header')
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
 
