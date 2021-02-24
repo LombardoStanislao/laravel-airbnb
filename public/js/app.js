@@ -87524,23 +87524,43 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         thumbnailElement.appendChild(imgTag); //}
         //show file name
 
-        thumbnailElement.dataset.label = file[i].name; //console.log(file[i]);
-        //show image
+        thumbnailElement.dataset.label = file[i].name; //show image
+        // if(file[i].type.startsWith("image/")){
+        //     var reader = new FileReader();
+        //
+        //     reader.readAsDataURL(file[i]);
+        //     reader.onload=()=>{
+        //
+        //         imgTag.src = reader.result;
+        //
+        //     };
+        //
+        // }else{
+        //     imgTag.src = null;
+        // }
 
-        if (file[i].type.startsWith("image/")) {
-          var reader = new FileReader();
-          reader.readAsDataURL(file[i]);
-
-          reader.onload = function () {
-            // thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-            imgTag.src = reader.result;
-          };
-        } else {
-          //thumbnailElement.style.backgroundImage = null;
-          imgTag.src = null;
-        }
+        loadImage(file, i, imgTag);
       }
     }
+
+    ;
+
+    function loadImage(file, i, imgTag) {
+      //show image
+      if (file[i].type.startsWith("image/")) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file[i]);
+
+        reader.onload = function () {
+          imgTag.src = reader.result;
+          console.log(imgTag.src);
+        };
+      } else {
+        imgTag.src = null;
+      }
+    }
+
+    ;
   }
 });
 
