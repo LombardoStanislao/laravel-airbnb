@@ -14,6 +14,7 @@
         var address = "{{ $apartment->adress }}";
         var pricePerNight = "{{ $apartment->price_per_night }}";
         var description = "{{ $apartment->description }}";
+        var numOldSecondaryImages = "{{ $images->count() }}";
     </script>
 @endsection
 
@@ -198,8 +199,8 @@
                         <label class="d-block">Immagine principale: </label>
                         <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
                         <label>Scegli un'altra immagine principale: </label>
-                        <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*">
-                        <div v-if="!imageValid" class="alert alert-danger">
+                        <input ref="mainImage" type="file" class="form-control-file" name="image" accept="image/*">
+                        <div v-if="!mainImageValid" class="alert alert-danger">
                             L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
                         @error ('image')
@@ -216,16 +217,22 @@
                             @foreach ($images as $index => $image)
                                 <div class="w-25 d-flex flex-column justify-content-between m-2">
                                     <img src="{{ asset("storage/" . $image->url) }}" class="mw-100">
-                                    <input ref="oldSecondaryImages" type="file" accept="image/*" class="form-control-file" name="old_images[{{ $index }}]" accept="image/*">
+                                    <input ref="oldSecondaryImages{{ $index }}" type="file" accept="image/*" class="form-control-file" name="old_images[{{ $index }}]" accept="image/*">
                                 </div>
                             @endforeach
+                        </div>
+                        <div v-if="!oldSecondaryImagesValid" class="alert alert-danger">
+                            Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
                         @if ($images->count() < 4)
                             <label>Aggiungi altre immagini secondarie</label>
                             <input ref="newSecondaryImages" type="file" accept="image/*" class="form-control-file" name="new_images[]" accept="image/*" multiple>
                         @endif
-                        <div v-if="!imageValid" class="alert alert-danger">
-                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        <div v-if="!newSecondaryImagesValid" class="alert alert-danger">
+                            Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        <div v-if="numNewSecondaryImages > (4 - numOldSecondaryImages)" class="alert alert-danger">
+                            Puoi caricare al massimo 4 immagini secondarie in totale
                         </div>
                         @error ('image')
                             <div class="alert alert-danger">
