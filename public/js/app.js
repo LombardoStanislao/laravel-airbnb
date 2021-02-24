@@ -87472,12 +87472,75 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       });
     }
   },
-  mounted: function mounted() {// let dropArea = document.getElementById('drop-area');
-    //
-    // dropArea.addEventListener('dragenter', handlerFunction, false);
-    // dropArea.addEventListener('dragleave', handlerFunction, false);
-    // dropArea.addEventListener('dragover', handlerFunction, false);
-    // dropArea.addEventListener('drop', handlerFunction, false);
+  mounted: function mounted() {
+    document.querySelectorAll(".drop-zone__input").forEach(function (inputElement) {
+      var dropZoneElement = inputElement.closest(".drop-zone");
+      dropZoneElement.addEventListener("click", function (e) {
+        inputElement.click();
+      });
+      dropZoneElement.addEventListener("change", function (e) {
+        if (inputElement.files.length) {
+          updateThumbnail(dropZoneElement, inputElement.files); //[0]
+        }
+      });
+      dropZoneElement.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        dropZoneElement.classList.add("drop-zone--over");
+      });
+      ["dragleave", "dragend"].forEach(function (type) {
+        dropZoneElement.addEventListener(type, function (e) {
+          dropZoneElement.classList.remove('drop-zone--over');
+        });
+      });
+      dropZoneElement.addEventListener("drop", function (e) {
+        e.preventDefault();
+
+        if (e.dataTransfer.files.length) {
+          inputElement.files = e.dataTransfer.files;
+          console.log(inputElement.files);
+          updateThumbnail(dropZoneElement, e.dataTransfer.files); //[0]
+        }
+
+        dropZoneElement.classList.remove("drop-zone--over");
+      });
+    });
+
+    function updateThumbnail(dropZoneElement, file) {
+      console.log(dropZoneElement);
+      console.log(file);
+      var thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+      if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+        dropZoneElement.querySelector(".drop-zone__prompt").remove();
+      }
+
+      for (var i = 0; i < file.length; i++) {
+        //add file in drop-area
+        //if(!thumbnailElement){
+        thumbnailElement = document.createElement("div");
+        thumbnailElement.classList.add("drop-zone__thumb");
+        dropZoneElement.appendChild(thumbnailElement);
+        var imgTag = document.createElement("img");
+        thumbnailElement.appendChild(imgTag); //}
+        //show file name
+
+        thumbnailElement.dataset.label = file[i].name; //console.log(file[i]);
+        //show image
+
+        if (file[i].type.startsWith("image/")) {
+          var reader = new FileReader();
+          reader.readAsDataURL(file[i]);
+
+          reader.onload = function () {
+            // thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+            imgTag.src = reader.result;
+          };
+        } else {
+          //thumbnailElement.style.backgroundImage = null;
+          imgTag.src = null;
+        }
+      }
+    }
   }
 });
 
