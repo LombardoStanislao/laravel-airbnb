@@ -17,25 +17,35 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark flex-md-nowrap p-0">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Airbnb</a>
-            <ul class="navbar-nav px-3 ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">
-                        Visita il sito
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </li>
-            </ul>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/') }}">
+                                Visita il sito
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -46,14 +56,14 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <h5>
-                                <a class="nav-link active" href="{{ route('admin.index') }}">
+                                <a class="nav-link {{ Request::route()->getName() == 'admin.index' ? 'active' : '' }}" href="{{ route('admin.index') }}">
                                     Home Dashboard
                                 </a>
                             </h5>
                         </li>
                         <li class="nav-item">
                             <h5>
-                                <a class="nav-link" href="{{ route('admin.apartments.index') }}">
+                                <a class="nav-link {{ Request::route()->getName() == 'admin.apartments.index' ? 'active' : '' }}" href="{{ route('admin.apartments.index') }}">
                                     I tuoi appartamenti
                                 </a>
                             </h5>

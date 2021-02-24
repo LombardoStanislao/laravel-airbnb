@@ -15,4 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/filteredSearch', 'Api\ApartmentController@filteredSearch');
 
-Route::post('/addView', 'Api\ApartmentController@addView');
+Route::get('/showViews', 'Api\ApartmentController@showViews');
+
+Route::post('/viewedMessage', 'Api\MessageController@viewedMessage');
+
+Route::get('/clientToken', 'Api\PaymentController@clientToken');

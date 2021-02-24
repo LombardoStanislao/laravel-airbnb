@@ -14,6 +14,7 @@ var create = new Vue({
         municipality: '',
         latitude,
         longitude,
+        address,
         pricePerNight,
         availableTypes: [
             'image/jpeg',
@@ -22,11 +23,14 @@ var create = new Vue({
             'image/gif',
             'image/svg'
         ],
-        comforts: [],
         description,
         submitted: false,
         noAdressFound: false,
-        imageValid: true,
+        mainImageValid: true,
+        numOldSecondaryImages: parseInt(numOldSecondaryImages),
+        oldSecondaryImagesValid: true,
+        newSecondaryImagesValid: true,
+        numNewSecondaryImages: 0
     },
     mounted() {
         tt.services.reverseGeocode({
@@ -56,12 +60,29 @@ var create = new Vue({
             var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
             var mucipalityValid = this.municipality;
             var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
-            if (this.$refs.inputFile.files[0]) {
-                this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
-            }
             var descriptionValid = this.description.length <= 65535;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
+            if (this.$refs.mainImage.files[0]) {
+                this.mainImageValid = this.availableTypes.includes(this.$refs.mainImage.files[0].type);
+            }
+
+            for (var i = 0; i < this.numOldSecondaryImages; i++) {
+                if (this.$refs['oldSecondaryImages' + i].files[0]) {
+                    this.oldSecondaryImagesValid = this.availableTypes.includes(this.$refs['oldSecondaryImages' + i].files[0].type);
+                }
+            }
+
+            if (this.$refs.newSecondaryImages) {
+                this.numNewSecondaryImages = this.$refs.newSecondaryImages.files.length;
+
+                if (this.numNewSecondaryImages) {
+                    Array.from(this.$refs.newSecondaryImages.files).forEach(file => {
+                        this.newSecondaryImagesValid = this.availableTypes.includes(file.type);
+                    });
+                }
+            }
+
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= (4-this.numOldSecondaryImages) && descriptionValid;
 
             tt.services.structuredGeocode({
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
@@ -74,11 +95,27 @@ var create = new Vue({
                 this.noAdressFound = false;
                 this.latitude = response.position.lat;
                 this.longitude = response.position.lng;
-                this.$nextTick(() => {
-                    if (noErrors) {
-                        this.$refs.editApartment.submit();
+
+                tt.services.reverseGeocode({
+                    key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                    position: {
+                        longitude: this.longitude,
+                        latitude: this.latitude
                     }
+                }).then(response => {
+                    var streetName = response.addresses[0].address.streetName;
+                    var streetNumber = response.addresses[0].address.streetNumber;
+                    var municipality = response.addresses[0].address.municipality;
+
+                    this.address = `${streetName} ${streetNumber}, ${municipality}`;
+
+                    this.$nextTick(() => {
+                        if (noErrors) {
+                            this.$refs.editApartment.submit();
+                        }
+                    });
                 });
+
             }).catch(error => {
                 this.noAdressFound = true;
             });

@@ -18,6 +18,8 @@
 
 @import "./../../node_modules/@tomtom-international/web-sdk-maps/dist/maps.css";
 
-#map {
-    height: 500px;
-}
+@import 'admin/dashboard';
+
+@import 'guest/homepage';
+@import 'guest/advanced-search';
+@import 'guest/apartment-details';

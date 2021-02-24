@@ -3,6 +3,53 @@
 @section('page-title', 'Aggiungi appartamento')
 
 @section('content')
+    <style media="screen">
+    .drop-zone{
+        max-width: 100%;
+        height: 200px;
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 20px;
+        cursor: pointer;
+        color: #ccc;
+        border: 4px dashed #009578;
+        border-radius: 10px;
+    }
+    .drop-zone--over{
+        border-style: solid;
+    }
+    .drop-zone__input{
+        display: none;
+    }
+    .drop-zone__thumb{
+        width: 25%;
+        height: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #ccc;
+        background-size: cover;
+        position: relative;
+    }
+    .drop-zone__thumb>img{
+        width: 100%;
+        height: 100%;
+    }
+    .drop-zone__thumb::after{
+        content: attr(data-label);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 5px 0;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.75);
+        font-size: 14px;
+        text-align: center;
+    }
+    </style>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -13,6 +60,15 @@
         </div>
         <div class="row">
             <div class="col-12">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="submitForm()" v-cloak>
                     @csrf
                     <div class="form-group">
@@ -170,10 +226,38 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Immagine di copertina: </label>
-                        <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*" required>
-                        <div v-if="!imageValid" class="alert alert-danger">
-                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        <label>Immagine principale: </label>
+                        <div class="drop-zone">
+                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                            <input ref="mainImage" type="file" class="form-control-file drop-zone__input" name="image" accept="image/*" required>
+                        </div>
+                        <div v-if="submitted && !mainImageType" class="alert alert-danger">
+                            L'immagine principale è obbligatoria
+                        </div>
+                        <div v-else-if="!mainImageValid" class="alert alert-danger">
+                            L'immagine principale deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        @error ('image')
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label>Immagini secondarie: </label>
+
+                        <div class="drop-zone">
+                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                            {{-- <div class="drop-zone__thumb" data-label="myfile.txt">
+                            </div> --}}
+                            <input ref="secondaryImages" type="file" multiple accept="image/*" class="form-control-file drop-zone__input" name="images[]" accept="image/*">
+                        </div>
+
+                        <div v-if="!secondaryImagesValid" class="alert alert-danger">
+                            Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        <div v-if="numSecondaryImages > 4" class="alert alert-danger">
+                            Puoi caricare al massimo 4 immagini secondarie
                         </div>
                         @error ('image')
                             <div class="alert alert-danger">
@@ -217,7 +301,7 @@
                         <label>Descrizione: </label>
                         <textarea name="description" rows="8" cols="80" class="form-control" max="65535">@{{ description }}</textarea>
                         <div v-if="description.length > 65535" class="alert alert-danger">
-                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                            La descrizione non può superare i 65535 caratteri
                         </div>
                         @error ('description')
                             <div class="alert alert-danger">

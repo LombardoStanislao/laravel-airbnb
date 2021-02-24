@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Apartment;
 use App\Comfort;
+use App\Image;
 use App\Sponsorship;
 use App\SponsorshipType;
+use App\View;
+use App\Message;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -64,14 +67,13 @@ class ApartmentController extends Controller
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
+            'images' => 'nullable|max:4',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535'
         ]);
 
         $data = $request->all();
-
-        // dd($data["sponsorship_types"][0]);
 
         $data["user_id"] = Auth::user()->id;
 
@@ -85,13 +87,22 @@ class ApartmentController extends Controller
             $slug_found = Apartment::where('slug', $new_slug)->first();
         }
         $data["slug"] = $new_slug;
-
         $main_image = Storage::put('apartment_images', $data["image"]);
         $data["main-image"] = $main_image;
 
         $new_apartment = new Apartment();
         $new_apartment->fill($data);
         $new_apartment->save();
+
+        if (array_key_exists('images', $data)) {
+            for ($i=0; $i < count($data["images"]) ; $i++) {
+                $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
+                $new_apartment_image = new Image();
+                $new_apartment_image->apartment_id = $new_apartment->id;
+                $new_apartment_image->url = $secondary_images;
+                $new_apartment_image->save();
+            }
+        }
 
         if (array_key_exists('comforts', $data)) {
             $new_apartment->comforts()->sync($data["comforts"]);
@@ -121,17 +132,24 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         if ($apartment && $apartment->user_id == Auth::user()->id) {
-            $last_sponsorship = $apartment->sponsorships->sortByDesc('created_at')->first();
-            if ($last_sponsorship) {
-                $sponsorship_end = $last_sponsorship->created_at->addHours($last_sponsorship->sponsorshipType->duration);
-                $has_active_sponsorship = $sponsorship_end > Carbon::now();
-            } else {
-                $has_active_sponsorship = false;
+            $active_sponsorship = $apartment->sponsorships->sortBy('created_at')->last();
+            if ($active_sponsorship) {
+                $last_payment = $active_sponsorship->payments->sortBy('created_at')->last();
+                if (!$last_payment->accepted) {
+                    $active_sponsorship = null;
+                } else {
+                    $sponsorship_end = $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration);
+
+                    if ($sponsorship_end <= Carbon::now()) {
+                        $active_sponsorship = null;
+                    }
+                }
             }
 
             $data = [
                 'apartment' => $apartment,
-                'has_active_sponsorship' => $has_active_sponsorship
+                'active_sponsorship' => $active_sponsorship,
+                'images' => Image::where('apartment_id', $apartment->id)->get(),
             ];
 
             return view('admin.apartments.show', $data);
@@ -151,7 +169,8 @@ class ApartmentController extends Controller
         if ($apartment && $apartment->user_id == Auth::user()->id) {
             $data = [
                 'apartment' => Apartment::where('id', $apartment->id)->first(),
-                'comforts' => Comfort::all()
+                'images' => Image::where('apartment_id', $apartment->id)->get(),
+                'comforts' => Comfort::all(),
             ];
 
             return view('admin.apartments.edit', $data);
@@ -169,6 +188,9 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
+        $oldImages = Image::where('apartment_id', $apartment->id)->get();
+        $maxNumNewImages = 4 - $oldImages->count();
+
         $request->validate([
             'title' => 'required|max:255',
             'rooms_number' => 'required|integer|min:1|max:255',
@@ -178,8 +200,13 @@ class ApartmentController extends Controller
             'street_name' => 'required',
             'street_number' => 'required|min:1',
             'municipality' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
+            'old_images' => 'nullable|max:4',
+            'new_images' => 'nullable|max:' . $maxNumNewImages,
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535',
@@ -202,9 +229,35 @@ class ApartmentController extends Controller
             $data["slug"] = $new_slug;
         }
 
-        if(array_key_exists('image',$data)){
+        if(array_key_exists('image', $data)){
             $main_image = Storage::put('apartment_images', $data["image"]);
             $data["main-image"] = $main_image;
+        }
+
+        if (array_key_exists('old_images', $data)) {
+            foreach ($oldImages as $index => $oldImage) {
+                if (array_key_exists($index, $data['old_images'])) {
+                    $oldImage->delete();
+                }
+            }
+            foreach ($data['old_images'] as $image) {
+                $secondary_images = Storage::put('apartment_images', $image);
+                $new_apartment_image = new Image();
+                $new_apartment_image->apartment_id = $apartment->id;
+                $new_apartment_image->url = $secondary_images;
+                $new_apartment_image->save();
+            }
+        }
+
+
+        if (array_key_exists('new_images', $data)) {
+            for ($i=0; $i < count($data["new_images"]) ; $i++) {
+                $secondary_images = Storage::put('apartment_images', $data["new_images"][$i]);
+                $new_apartment_image = new Image();
+                $new_apartment_image->apartment_id = $apartment->id;
+                $new_apartment_image->url = $secondary_images;
+                $new_apartment_image->save();
+            }
         }
 
         $apartment->update($data);
@@ -231,5 +284,21 @@ class ApartmentController extends Controller
         $apartment->delete();
 
         return redirect()->route('admin.apartments.index');
+    }
+
+    public function statistics($apartment_id) {
+        $apartment = Apartment::where('id', $apartment_id)->first();
+
+        if ($apartment && $apartment->user_id == Auth::user()->id) {
+            $data = [
+                'views' => View::where('apartment_id', $apartment->id)->get(),
+                'messages' => Message::where('apartment_id', $apartment->id)->get(),
+                'apartment_id' => $apartment_id
+            ];
+
+            return view('admin.apartments.statistics', $data);
+        }
+
+        abort(404);
     }
 }

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Http;
 
 use App\Apartment;
 use App\Comfort;
+use Carbon\Carbon;
+
 class HomeController extends Controller
 {
     /**
@@ -24,8 +26,22 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $apartments = Apartment::all();
 
-        return view('guest.home');
+        $sponsored_apartments = $apartments->filter(function($apartment) {
+            return isSponsored($apartment);
+        });
+
+        $non_sponsored_apartments = $apartments->filter(function($apartment) {
+            return !isSponsored($apartment);
+        });
+
+        $data = [
+            'sponsored_apartments' => $sponsored_apartments,
+            'non_sponsored_apartments' => $non_sponsored_apartments
+        ];
+
+        return view('guest.home', $data);
     }
 
     public function search(Request $request) {
@@ -93,6 +109,10 @@ class HomeController extends Controller
         //select the apartments where the latitude and longitude are in the arrays
         $filteredApartments = $apartments->whereIn('latitude', $lats)->whereIn('longitude', $lons);
 
+        // sort the apartments so that those having an active sponsorship come before
+        $filteredApartments = $filteredApartments->sort(function($a, $b) {
+            return isSponsored($b) - isSponsored($a);
+        });
 
         $data = [
             'apartments' => $filteredApartments,

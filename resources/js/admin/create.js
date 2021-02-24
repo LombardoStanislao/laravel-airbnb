@@ -27,7 +27,10 @@ var create = new Vue({
         description: '',
         submitted: false,
         noAdressFound: false,
-        imageValid: true,
+        mainImageType: null,
+        mainImageValid: true,
+        secondaryImagesValid: true,
+        numSecondaryImages: 0,
     },
     methods: {
         submitForm() {
@@ -44,11 +47,29 @@ var create = new Vue({
             var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
             var mucipalityValid = this.municipality;
             var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
-            this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
+
+            if (this.$refs.mainImage.files[0]) {
+                this.mainImageType = this.$refs.mainImage.files[0].type;
+                this.mainImageValid = this.availableTypes.includes(this.mainImageType);
+            } else {
+                this.mainImageType = null;
+                this.mainImageValid = true;
+            }
+
+            this.numSecondaryImages = this.$refs.secondaryImages.files.length;
+
+            if (this.numSecondaryImages) {
+                Array.from(this.$refs.secondaryImages.files).forEach(file => {
+                    this.secondaryImagesValid = this.availableTypes.includes(file.type);
+                });
+            }
+
+            var mainImageValid = this.mainImageType && this.mainImageValid;
+
             var descriptionValid = this.description.length <= 65535;
             var addressValid = this.address.length <= 255;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && descriptionValid;
 
 
             tt.services.structuredGeocode({
@@ -82,10 +103,95 @@ var create = new Vue({
                         }
                     });
                 });
-                
+
             }).catch(error => {
                 this.noAdressFound = true;
             });
+        },
+
+
+
+    },
+    mounted() {
+
+
+        document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
+
+            const dropZoneElement = inputElement.closest(".drop-zone");
+
+            dropZoneElement.addEventListener("click", e =>{
+                inputElement.click();
+            });
+
+            dropZoneElement.addEventListener("change", e =>{
+                if(inputElement.files.length){
+                    updateThumbnail(dropZoneElement, inputElement.files);//[0]
+                }
+            });
+
+            dropZoneElement.addEventListener("dragover", e =>{
+                e.preventDefault();
+                dropZoneElement.classList.add("drop-zone--over");
+            });
+
+            ["dragleave", "dragend"].forEach(type => {
+                dropZoneElement.addEventListener(type, e =>{
+                    dropZoneElement.classList.remove('drop-zone--over');
+                });
+            });
+
+            dropZoneElement.addEventListener("drop", e =>{
+                e.preventDefault();
+
+                if(e.dataTransfer.files.length){
+                    inputElement.files = e.dataTransfer.files;
+                    console.log(inputElement.files);
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files);//[0]
+                }
+
+                dropZoneElement.classList.remove("drop-zone--over");
+
+            });
+
+        });
+
+        function updateThumbnail(dropZoneElement, file){
+            console.log(dropZoneElement);
+            console.log(file);
+            let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+            if(dropZoneElement.querySelector(".drop-zone__prompt")){
+                dropZoneElement.querySelector(".drop-zone__prompt").remove();
+            }
+            for (var i = 0; i < file.length; i++) {
+                //add file in drop-area
+                //if(!thumbnailElement){
+                    thumbnailElement = document.createElement("div");
+                    thumbnailElement.classList.add("drop-zone__thumb");
+                    dropZoneElement.appendChild(thumbnailElement);
+                    var imgTag = document.createElement("img");
+                    thumbnailElement.appendChild(imgTag);
+
+                //}
+
+                //show file name
+                thumbnailElement.dataset.label = file[i].name;
+                //console.log(file[i]);
+                //show image
+                if(file[i].type.startsWith("image/")){
+                    var reader = new FileReader();
+
+                    reader.readAsDataURL(file[i]);
+                    reader.onload=()=>{
+                            // thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+                            imgTag.src = reader.result;
+                    };
+
+                }else{
+                    //thumbnailElement.style.backgroundImage = null;
+                    imgTag.src = null;
+                }
+            }
 
 
 

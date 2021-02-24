@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Apartment;
+use App\User;
 use Faker\Generator as Faker;
 
 class ApartmentsTableSeeder extends Seeder
@@ -20,7 +21,14 @@ class ApartmentsTableSeeder extends Seeder
         $maxLon = 14.5;
         for ($i = 0; $i < 10; $i++) {
             $newApartment = new Apartment();
-            $newApartment->user_id = 1;
+
+            $user = null;
+            $maxId = User::orderBy('id', 'desc')->first()->id;
+            while(!$user) {
+                $user = User::find(rand(1, $maxId));
+            }
+
+            $newApartment->user_id = $user->id;
             $newApartment->rooms_number = rand(1, 6);
             $newApartment->sleeps_accomodations = rand(2, 15);
             $newApartment->title = $faker->words(rand(2, 6), true);
