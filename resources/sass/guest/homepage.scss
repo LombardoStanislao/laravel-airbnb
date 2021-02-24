@@ -12,47 +12,56 @@ header {
     transition: 0.6s ;
     padding: 30px 100px;
     z-index: 5;
+    // background:url("{{asset('./img/jumbotron.jpg')}}");
+
     &.sticky  {
         padding: 20px 100px;
         background: blue;
     }
     nav {
         &.navbar{
-                width: 100%;
+            width: 100%;
         }
         .navbar {
-                justify-content: flex-start;
+            justify-content: flex-start;
+            // background: blue;
         }
     }
+    #header-form {
 
-    .input-menu {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        background-color: black;
-        border-radius: 30px;
-        transition: all 1s;
-        input {
-            border: 0;
+
+        form {
+            padding: 10px;
+            margin: 45px 100px;
+            &.sticky {
+                margin: 5px 100px;
+            }
+
+        }
+        .input-menu {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
             background-color: transparent;
-            &:focus {
-                outline: 0;
-            }
+            border-radius: 30px;
+            transition: all 1s;
 
-            &:hover {
-                border-radius: 30px;
-                background-color: #ccc ;
+            input {
+                border: 0;
+                background-color: transparent;
+                &:focus {
+                    outline: 0;
                 }
-            }
-    }
 
-    form {
-        margin: 45px 100px;
-        &.sticky {
-            margin: 5px 100px;
+
         }
-
+        &:hover {
+            border-radius: 30px;
+            background-color: #ccc ;
+            }
+        }
     }
+
 
     img {
         width: 100px;
@@ -64,8 +73,6 @@ header {
         transition: all 1s;
     }
     button:hover {
-        content: 'Search';
-        width: 145px;
     }
 
 }

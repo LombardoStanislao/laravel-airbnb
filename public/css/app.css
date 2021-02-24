@@ -17157,35 +17157,36 @@ header nav .navbar {
   justify-content: flex-start;
 }
 
-header .input-menu {
+header #header-form form {
+  padding: 10px;
+  margin: 45px 100px;
+}
+
+header #header-form form.sticky {
+  margin: 5px 100px;
+}
+
+header #header-form .input-menu {
   position: relative;
   display: flex;
   justify-content: space-between;
-  background-color: black;
+  background-color: transparent;
   border-radius: 30px;
   transition: all 1s;
 }
 
-header .input-menu input {
+header #header-form .input-menu input {
   border: 0;
   background-color: transparent;
 }
 
-header .input-menu input:focus {
+header #header-form .input-menu input:focus {
   outline: 0;
 }
 
-header .input-menu input:hover {
+header #header-form .input-menu:hover {
   border-radius: 30px;
   background-color: #ccc;
-}
-
-header form {
-  margin: 45px 100px;
-}
-
-header form.sticky {
-  margin: 5px 100px;
 }
 
 header img {
@@ -17196,11 +17197,6 @@ header button {
   display: inline-block;
   border-radius: 30px;
   transition: all 1s;
-}
-
-header button:hover {
-  content: "Search";
-  width: 145px;
 }
 
 main {

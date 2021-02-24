@@ -1,5 +1,5 @@
 {{-- registrazione e login --}}
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{asset('./img/logo.png')}}" alt="">
@@ -13,16 +13,17 @@
             <ul class="navbar-nav mr-auto">
 
             </ul>
+            <div id="header-form">
+                <form  class="input-menu" action="{{ route('search') }}" method="get">
+                    <input type="text" name="location" value=""  placeholder="Inserisci dove vuoi andare">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search">
 
+                        </i>
+                    </button>
+                </form>    
+            </div>
 
-            <form  class="input-menu" action="{{ route('search') }}" method="get">
-                <input type="text" name="location" value=""  placeholder="Inserisci dove vuoi andare">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search">
-
-                    </i>
-                </button>
-            </form>
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
