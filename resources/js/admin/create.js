@@ -163,6 +163,7 @@ var create = new Vue({
             if(dropZoneElement.querySelector(".drop-zone__prompt")){
                 dropZoneElement.querySelector(".drop-zone__prompt").remove();
             }
+
             for (var i = 0; i < file.length; i++) {
                 //add file in drop-area
                 //if(!thumbnailElement){
@@ -176,25 +177,27 @@ var create = new Vue({
 
                 //show file name
                 thumbnailElement.dataset.label = file[i].name;
-                //console.log(file[i]);
+
                 //show image
-                if(file[i].type.startsWith("image/")){
-                    var reader = new FileReader();
-
-                    reader.readAsDataURL(file[i]);
-                    reader.onload=()=>{
-                            // thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-                            imgTag.src = reader.result;
-                    };
-
-                }else{
-                    //thumbnailElement.style.backgroundImage = null;
-                    imgTag.src = null;
-                }
+                loadImage(file,i,imgTag);
             }
 
+        };
 
+        function loadImage(file,i,imgTag){
+            if(file[i].type.startsWith("image/")){
+                var reader = new FileReader();
 
-        }
+                reader.readAsDataURL(file[i]);
+                reader.onload=()=>{
+
+                    imgTag.src = reader.result;
+                    
+                };
+
+            }else{
+                imgTag.src = null;
+            }
+        };
     }
 });
