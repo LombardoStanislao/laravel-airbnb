@@ -87580,7 +87580,11 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     description: description,
     submitted: false,
     noAdressFound: false,
-    imageValid: true
+    mainImageValid: true,
+    numOldSecondaryImages: parseInt(numOldSecondaryImages),
+    oldSecondaryImagesValid: true,
+    newSecondaryImagesValid: true,
+    numNewSecondaryImages: 0
   },
   mounted: function mounted() {
     var _this = this;
@@ -87612,13 +87616,29 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
       var mucipalityValid = this.municipality;
       var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
+      var descriptionValid = this.description.length <= 65535;
 
-      if (this.$refs.inputFile.files[0]) {
-        this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
+      if (this.$refs.mainImage.files[0]) {
+        this.mainImageValid = this.availableTypes.includes(this.$refs.mainImage.files[0].type);
       }
 
-      var descriptionValid = this.description.length <= 65535;
-      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
+      for (var i = 0; i < this.numOldSecondaryImages; i++) {
+        if (this.$refs['oldSecondaryImages' + i].files[0]) {
+          this.oldSecondaryImagesValid = this.availableTypes.includes(this.$refs['oldSecondaryImages' + i].files[0].type);
+        }
+      }
+
+      if (this.$refs.newSecondaryImages) {
+        this.numNewSecondaryImages = this.$refs.newSecondaryImages.files.length;
+
+        if (this.numNewSecondaryImages) {
+          Array.from(this.$refs.newSecondaryImages.files).forEach(function (file) {
+            _this2.newSecondaryImagesValid = _this2.availableTypes.includes(file.type);
+          });
+        }
+      }
+
+      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= 4 - this.numOldSecondaryImages && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
         countryCode: 'IT',
