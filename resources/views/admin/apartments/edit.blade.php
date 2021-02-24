@@ -197,7 +197,7 @@
                     <div class="form-group">
                         <label class="d-block">Immagine principale: </label>
                         <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
-                        <label>Scegli un'altra immagine: </label>
+                        <label>Scegli un'altra immagine principale: </label>
                         <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*">
                         <div v-if="!imageValid" class="alert alert-danger">
                             L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
@@ -209,13 +209,21 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label class="d-block">Immagini secondarie: </label>
-                        @foreach ($images as $image)
-                            <div class="w-25 h-25 d-inline-block">
-                                <img src="{{ asset("storage/" . $image->url) }}" class="mw-100 mh-100">
-                            </div>
-                        @endforeach
-                        <input ref="inputFile" type="file" multiple accept="image/*" class="form-control-file " name="images[]" accept="image/*">
+                        @if ($images->count())
+                            <label class="d-block">Modifica immagini secondarie già presenti: </label>
+                        @endif
+                        <div class="d-flex">
+                            @foreach ($images as $index => $image)
+                                <div class="w-25 d-flex flex-column justify-content-between m-2">
+                                    <img src="{{ asset("storage/" . $image->url) }}" class="mw-100">
+                                    <input ref="oldSecondaryImages" type="file" accept="image/*" class="form-control-file" name="old_images[{{ $index }}]" accept="image/*">
+                                </div>
+                            @endforeach
+                        </div>
+                        @if ($images->count() < 4)
+                            <label>Aggiungi altre immagini secondarie</label>
+                            <input ref="newSecondaryImages" type="file" accept="image/*" class="form-control-file" name="new_images[]" accept="image/*" multiple>
+                        @endif
                         <div v-if="!imageValid" class="alert alert-danger">
                             L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
@@ -224,7 +232,6 @@
                                 {{ $message }}
                             </div>
                         @enderror
-
                     </div>
                     <div class="form-group">
                         <label>Comforts:</label>
