@@ -16,6 +16,15 @@ header {
         padding: 20px 100px;
         background: blue;
     }
+    nav {
+        &.navbar{
+                width: 100%;
+        }
+        .navbar {
+                justify-content: flex-start;
+        }
+    }
+
     .input-menu {
         position: relative;
         display: flex;
@@ -42,12 +51,11 @@ header {
         &.sticky {
             margin: 5px 100px;
         }
+
     }
 
-    .navbar .container, .navbar .container-fluid, .navbar .container-sm, .navbar .container-md, .navbar .container-lg, .navbar .container-xl {
-
-        align-items: flex-start;
-
+    img {
+        width: 100px;
     }
 
     button {
@@ -65,4 +73,11 @@ header {
 main {
     position: relative;
     padding: 200px 100px;
+
+    .card {
+        transition: all 1s;
+        &:hover{
+            transform: scale(1.2);
+        }
+    }
 }

@@ -13,10 +13,36 @@
 @endsection
 
 @section('content')
-    <div id="home" class="container">
+    <main>
+        <div id="home" class="container">
         <div class="row">
-            <div class="col-12">
-                
+            <div class="col-3">
+                <div class="card">
+                    <img src="{{asset('./img/logo.png')}}" alt="">
+                    <h2>TITOLO</h2>
+                    <p>DESCRIZIONE</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <img src="{{asset('./img/logo.png')}}" alt="">
+                    <h2>TITOLO</h2>
+                    <p>DESCRIZIONE</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <img src="{{asset('./img/logo.png')}}" alt="">
+                    <h2>TITOLO</h2>
+                    <p>DESCRIZIONE</p>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <img src="{{asset('./img/logo.png')}}" alt="">
+                    <h2>TITOLO</h2>
+                    <p>DESCRIZIONE</p>
+                </div>
             </div>
         </div>
 
@@ -65,4 +91,5 @@
             </div>
         </div>
     </div>
+    </main>
 @endsection
