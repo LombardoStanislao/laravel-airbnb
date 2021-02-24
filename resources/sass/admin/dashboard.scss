@@ -10,11 +10,52 @@
 
 .sidebar {
 
+    border-bottom: 1px solid #80808033;
+
     .active {
         color: #11079d;
+    }
+
+    @media only screen and (min-width: 768px) {
+        border-bottom: 0;
     }
 }
 
 #messages-table {
     min-width: 520px;
+}
+
+#show-apartment {
+    .primary-image {
+        height: 240px;
+
+        @media only screen and (min-width: 576px) {
+            height: 300px;
+        }
+
+        @media only screen and (min-width: 960px) {
+            height: 360px;
+        }
+    }
+
+    [class^="secondary-image"] {
+        height: 115px;
+
+        @media only screen and (min-width: 576px) {
+            height: 145px;
+        }
+
+        @media only screen and (min-width: 960px) {
+            height: 175px;
+        }
+    }
+
+    .secondary-image-1,
+    .secondary-image-2 {
+        margin-bottom: 10px;
+    }
+
+    img {
+        object-fit: cover;
+    }
 }
