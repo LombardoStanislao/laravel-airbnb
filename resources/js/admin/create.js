@@ -31,12 +31,16 @@ var create = new Vue({
         mainImageValid: true,
         secondaryImagesValid: true,
         numSecondaryImages: 0,
+        allComforts: [],
+        invalidComforts: []
     },
     methods: {
         submitForm() {
             this.submitted = true;
 
             window.scrollTo(0, 0);
+
+            this.invalidComforts = [];
 
             var titleValid = this.title && this.title.length <= 255;
             var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
@@ -69,7 +73,16 @@ var create = new Vue({
             var descriptionValid = this.description.length <= 65535;
             var addressValid = this.address.length <= 255;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && descriptionValid;
+
+            for (var i = 0; i < this.allComforts.length; i++) {
+                if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+                    this.invalidComforts.push(i);
+                }
+            }
+
+            var comfortsValid = !this.invalidComforts.length;
+
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && comfortsValid && descriptionValid;
 
 
             tt.services.structuredGeocode({
@@ -108,12 +121,11 @@ var create = new Vue({
                 this.noAdressFound = true;
             });
         },
-
-
-
     },
     mounted() {
-
+        axios.get('/api/getAllComforts').then((response) => {
+            this.allComforts = response.data.results;
+        });
 
         document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
 
@@ -125,7 +137,7 @@ var create = new Vue({
 
             dropZoneElement.addEventListener("change", e =>{
                 if(inputElement.files.length){
-                    updateThumbnail(dropZoneElement, inputElement.files);//[0]
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
                 }
             });
 
@@ -146,7 +158,7 @@ var create = new Vue({
                 if(e.dataTransfer.files.length){
                     inputElement.files = e.dataTransfer.files;
                     console.log(inputElement.files);
-                    updateThumbnail(dropZoneElement, e.dataTransfer.files);//[0]
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
                 }
 
                 dropZoneElement.classList.remove("drop-zone--over");
@@ -164,40 +176,37 @@ var create = new Vue({
                 dropZoneElement.querySelector(".drop-zone__prompt").remove();
             }
 
-            for (var i = 0; i < file.length; i++) {
-                //add file in drop-area
-                //if(!thumbnailElement){
-                    thumbnailElement = document.createElement("div");
-                    thumbnailElement.classList.add("drop-zone__thumb");
-                    dropZoneElement.appendChild(thumbnailElement);
-                    var imgTag = document.createElement("img");
-                    thumbnailElement.appendChild(imgTag);
 
-                //}
+            //add file in drop-area
+            if(!thumbnailElement){
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
 
-                //show file name
-                thumbnailElement.dataset.label = file[i].name;
-
-                //show image
-                loadImage(file,i,imgTag);
             }
 
-        };
+            //show file name
+            thumbnailElement.dataset.label = file.name;
 
-        function loadImage(file,i,imgTag){
-            if(file[i].type.startsWith("image/")){
+            //show image
+            if(file.type.startsWith("image/")){
                 var reader = new FileReader();
 
-                reader.readAsDataURL(file[i]);
+                reader.readAsDataURL(file);
                 reader.onload=()=>{
 
                     imgTag.src = reader.result;
-                    
+
                 };
 
             }else{
                 imgTag.src = null;
             }
+
+
         };
+
     }
 });

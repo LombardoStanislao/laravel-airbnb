@@ -6,7 +6,7 @@
     <style media="screen">
     .drop-zone{
         max-width: 100%;
-        height: 200px;
+        height: 365px;
         padding: 25px;
         display: flex;
         align-items: center;
@@ -18,6 +18,9 @@
         border: 4px dashed #009578;
         border-radius: 10px;
     }
+    .mini{
+        height: 180px;
+    }
     .drop-zone--over{
         border-style: solid;
     }
@@ -25,7 +28,7 @@
         display: none;
     }
     .drop-zone__thumb{
-        width: 25%;
+        width: 100%;
         height: 100%;
         border-radius: 10px;
         overflow: hidden;
@@ -225,7 +228,7 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-sm-12 col-md-6 float-left">
                         <label>Immagine principale: </label>
                         <div class="drop-zone">
                             <span class="drop-zone__prompt">Drop file here or click to upload</span>
@@ -243,16 +246,17 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label>Immagini secondarie: </label>
 
-                        <div class="drop-zone">
-                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
-                            {{-- <div class="drop-zone__thumb" data-label="myfile.txt">
-                            </div> --}}
-                            <input ref="secondaryImages" type="file" multiple accept="image/*" class="form-control-file drop-zone__input" name="images[]" accept="image/*">
-                        </div>
-
+                    <div class="form-group col-sm-12 col-md-6 float-left">
+                        <label class="d-block">Immagini secondarie: </label>
+                        @for ($i=0; $i < 4; $i++)
+                            <div class="col-sm-12 col-md-6 float-left pb-2">
+                                <div class="drop-zone mini">
+                                    <span class="drop-zone__prompt">Drop files here or click to upload</span>
+                                    <input ref="secondaryImages" type="file" accept="image/*" class="form-control-file drop-zone__input" name="images[]" accept="image/*">
+                                </div>
+                            </div>
+                        @endfor
                         <div v-if="!secondaryImagesValid" class="alert alert-danger">
                             Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
@@ -267,12 +271,15 @@
                     </div>
                     <div class="form-group">
                         <label>Comforts: </label>
-                        @foreach ($comforts as $comfort)
+                        @foreach ($comforts as $index => $comfort)
                             <div class="form-check">
-                                <input name="comforts[]" class="form-check-input" type="checkbox" value="{{ $comfort->id }}" {{ in_array($comfort->id, old('comforts', [])) ? 'checked' : '' }}>
+                                <input ref="comfort{{ $index }}" name="comforts[]" class="form-check-input" type="checkbox" value="{{ $comfort->id }}" {{ in_array($comfort->id, old('comforts', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label">
                                     {{ $comfort->name }}
                                 </label>
+                                <div v-if="invalidComforts.includes({{ $index }})" class="alert alert-danger">
+                                    Il valore di questo comfort non è valido
+                                </div>
                             </div>
                         @endforeach
                         @error ('comforts')

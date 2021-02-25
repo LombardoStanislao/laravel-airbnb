@@ -30,9 +30,15 @@ var create = new Vue({
         numOldSecondaryImages: parseInt(numOldSecondaryImages),
         oldSecondaryImagesValid: true,
         newSecondaryImagesValid: true,
-        numNewSecondaryImages: 0
+        numNewSecondaryImages: 0,
+        allComforts: [],
+        invalidComforts: []
     },
     mounted() {
+        axios.get('/api/getAllComforts').then((response) => {
+            this.allComforts = response.data.results;
+        });
+
         tt.services.reverseGeocode({
             key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
             position: {
@@ -50,6 +56,8 @@ var create = new Vue({
             this.submitted = true;
 
             window.scrollTo(0, 0);
+
+            this.invalidComforts = [];
 
             var titleValid = this.title && this.title.length <= 255;
             var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
@@ -82,7 +90,15 @@ var create = new Vue({
                 }
             }
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= (4-this.numOldSecondaryImages) && descriptionValid;
+            for (var i = 0; i < this.allComforts.length; i++) {
+                if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+                    this.invalidComforts.push(i);
+                }
+            }
+
+            var comfortsValid = !this.invalidComforts.length;
+
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= (4-this.numOldSecondaryImages) && comfortsValid && descriptionValid;
 
             tt.services.structuredGeocode({
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
@@ -120,5 +136,87 @@ var create = new Vue({
                 this.noAdressFound = true;
             });
         }
+    },
+    mounted() {
+
+        document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
+
+            const dropZoneElement = inputElement.closest(".drop-zone");
+
+            dropZoneElement.addEventListener("click", e =>{
+                inputElement.click();
+            });
+
+            dropZoneElement.addEventListener("change", e =>{
+                if(inputElement.files.length){
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
+                }
+            });
+
+            dropZoneElement.addEventListener("dragover", e =>{
+                e.preventDefault();
+                dropZoneElement.classList.add("drop-zone--over");
+            });
+
+            ["dragleave", "dragend"].forEach(type => {
+                dropZoneElement.addEventListener(type, e =>{
+                    dropZoneElement.classList.remove('drop-zone--over');
+                });
+            });
+
+            dropZoneElement.addEventListener("drop", e =>{
+                e.preventDefault();
+
+                if(e.dataTransfer.files.length){
+                    inputElement.files = e.dataTransfer.files;
+                    console.log(inputElement.files);
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+                }
+
+                dropZoneElement.classList.remove("drop-zone--over");
+
+            });
+
+        });
+
+        function updateThumbnail(dropZoneElement, file){
+            console.log(dropZoneElement);
+            console.log(file);
+            let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+            if(dropZoneElement.querySelector(".drop-zone__prompt")){
+                dropZoneElement.querySelector(".drop-zone__prompt").remove();
+            }
+
+            //add file in drop-area
+            if(!thumbnailElement){
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
+
+            }
+
+            //show file name
+            thumbnailElement.dataset.label = file.name;
+
+            //show image
+            if(file.type.startsWith("image/")){
+                var reader = new FileReader();
+
+                reader.readAsDataURL(file);
+                reader.onload=()=>{
+
+                    imgTag.src = reader.result;
+
+                };
+
+            }else{
+                imgTag.src = null;
+            }
+
+        };
+
     }
 });

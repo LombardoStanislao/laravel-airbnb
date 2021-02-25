@@ -14,7 +14,7 @@
                     </div>
                 </div>
             @endif
-            <div class="row">
+            <div class="row mt-4 mb-4">
                 <div class="col-12 col-sm-6 mb-2">
                     <h1>{{ $apartment->title }}</h1>
                 </div>

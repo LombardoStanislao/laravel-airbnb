@@ -68,6 +68,7 @@ class ApartmentController extends Controller
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'images' => 'nullable|max:4',
+            'images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535'
@@ -96,11 +97,15 @@ class ApartmentController extends Controller
 
         if (array_key_exists('images', $data)) {
             for ($i=0; $i < count($data["images"]) ; $i++) {
+                // dd($data["images"]);
+
                 $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
                 $new_apartment_image = new Image();
                 $new_apartment_image->apartment_id = $new_apartment->id;
                 $new_apartment_image->url = $secondary_images;
                 $new_apartment_image->save();
+
+
             }
         }
 
@@ -206,7 +211,9 @@ class ApartmentController extends Controller
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'old_images' => 'nullable|max:4',
+            'old_images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'new_images' => 'nullable|max:' . $maxNumNewImages,
+            'new_images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535',

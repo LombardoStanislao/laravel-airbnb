@@ -59,3 +59,37 @@
         object-fit: cover;
     }
 }
+
+#edit-apartment {
+    .secondary-images {
+        width: calc(50% - 20px);
+        margin: 10px;
+
+        @media only screen and (min-width: 1140px) {
+            width: calc(25% - 20px);
+        }
+
+        img {
+            height: 120px;
+            object-fit: cover;
+
+            @media only screen and (min-width: 576px) {
+                height: 240px;
+            }
+        }
+    }
+}
+
+#payment-form {
+    .card {
+        cursor: pointer;
+
+        &:hover {
+            background-color: #00d8ff38;
+        }
+
+        &.active {
+            background-color: #00d8ff38;
+        }
+    }
+}

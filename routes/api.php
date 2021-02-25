@@ -20,3 +20,5 @@ Route::get('/showViews', 'Api\ApartmentController@showViews');
 Route::post('/viewedMessage', 'Api\MessageController@viewedMessage');
 
 Route::get('/clientToken', 'Api\PaymentController@clientToken');
+
+Route::get('/getAllComforts', 'Api\ComfortController@getAllComforts');
