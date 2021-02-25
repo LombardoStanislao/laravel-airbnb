@@ -1,10 +1,8 @@
 {{-- registrazione e login --}}
-
-{{-- Navbar per tablet e desktop --}}
-<nav class="navbar navbar-expand-md navbar-top">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm navbar-top">
     <div class="container">
-        <a class="navbar-brand white" href="{{ url('/') }}" id="logo">
-            airbnb
+        <a class="navbar-brand" href="{{ url('/') }}">
+            <img src="{{asset('./img/logo.png')}}" alt="">
         </a>
 
         <div class="nav-menu">
@@ -17,7 +15,22 @@
         </div>
 
 
+<<<<<<< HEAD
         <div class="collapse navbar-collapse user-menu-container" id="navbarSupportedContent">
+=======
+            </ul>
+            <div id="header-form">
+                <form  class="input-menu" action="{{ route('search') }}" method="get">
+                    <input type="text" name="location" value=""  placeholder="Inserisci dove vuoi andare">
+                    <button type="submit" class="btn btn-primary ">
+                        <i class="fas fa-search">
+
+                        </i>
+                    </button>
+                </form>
+            </div>
+
+>>>>>>> main
 
             <!-- Right Side Of Navbar -->
             <a class="user-menu" id="user-icon">
@@ -75,6 +88,7 @@
         </div>
     </div>
 </nav>
+<<<<<<< HEAD
 
 {{-- Navbar per mobile --}}
 
@@ -117,4 +131,17 @@
 
 
     </div>
+=======
+<script type="text/javascript">
+window.addEventListener("scroll",function(){
+    var header = document.querySelector("header");
+    var form = document.querySelector("form");
+    header.classList.toggle("sticky", window.scrollY > 0);
+    form.classList.toggle("sticky", window.scrollY > 0);
+});
+</script>
+{{-- ricerca --}}
+<nav>
+    {{-- input --}}
+>>>>>>> main
 </nav>
