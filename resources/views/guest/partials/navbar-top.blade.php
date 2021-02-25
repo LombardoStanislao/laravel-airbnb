@@ -1,8 +1,8 @@
 {{-- registrazione e login --}}
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+            <img src="{{asset('./img/logo.png')}}" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -13,6 +13,17 @@
             <ul class="navbar-nav mr-auto">
 
             </ul>
+            <div id="header-form">
+                <form  class="input-menu" action="{{ route('search') }}" method="get">
+                    <input type="text" name="location" value=""  placeholder="Inserisci dove vuoi andare">
+                    <button type="submit" class="btn btn-primary ">
+                        <i class="fas fa-search">
+
+                        </i>
+                    </button>
+                </form>
+            </div>
+
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -55,7 +66,14 @@
         </div>
     </div>
 </nav>
-
+<script type="text/javascript">
+window.addEventListener("scroll",function(){
+    var header = document.querySelector("header");
+    var form = document.querySelector("form");
+    header.classList.toggle("sticky", window.scrollY > 0);
+    form.classList.toggle("sticky", window.scrollY > 0);
+});
+</script>
 {{-- ricerca --}}
 <nav>
     {{-- input --}}
