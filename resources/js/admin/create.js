@@ -30,7 +30,6 @@ var create = new Vue({
         mainImageType: null,
         mainImageValid: true,
         secondaryImagesValid: true,
-        numSecondaryImages: 0,
         allComforts: [],
         invalidComforts: []
     },
@@ -41,6 +40,8 @@ var create = new Vue({
             window.scrollTo(0, 0);
 
             this.invalidComforts = [];
+
+            this.secondaryImagesValid = true;
 
             var titleValid = this.title && this.title.length <= 255;
             var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
@@ -60,12 +61,11 @@ var create = new Vue({
                 this.mainImageValid = true;
             }
 
-            this.numSecondaryImages = this.$refs.secondaryImages.files.length;
 
-            if (this.numSecondaryImages) {
-                Array.from(this.$refs.secondaryImages.files).forEach(file => {
-                    this.secondaryImagesValid = this.availableTypes.includes(file.type);
-                });
+            for (var i = 0; i < 4; i++) {
+                if (this.$refs['secondaryImage' + i].files[0] && !this.availableTypes.includes(this.$refs['secondaryImage' + i].files[0].type)) {
+                    this.secondaryImagesValid = false;
+                }
             }
 
             var mainImageValid = this.mainImageType && this.mainImageValid;
@@ -82,7 +82,7 @@ var create = new Vue({
 
             var comfortsValid = !this.invalidComforts.length;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && comfortsValid && descriptionValid;
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.secondaryImagesValid && comfortsValid && descriptionValid;
 
 
             tt.services.structuredGeocode({
@@ -184,7 +184,13 @@ var create = new Vue({
                 dropZoneElement.appendChild(thumbnailElement);
                 var imgTag = document.createElement("img");
                 thumbnailElement.appendChild(imgTag);
-
+            }else{
+                dropZoneElement.removeChild(thumbnailElement);
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
             }
 
             //show file name

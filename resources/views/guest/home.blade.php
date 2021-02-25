@@ -25,7 +25,7 @@
 @endsection
 
 @section('content')
-    <main>
+    <main id="main-home">
         <div id="home" class="container">
         <div class="row">
             <div class="col-3">

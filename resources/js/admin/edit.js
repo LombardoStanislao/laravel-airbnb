@@ -34,23 +34,6 @@ var create = new Vue({
         allComforts: [],
         invalidComforts: []
     },
-    mounted() {
-        axios.get('/api/getAllComforts').then((response) => {
-            this.allComforts = response.data.results;
-        });
-
-        tt.services.reverseGeocode({
-            key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-            position: {
-                longitude: this.longitude,
-                latitude: this.latitude
-            }
-        }).then(response => {
-            this.streetName = response.addresses[0].address.streetName;
-            this.streetNumber = response.addresses[0].address.streetNumber;
-            this.municipality = response.addresses[0].address.municipality;
-        })
-    },
     methods: {
         submitForm() {
             this.submitted = true;
@@ -58,6 +41,9 @@ var create = new Vue({
             window.scrollTo(0, 0);
 
             this.invalidComforts = [];
+
+            this.oldSecondaryImagesValid = true;
+            this.newSecondaryImagesValid = true;
 
             var titleValid = this.title && this.title.length <= 255;
             var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
@@ -75,18 +61,14 @@ var create = new Vue({
             }
 
             for (var i = 0; i < this.numOldSecondaryImages; i++) {
-                if (this.$refs['oldSecondaryImages' + i].files[0]) {
-                    this.oldSecondaryImagesValid = this.availableTypes.includes(this.$refs['oldSecondaryImages' + i].files[0].type);
+                if (this.$refs['oldSecondaryImages' + i].files[0] && !this.availableTypes.includes(this.$refs['oldSecondaryImages' + i].files[0].type)) {
+                    this.oldSecondaryImagesValid = false;
                 }
             }
 
-            if (this.$refs.newSecondaryImages) {
-                this.numNewSecondaryImages = this.$refs.newSecondaryImages.files.length;
-
-                if (this.numNewSecondaryImages) {
-                    Array.from(this.$refs.newSecondaryImages.files).forEach(file => {
-                        this.newSecondaryImagesValid = this.availableTypes.includes(file.type);
-                    });
+            for (var i = 0; i < 4 - this.numOldSecondaryImages; i++) {
+                if (this.$refs['newSecondaryImages' + i].files[0] && !this.availableTypes.includes(this.$refs['newSecondaryImages' + i].files[0].type)) {
+                    this.newSecondaryImagesValid = false;
                 }
             }
 
@@ -138,6 +120,21 @@ var create = new Vue({
         }
     },
     mounted() {
+        axios.get('/api/getAllComforts').then((response) => {
+            this.allComforts = response.data.results;
+        });
+
+        tt.services.reverseGeocode({
+            key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+            position: {
+                longitude: this.longitude,
+                latitude: this.latitude
+            }
+        }).then((response) => {
+            this.streetName = response.addresses[0].address.streetName;
+            this.streetNumber = response.addresses[0].address.streetNumber;
+            this.municipality = response.addresses[0].address.municipality;
+        });
 
         document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
 
@@ -195,7 +192,13 @@ var create = new Vue({
                 dropZoneElement.appendChild(thumbnailElement);
                 var imgTag = document.createElement("img");
                 thumbnailElement.appendChild(imgTag);
-
+            }else{
+                dropZoneElement.removeChild(thumbnailElement);
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
             }
 
             //show file name
