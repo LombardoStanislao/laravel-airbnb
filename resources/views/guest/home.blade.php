@@ -13,15 +13,17 @@
 @endsection
 
 @section('content')
-    <div id="home" class="container">
+    <main>
+        <div id="home" class="container">
         <div class="row">
-            <div class="col-12">
-                <form action="{{ route('search') }}" method="get">
-                    <button type="submit">
-                        <i class="fas fa-search"> Search</i>
-                    </button>
-                    <input type="text" name="location" value="" placeholder="Inserisci dove vuoi andare">
-                </form>
+            <div class="col-3">
+                <a href="#">
+                    <div class="card">
+                        <img src="{{asset('./img/logo.png')}}" alt="">
+                        <h2>TITOLO</h2>
+                        <p>DESCRIZIONE</p>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -70,4 +72,10 @@
             </div>
         </div>
     </div>
+    </main>
+@endsection
+@section('footer')
+    <footer>
+        @include('guest.partials.footer')
+    </footer>
 @endsection

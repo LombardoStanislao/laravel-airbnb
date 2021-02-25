@@ -30,9 +30,9 @@
         </main>
 
         {{-- navbar bottom --}}
-        <nav>
-
-        </nav>
+        <footer>
+            @yield('footer')
+        </footer>
     </div>
 </body>
 </html>

@@ -17127,6 +17127,122 @@ body [v-cloak] {
   min-width: 520px;
 }
 
+body {
+  min-height: 200vh;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.6s;
+  padding: 30px 100px;
+  z-index: 5;
+}
+
+header.sticky {
+  padding: 20px 100px;
+  background: blue;
+}
+
+header nav.navbar {
+  width: 100%;
+}
+
+header nav .navbar {
+  justify-content: flex-start;
+}
+
+header #header-form form {
+  padding: 10px;
+  margin: 45px 100px;
+}
+
+header #header-form form.sticky {
+  margin: 5px 100px;
+}
+
+header #header-form .input-menu {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+  border-radius: 30px;
+  transition: all 1s;
+}
+
+header #header-form .input-menu input {
+  border: 0;
+  background-color: transparent;
+}
+
+header #header-form .input-menu input:focus {
+  outline: 0;
+}
+
+header #header-form .input-menu:hover {
+  border-radius: 30px;
+  background-color: #ccc;
+}
+
+header .navbar .container,
+header .navbar .container-fluid,
+header .navbar .container-sm,
+header .navbar .container-md,
+header .navbar .container-lg,
+header .navbar .container-xl {
+  align-items: flex-start;
+}
+
+header ul .navbar-nav {
+  height: 100px;
+  align-self: flex-start;
+}
+
+header img {
+  width: 100px;
+}
+
+header button {
+  display: inline-block;
+  border-radius: 30px;
+  transition: all 1s;
+}
+
+header button.btn-primary {
+  background-color: #ff385c;
+  border: 1px solid #ff385c;
+}
+
+header button.btn-primary:hover {
+  background-color: #ff385c;
+}
+
+main {
+  position: relative;
+  padding: 200px 100px;
+}
+
+main .card {
+  transition: all 1s;
+}
+
+main .card:hover {
+  transform: scale(1.2);
+}
+
+footer {
+  background-color: #ccc;
+}
+
+footer ul {
+  list-style-type: none;
+}
+
 #apartment-page .address {
   color: #717171;
 }
