@@ -1,5 +1,5 @@
 {{-- registrazione e login --}}
-<nav class="navbar navbar-expand-md navbar-light shadow-sm navbar-top">
+<nav class="navbar navbar-expand-md navbar-light shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{asset('./img/logo.png')}}" alt="">
@@ -30,7 +30,6 @@
                 </form>
             </div>
 
->>>>>>> main
 
             <!-- Right Side Of Navbar -->
             <a class="user-menu" id="user-icon">
@@ -88,50 +87,6 @@
         </div>
     </div>
 </nav>
-<<<<<<< HEAD
-
-{{-- Navbar per mobile --}}
-
-<nav class="navbar-bottom">
-    <div class="container">
-
-        <div class="navbar-bottom-link">
-            <a href="{{url('/')}}" class="{{ Request::route()->getName() == 'home' ? 'active-link' : ' ' }}">
-                <i class="fas fa-search"></i>
-                <p>Esplora</p>
-            </a>
-        </div>
-
-        <div class="navbar-bottom-link">
-            @guest
-                <div class="navbar-bottom-link">
-                    <a class=""  href="{{ route('login') }}">
-                        <i class="far fa-user"></i>
-                        <p>Accedi</p>
-                    </a>
-                </div>
-
-
-                @if (Route::has('register'))
-                    <div class="navbar-bottom-link">
-                        <a class=""  href="{{ route('register') }}">
-                            <i class="far fa-user"></i>
-                            <p>Registrati</p>
-                        </a>
-                    </div>
-
-                @endif
-            @else
-                <a class=""  href="{{ route('admin.index') }}">
-                    <i class="far fa-user"></i>
-                    <p>{{ Auth::user()->name }}</p>
-                </a>
-            @endguest
-        </div>
-
-
-    </div>
-=======
 <script type="text/javascript">
 window.addEventListener("scroll",function(){
     var header = document.querySelector("header");
