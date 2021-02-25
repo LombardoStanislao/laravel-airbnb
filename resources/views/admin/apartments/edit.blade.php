@@ -242,16 +242,19 @@
                     </div>
                     <div class="form-group">
                         <label>Comforts:</label>
-                            @foreach ($comforts as $comfort)
+                            @foreach ($comforts as $index => $comfort)
                                 <div class="form-check">
                                     @if($errors->any())
-                                        <input type="checkbox" name="comforts[]" value="{{$comfort->id}}"
+                                        <input ref="comfort{{ $index }}" type="checkbox" name="comforts[]" value="{{$comfort->id}}"
                                         {{ in_array($comfort->id, old('comforts', [])) ? 'checked=checked' : ''}}>
                                     @else
-                                        <input type="checkbox" name="comforts[]" value="{{$comfort->id}}"
+                                        <input ref="comfort{{ $index }}" type="checkbox" name="comforts[]" value="{{$comfort->id}}"
                                         {{ $apartment->comforts->contains($comfort) ? 'checked=checked' : '' }}>
                                     @endif
                                     <label class="form-check-label">{{$comfort->name}}</label>
+                                    <div v-if="invalidComforts.includes({{ $index }})" class="alert alert-danger">
+                                        Il valore di questo comfort non è valido
+                                    </div>
                                 </div>
                             @endforeach
                             @error ('comforts')

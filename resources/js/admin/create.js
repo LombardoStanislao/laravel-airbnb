@@ -31,12 +31,16 @@ var create = new Vue({
         mainImageValid: true,
         secondaryImagesValid: true,
         numSecondaryImages: 0,
+        allComforts: [],
+        invalidComforts: []
     },
     methods: {
         submitForm() {
             this.submitted = true;
 
             window.scrollTo(0, 0);
+
+            this.invalidComforts = [];
 
             var titleValid = this.title && this.title.length <= 255;
             var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
@@ -69,7 +73,16 @@ var create = new Vue({
             var descriptionValid = this.description.length <= 65535;
             var addressValid = this.address.length <= 255;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && descriptionValid;
+
+            for (var i = 0; i < this.allComforts.length; i++) {
+                if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+                    this.invalidComforts.push(i);
+                }
+            }
+
+            var comfortsValid = !this.invalidComforts.length;
+
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && comfortsValid && descriptionValid;
 
 
             tt.services.structuredGeocode({
@@ -108,12 +121,11 @@ var create = new Vue({
                 this.noAdressFound = true;
             });
         },
-
-
-
     },
     mounted() {
-
+        axios.get('/api/getAllComforts').then((response) => {
+            this.allComforts = response.data.results;
+        });
 
         document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
 
@@ -192,7 +204,7 @@ var create = new Vue({
                 reader.onload=()=>{
 
                     imgTag.src = reader.result;
-                    
+
                 };
 
             }else{

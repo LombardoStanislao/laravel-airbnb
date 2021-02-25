@@ -87400,7 +87400,9 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     mainImageType: null,
     mainImageValid: true,
     secondaryImagesValid: true,
-    numSecondaryImages: 0
+    numSecondaryImages: 0,
+    allComforts: [],
+    invalidComforts: []
   },
   methods: {
     submitForm: function submitForm() {
@@ -87408,6 +87410,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
       this.submitted = true;
       window.scrollTo(0, 0);
+      this.invalidComforts = [];
       var titleValid = this.title && this.title.length <= 255;
       var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
       var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
@@ -87437,7 +87440,15 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var mainImageValid = this.mainImageType && this.mainImageValid;
       var descriptionValid = this.description.length <= 65535;
       var addressValid = this.address.length <= 255;
-      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && descriptionValid;
+
+      for (var i = 0; i < this.allComforts.length; i++) {
+        if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+          this.invalidComforts.push(i);
+        }
+      }
+
+      var comfortsValid = !this.invalidComforts.length;
+      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && comfortsValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
         countryCode: 'IT',
@@ -87473,6 +87484,11 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     }
   },
   mounted: function mounted() {
+    var _this2 = this;
+
+    axios.get('/api/getAllComforts').then(function (response) {
+      _this2.allComforts = response.data.results;
+    });
     document.querySelectorAll(".drop-zone__input").forEach(function (inputElement) {
       var dropZoneElement = inputElement.closest(".drop-zone");
       dropZoneElement.addEventListener("click", function (e) {
@@ -87525,19 +87541,6 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         //show file name
 
         thumbnailElement.dataset.label = file[i].name; //show image
-        // if(file[i].type.startsWith("image/")){
-        //     var reader = new FileReader();
-        //
-        //     reader.readAsDataURL(file[i]);
-        //     reader.onload=()=>{
-        //
-        //         imgTag.src = reader.result;
-        //
-        //     };
-        //
-        // }else{
-        //     imgTag.src = null;
-        // }
 
         loadImage(file, i, imgTag);
       }
@@ -87546,14 +87549,12 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     ;
 
     function loadImage(file, i, imgTag) {
-      //show image
       if (file[i].type.startsWith("image/")) {
         var reader = new FileReader();
         reader.readAsDataURL(file[i]);
 
         reader.onload = function () {
           imgTag.src = reader.result;
-          console.log(imgTag.src);
         };
       } else {
         imgTag.src = null;
@@ -87604,11 +87605,16 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     numOldSecondaryImages: parseInt(numOldSecondaryImages),
     oldSecondaryImagesValid: true,
     newSecondaryImagesValid: true,
-    numNewSecondaryImages: 0
+    numNewSecondaryImages: 0,
+    allComforts: [],
+    invalidComforts: []
   },
   mounted: function mounted() {
     var _this = this;
 
+    axios.get('/api/getAllComforts').then(function (response) {
+      _this.allComforts = response.data.results;
+    });
     _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
       key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
       position: {
@@ -87627,6 +87633,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
       this.submitted = true;
       window.scrollTo(0, 0);
+      this.invalidComforts = [];
       var titleValid = this.title && this.title.length <= 255;
       var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
       var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
@@ -87658,7 +87665,14 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         }
       }
 
-      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= 4 - this.numOldSecondaryImages && descriptionValid;
+      for (var i = 0; i < this.allComforts.length; i++) {
+        if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+          this.invalidComforts.push(i);
+        }
+      }
+
+      var comfortsValid = !this.invalidComforts.length;
+      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= 4 - this.numOldSecondaryImages && comfortsValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
         countryCode: 'IT',
