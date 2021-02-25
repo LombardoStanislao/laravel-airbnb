@@ -17179,6 +17179,41 @@ body [v-cloak] {
      object-fit: cover;
 }
 
+#edit-apartment .secondary-images {
+  width: calc(50% - 20px);
+  margin: 10px;
+}
+
+@media only screen and (min-width: 1140px) {
+  #edit-apartment .secondary-images {
+    width: calc(25% - 20px);
+  }
+}
+
+#edit-apartment .secondary-images img {
+  height: 120px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media only screen and (min-width: 576px) {
+  #edit-apartment .secondary-images img {
+    height: 240px;
+  }
+}
+
+#payment-form .card {
+  cursor: pointer;
+}
+
+#payment-form .card:hover {
+  background-color: #00d8ff38;
+}
+
+#payment-form .card.active {
+  background-color: #00d8ff38;
+}
+
 #apartment-page .address {
   color: #717171;
 }
