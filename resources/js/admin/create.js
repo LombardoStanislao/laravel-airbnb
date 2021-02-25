@@ -137,7 +137,7 @@ var create = new Vue({
 
             dropZoneElement.addEventListener("change", e =>{
                 if(inputElement.files.length){
-                    updateThumbnail(dropZoneElement, inputElement.files);//[0]
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
                 }
             });
 
@@ -158,7 +158,7 @@ var create = new Vue({
                 if(e.dataTransfer.files.length){
                     inputElement.files = e.dataTransfer.files;
                     console.log(inputElement.files);
-                    updateThumbnail(dropZoneElement, e.dataTransfer.files);//[0]
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
                 }
 
                 dropZoneElement.classList.remove("drop-zone--over");
@@ -176,31 +176,25 @@ var create = new Vue({
                 dropZoneElement.querySelector(".drop-zone__prompt").remove();
             }
 
-            for (var i = 0; i < file.length; i++) {
-                //add file in drop-area
-                //if(!thumbnailElement){
-                    thumbnailElement = document.createElement("div");
-                    thumbnailElement.classList.add("drop-zone__thumb");
-                    dropZoneElement.appendChild(thumbnailElement);
-                    var imgTag = document.createElement("img");
-                    thumbnailElement.appendChild(imgTag);
 
-                //}
+            //add file in drop-area
+            if(!thumbnailElement){
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
 
-                //show file name
-                thumbnailElement.dataset.label = file[i].name;
-
-                //show image
-                loadImage(file,i,imgTag);
             }
 
-        };
+            //show file name
+            thumbnailElement.dataset.label = file.name;
 
-        function loadImage(file,i,imgTag){
-            if(file[i].type.startsWith("image/")){
+            //show image
+            if(file.type.startsWith("image/")){
                 var reader = new FileReader();
 
-                reader.readAsDataURL(file[i]);
+                reader.readAsDataURL(file);
                 reader.onload=()=>{
 
                     imgTag.src = reader.result;
@@ -210,6 +204,9 @@ var create = new Vue({
             }else{
                 imgTag.src = null;
             }
+
+
         };
+
     }
 });

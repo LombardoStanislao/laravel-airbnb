@@ -87496,7 +87496,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       });
       dropZoneElement.addEventListener("change", function (e) {
         if (inputElement.files.length) {
-          updateThumbnail(dropZoneElement, inputElement.files); //[0]
+          updateThumbnail(dropZoneElement, inputElement.files[0]);
         }
       });
       dropZoneElement.addEventListener("dragover", function (e) {
@@ -87514,7 +87514,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         if (e.dataTransfer.files.length) {
           inputElement.files = e.dataTransfer.files;
           console.log(inputElement.files);
-          updateThumbnail(dropZoneElement, e.dataTransfer.files); //[0]
+          updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
         }
 
         dropZoneElement.classList.remove("drop-zone--over");
@@ -87528,30 +87528,23 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
       if (dropZoneElement.querySelector(".drop-zone__prompt")) {
         dropZoneElement.querySelector(".drop-zone__prompt").remove();
-      }
+      } //add file in drop-area
 
-      for (var i = 0; i < file.length; i++) {
-        //add file in drop-area
-        //if(!thumbnailElement){
+
+      if (!thumbnailElement) {
         thumbnailElement = document.createElement("div");
         thumbnailElement.classList.add("drop-zone__thumb");
         dropZoneElement.appendChild(thumbnailElement);
         var imgTag = document.createElement("img");
-        thumbnailElement.appendChild(imgTag); //}
-        //show file name
+        thumbnailElement.appendChild(imgTag);
+      } //show file name
 
-        thumbnailElement.dataset.label = file[i].name; //show image
 
-        loadImage(file, i, imgTag);
-      }
-    }
+      thumbnailElement.dataset.label = file.name; //show image
 
-    ;
-
-    function loadImage(file, i, imgTag) {
-      if (file[i].type.startsWith("image/")) {
+      if (file.type.startsWith("image/")) {
         var reader = new FileReader();
-        reader.readAsDataURL(file[i]);
+        reader.readAsDataURL(file);
 
         reader.onload = function () {
           imgTag.src = reader.result;
@@ -87580,9 +87573,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tomtom-international/web-sdk-services */ "./node_modules/@tomtom-international/web-sdk-services/dist/services.min.js");
 /* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+
+var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a(_defineProperty({
   el: '#edit-apartment',
   data: {
     title: title,
@@ -87707,7 +87702,74 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       });
     }
   }
-});
+}, "mounted", function mounted() {
+  document.querySelectorAll(".drop-zone__input").forEach(function (inputElement) {
+    var dropZoneElement = inputElement.closest(".drop-zone");
+    dropZoneElement.addEventListener("click", function (e) {
+      inputElement.click();
+    });
+    dropZoneElement.addEventListener("change", function (e) {
+      if (inputElement.files.length) {
+        updateThumbnail(dropZoneElement, inputElement.files[0]);
+      }
+    });
+    dropZoneElement.addEventListener("dragover", function (e) {
+      e.preventDefault();
+      dropZoneElement.classList.add("drop-zone--over");
+    });
+    ["dragleave", "dragend"].forEach(function (type) {
+      dropZoneElement.addEventListener(type, function (e) {
+        dropZoneElement.classList.remove('drop-zone--over');
+      });
+    });
+    dropZoneElement.addEventListener("drop", function (e) {
+      e.preventDefault();
+
+      if (e.dataTransfer.files.length) {
+        inputElement.files = e.dataTransfer.files;
+        console.log(inputElement.files);
+        updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+      }
+
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+
+  function updateThumbnail(dropZoneElement, file) {
+    console.log(dropZoneElement);
+    console.log(file);
+    var thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+    if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+      dropZoneElement.querySelector(".drop-zone__prompt").remove();
+    } //add file in drop-area
+
+
+    if (!thumbnailElement) {
+      thumbnailElement = document.createElement("div");
+      thumbnailElement.classList.add("drop-zone__thumb");
+      dropZoneElement.appendChild(thumbnailElement);
+      var imgTag = document.createElement("img");
+      thumbnailElement.appendChild(imgTag);
+    } //show file name
+
+
+    thumbnailElement.dataset.label = file.name; //show image
+
+    if (file.type.startsWith("image/")) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function () {
+        imgTag.src = reader.result;
+      };
+    } else {
+      imgTag.src = null;
+    }
+  }
+
+  ;
+}));
 
 /***/ }),
 
