@@ -17111,29 +17111,95 @@ body [v-cloak] {
   display: none;
 }
 
-header {
-  height: 1000px;
+#header-guest {
   background-image: url("https://a0.muscache.com/im/pictures/cf39f4c4-e860-43d4-85be-deddd7b2da90.jpg?im_w=1440");
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
 }
 
-header a {
-  color: white;
-}
-
-header a:hover {
-  color: #d9d9d9;
-}
-
 #logo {
-  font-weight: 500;
-  font-size: 22px;
+  width: 100px;
+}
+
+#header-form .navbar-search {
+  padding: 10px;
+  margin: 45px 100px;
+}
+
+#header-form .navbar-search .navbar-top-button {
+  background: none;
+  border: none;
+}
+
+#header-form .navbar-search .navbar-top-button i {
+  color: white;
+  padding: 15px;
+  display: inline-block;
+  border-radius: 50%;
+  transition: all 0.6s;
+  background-color: #ff385c;
+}
+
+#header-form .navbar-search .navbar-top-button i:hover {
+  background-color: #ff1f47;
+}
+
+#header-form .navbar-search.sticky {
+  margin: 5px 100px;
+  border: 1.5px solid #DDDDDD;
+  transition: all 0.5s;
+}
+
+#header-form .navbar-search.sticky input::-moz-placeholder {
+  color: black;
+}
+
+#header-form .navbar-search.sticky input:-ms-input-placeholder {
+  color: black;
+}
+
+#header-form .navbar-search.sticky input::placeholder {
+  color: black;
+}
+
+#header-form .navbar-search.sticky:hover {
+  box-shadow: 0px 6px 15px -4px rgba(127, 121, 124, 0.8);
+}
+
+#header-form .input-menu {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+  border-radius: 30px;
+  transition: all 1s;
+  background-color: white;
+}
+
+#header-form .input-menu input {
+  border: 0;
+  background-color: transparent;
+}
+
+#header-form .input-menu input:focus {
+  outline: 0;
 }
 
 .navbar-top {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 0.6s;
+  width: 100%;
+  z-index: 5;
+  padding: 25px 100px;
+}
+
+.navbar-top.sticky {
+  padding: 0px 100px;
+  background: white;
 }
 
 .navbar-bottom {
@@ -17144,11 +17210,12 @@ header a:hover {
   width: 100%;
   background-color: white;
   color: black;
+  z-index: 3;
 }
 
 .navbar-bottom .container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: 100%;
 }
@@ -17233,6 +17300,10 @@ header a:hover {
     position: relative;
   }
 
+  .navbar-top .user-menu:hover {
+    text-decoration: none;
+  }
+
   .navbar-top .user-menu .fa-user-circle {
     color: #a09d9d;
   }
@@ -17287,6 +17358,14 @@ header a:hover {
   }
 }
 
+#jumbotron-homepage {
+  padding-top: 150px;
+}
+
+#jumbotron-homepage h1 {
+  padding-top: 500px;
+}
+
 #bt-dropin [data-braintree-id=toggle] {
   display: none;
 }
@@ -17311,122 +17390,6 @@ header a:hover {
 
 #messages-table {
   min-width: 520px;
-}
-
-body {
-  min-height: 200vh;
-}
-
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: 0.6s;
-  padding: 30px 100px;
-  z-index: 5;
-}
-
-header.sticky {
-  padding: 20px 100px;
-  background: blue;
-}
-
-header nav.navbar {
-  width: 100%;
-}
-
-header nav .navbar {
-  justify-content: flex-start;
-}
-
-header #header-form form {
-  padding: 10px;
-  margin: 45px 100px;
-}
-
-header #header-form form.sticky {
-  margin: 5px 100px;
-}
-
-header #header-form .input-menu {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  background-color: transparent;
-  border-radius: 30px;
-  transition: all 1s;
-}
-
-header #header-form .input-menu input {
-  border: 0;
-  background-color: transparent;
-}
-
-header #header-form .input-menu input:focus {
-  outline: 0;
-}
-
-header #header-form .input-menu:hover {
-  border-radius: 30px;
-  background-color: #ccc;
-}
-
-header .navbar .container,
-header .navbar .container-fluid,
-header .navbar .container-sm,
-header .navbar .container-md,
-header .navbar .container-lg,
-header .navbar .container-xl {
-  align-items: flex-start;
-}
-
-header ul .navbar-nav {
-  height: 100px;
-  align-self: flex-start;
-}
-
-header img {
-  width: 100px;
-}
-
-header button {
-  display: inline-block;
-  border-radius: 30px;
-  transition: all 1s;
-}
-
-header button.btn-primary {
-  background-color: #ff385c;
-  border: 1px solid #ff385c;
-}
-
-header button.btn-primary:hover {
-  background-color: #ff385c;
-}
-
-main {
-  position: relative;
-  padding: 200px 100px;
-}
-
-main .card {
-  transition: all 1s;
-}
-
-main .card:hover {
-  transform: scale(1.2);
-}
-
-footer {
-  background-color: #ccc;
-}
-
-footer ul {
-  list-style-type: none;
 }
 
 #show-apartment .primary-image {

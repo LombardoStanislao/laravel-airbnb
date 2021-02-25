@@ -1,26 +1,89 @@
-header {
-    height: 1000px;
-    // background-image: url('/../img/bg-header.jpg');
+#header-guest {
     background-image: url('https://a0.muscache.com/im/pictures/cf39f4c4-e860-43d4-85be-deddd7b2da90.jpg?im_w=1440');
     background-repeat: no-repeat;
     background-size: cover;
     color: $text-white;
-    a {
-        color: $text-white;
-        &:hover {
-            color: darken($text-white, 15%);
-        }
-    }
-
 }
 
 #logo {
-    font-weight: 500;
-    font-size: 22px;
+    width: 100px;
+}
+
+#header-form {
+
+
+    .navbar-search {
+        padding: 10px;
+        margin: 45px 100px;
+
+        .navbar-top-button {
+            background: none;
+            border: none;
+
+           i {
+               color: white;
+               padding: 15px;
+               display: inline-block;
+               border-radius: 50%;
+               transition: all .6s;
+               background-color: $main-color;
+
+               &:hover {
+                   background-color: darken($main-color, 5%);
+               }
+           }
+       }
+
+        &.sticky {
+            margin: 5px 100px;
+            border: 1.5px solid #DDDDDD;
+            transition: all .5s;
+
+            input::placeholder {
+                color: black;
+            }
+
+            &:hover {
+                -webkit-box-shadow: 0px 6px 15px -4px rgba(127,121,124,0.8);
+                box-shadow: 0px 6px 15px -4px rgba(127,121,124,0.8);
+            }
+        }
+
+    }
+
+
+    .input-menu {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        background-color: transparent;
+        border-radius: 30px;
+        transition: all 1s;
+        background-color: white;
+
+        input {
+            border: 0;
+            background-color: transparent;
+            &:focus {
+                outline: 0;
+            }
+        }
+    }
 }
 
 .navbar-top {
     display: none;
+    position: fixed;
+    top: 0;
+    left:0;
+    transition: 0.6s;
+    width: 100%;
+    z-index: 5;
+    padding: 25px 100px;
+    &.sticky  {
+       padding: 0px 100px;
+       background: white;
+    }
 }
 
 .navbar-bottom {
@@ -31,10 +94,11 @@ header {
     width: 100%;
     background-color: white;
     color: black;
+    z-index: 3;
 
     .container {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
         height: 100%;
 
@@ -125,6 +189,10 @@ header {
             cursor: pointer;
             position: relative;
 
+            &:hover {
+                text-decoration: none;
+            }
+
             .fa-user-circle {
                 color: $text-grey;
             }
@@ -192,5 +260,14 @@ header {
 
     .navbar-bottom {
         display: none;
+    }
+}
+
+
+#jumbotron-homepage {
+    padding-top: 150px;
+
+    h1 {
+        padding-top: 500px;
     }
 }
