@@ -87728,7 +87728,8 @@ var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   data: {
     nonce: '',
     dropin: null,
-    loaded: false
+    loaded: false,
+    selectedSponsorship: undefined
   },
   mounted: function mounted() {
     var self = this;
@@ -87753,6 +87754,16 @@ var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           self.$refs.paymentForm.submit();
         });
       });
+    },
+    selectSponsorship: function selectSponsorship(id) {
+      document.getElementById('sponsorship-' + id + '-input').checked = true;
+
+      if (this.selectedSponsorship) {
+        document.getElementById('sponsorship-' + this.selectedSponsorship + '-card').classList.remove('active');
+      }
+
+      document.getElementById('sponsorship-' + id + '-card').classList.add('active');
+      this.selectedSponsorship = id;
     }
   }
 });

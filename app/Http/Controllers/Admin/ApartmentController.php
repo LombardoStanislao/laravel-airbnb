@@ -68,6 +68,7 @@ class ApartmentController extends Controller
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'images' => 'nullable|max:4',
+            'images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535'
@@ -206,7 +207,9 @@ class ApartmentController extends Controller
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'old_images' => 'nullable|max:4',
+            'old_images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'new_images' => 'nullable|max:' . $maxNumNewImages,
+            'new_images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535',
