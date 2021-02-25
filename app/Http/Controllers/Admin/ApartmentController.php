@@ -97,11 +97,15 @@ class ApartmentController extends Controller
 
         if (array_key_exists('images', $data)) {
             for ($i=0; $i < count($data["images"]) ; $i++) {
+                // dd($data["images"]);
+
                 $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
                 $new_apartment_image = new Image();
                 $new_apartment_image->apartment_id = $new_apartment->id;
                 $new_apartment_image->url = $secondary_images;
                 $new_apartment_image->save();
+
+
             }
         }
 
