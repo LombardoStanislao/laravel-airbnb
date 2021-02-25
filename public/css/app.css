@@ -17149,38 +17149,22 @@ body [v-cloak] {
   margin: 5px 100px;
   border: 1.5px solid #DDDDDD;
   transition: all 0.5s;
-#show-apartment .primary-image {
-  height: 240px;
 }
 
 #header-form .navbar-search.sticky input::-moz-placeholder {
   color: black;
-@media only screen and (min-width: 576px) {
-  #show-apartment .primary-image {
-    height: 300px;
-  }
 }
 
 #header-form .navbar-search.sticky input:-ms-input-placeholder {
   color: black;
-@media only screen and (min-width: 960px) {
-  #show-apartment .primary-image {
-    height: 360px;
-  }
 }
 
 #header-form .navbar-search.sticky input::placeholder {
   color: black;
-#show-apartment [class^=secondary-image] {
-  height: 115px;
 }
 
 #header-form .navbar-search.sticky:hover {
   box-shadow: 0px 6px 15px -4px rgba(127, 121, 124, 0.8);
-@media only screen and (min-width: 576px) {
-  #show-apartment [class^=secondary-image] {
-    height: 145px;
-  }
 }
 
 #header-form .input-menu {
@@ -17191,36 +17175,15 @@ body [v-cloak] {
   border-radius: 30px;
   transition: all 1s;
   background-color: white;
-@media only screen and (min-width: 960px) {
-  #show-apartment [class^=secondary-image] {
-    height: 175px;
-  }
-}
-
-#show-apartment .secondary-image-1,
-#show-apartment .secondary-image-2 {
-  margin-bottom: 10px;
-}
-
-#show-apartment img {
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 
 #header-form .input-menu input {
   border: 0;
   background-color: transparent;
-#edit-apartment .secondary-images {
-  width: calc(50% - 20px);
-  margin: 10px;
 }
 
 #header-form .input-menu input:focus {
   outline: 0;
-@media only screen and (min-width: 1140px) {
-  #edit-apartment .secondary-images {
-    width: calc(25% - 20px);
-  }
 }
 
 .navbar-top {
@@ -17232,19 +17195,11 @@ body [v-cloak] {
   width: 100%;
   z-index: 5;
   padding: 25px 100px;
-#edit-apartment .secondary-images img {
-  height: 120px;
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 
 .navbar-top.sticky {
   padding: 0px 100px;
   background: white;
-@media only screen and (min-width: 576px) {
-  #edit-apartment .secondary-images img {
-    height: 240px;
-  }
 }
 
 .navbar-bottom {
@@ -17256,8 +17211,6 @@ body [v-cloak] {
   background-color: white;
   color: black;
   z-index: 3;
-#payment-form .card {
-  cursor: pointer;
 }
 
 .navbar-bottom .container {
@@ -17265,8 +17218,6 @@ body [v-cloak] {
   justify-content: space-around;
   align-items: center;
   height: 100%;
-#payment-form .card:hover {
-  background-color: #00d8ff38;
 }
 
 .navbar-bottom .container .navbar-bottom-link {
@@ -17275,14 +17226,10 @@ body [v-cloak] {
   align-items: center;
   height: 100%;
   padding-right: 20px;
-#payment-form .card.active {
-  background-color: #00d8ff38;
 }
 
 .navbar-bottom .container .navbar-bottom-link:last-child {
   padding-right: 0;
-body {
-  min-height: 200vh;
 }
 
 .navbar-bottom .container .navbar-bottom-link .active-link {
@@ -17536,118 +17483,6 @@ body {
 
 #payment-form .card.active {
   background-color: #00d8ff38;
-}
-
-#header-home {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: 0.6s;
-  padding: 30px 100px;
-  z-index: 5;
-}
-
-#header-home.sticky {
-  padding: 20px 100px;
-  background: blue;
-}
-
-#header-home nav.navbar {
-  width: 100%;
-}
-
-#header-home nav .navbar {
-  justify-content: flex-start;
-}
-
-#header-home #header-form form {
-  padding: 10px;
-  margin: 45px 100px;
-}
-
-#header-home #header-form form.sticky {
-  margin: 5px 100px;
-}
-
-#header-home #header-form .input-menu {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  background-color: transparent;
-  border-radius: 30px;
-  transition: all 1s;
-}
-
-#header-home #header-form .input-menu input {
-  border: 0;
-  background-color: transparent;
-}
-
-#header-home #header-form .input-menu input:focus {
-  outline: 0;
-}
-
-#header-home #header-form .input-menu:hover {
-  border-radius: 30px;
-  background-color: #ccc;
-}
-
-#header-home .navbar .container,
-#header-home .navbar .container-fluid,
-#header-home .navbar .container-sm,
-#header-home .navbar .container-md,
-#header-home .navbar .container-lg,
-#header-home .navbar .container-xl {
-  align-items: flex-start;
-}
-
-#header-home ul .navbar-nav {
-  height: 100px;
-  align-self: flex-start;
-}
-
-#header-home img {
-  width: 100px;
-}
-
-#header-home button {
-  display: inline-block;
-  border-radius: 30px;
-  transition: all 1s;
-}
-
-#header-home button.btn-primary {
-  background-color: #ff385c;
-  border: 1px solid #ff385c;
-}
-
-#header-home button.btn-primary:hover {
-  background-color: #ff385c;
-}
-
-#main-home {
-  position: relative;
-  padding: 200px 100px;
-}
-
-#main-home .card {
-  transition: all 1s;
-}
-
-#main-home .card:hover {
-  transform: scale(1.2);
-}
-
-footer {
-  background-color: #ccc;
-}
-
-footer ul {
-  list-style-type: none;
 }
 
 #apartment-page .address {
