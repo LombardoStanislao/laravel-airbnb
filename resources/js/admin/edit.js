@@ -195,7 +195,13 @@ var create = new Vue({
                 dropZoneElement.appendChild(thumbnailElement);
                 var imgTag = document.createElement("img");
                 thumbnailElement.appendChild(imgTag);
-
+            }else{
+                dropZoneElement.removeChild(thumbnailElement);
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
             }
 
             //show file name

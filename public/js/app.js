@@ -87537,6 +87537,13 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         dropZoneElement.appendChild(thumbnailElement);
         var imgTag = document.createElement("img");
         thumbnailElement.appendChild(imgTag);
+      } else {
+        dropZoneElement.removeChild(thumbnailElement);
+        thumbnailElement = document.createElement("div");
+        thumbnailElement.classList.add("drop-zone__thumb");
+        dropZoneElement.appendChild(thumbnailElement);
+        var imgTag = document.createElement("img");
+        thumbnailElement.appendChild(imgTag);
       } //show file name
 
 
@@ -88409,8 +88416,8 @@ var home = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/Corsoboolean/esercizi/laravel-airbnb/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/Corsoboolean/esercizi/laravel-airbnb/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
