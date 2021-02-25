@@ -17111,20 +17111,11 @@ body [v-cloak] {
   display: none;
 }
 
-header {
+#header-guest {
   background-image: url("https://a0.muscache.com/im/pictures/cf39f4c4-e860-43d4-85be-deddd7b2da90.jpg?im_w=1440");
   background-repeat: no-repeat;
-  height: 1000px;
   background-size: cover;
   color: white;
-}
-
-header a {
-  color: white;
-}
-
-header a:hover {
-  color: #d9d9d9;
 }
 
 #logo {
@@ -17224,7 +17215,7 @@ header a:hover {
 
 .navbar-bottom .container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: 100%;
 }
@@ -17365,6 +17356,14 @@ header a:hover {
   .navbar-bottom {
     display: none;
   }
+}
+
+#jumbotron-homepage {
+  padding-top: 150px;
+}
+
+#jumbotron-homepage h1 {
+  padding-top: 500px;
 }
 
 #bt-dropin [data-braintree-id=toggle] {

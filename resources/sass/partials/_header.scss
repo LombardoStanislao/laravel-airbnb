@@ -1,16 +1,8 @@
-header {
+#header-guest {
     background-image: url('https://a0.muscache.com/im/pictures/cf39f4c4-e860-43d4-85be-deddd7b2da90.jpg?im_w=1440');
     background-repeat: no-repeat;
-    height: 1000px;
     background-size: cover;
     color: $text-white;
-    a {
-        color: $text-white;
-        &:hover {
-            color: darken($text-white, 15%);
-        }
-    }
-
 }
 
 #logo {
@@ -106,7 +98,7 @@ header {
 
     .container {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
         height: 100%;
 
@@ -268,5 +260,14 @@ header {
 
     .navbar-bottom {
         display: none;
+    }
+}
+
+
+#jumbotron-homepage {
+    padding-top: 150px;
+
+    h1 {
+        padding-top: 500px;
     }
 }

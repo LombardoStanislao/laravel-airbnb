@@ -7,8 +7,19 @@
 @endsection
 
 @section('header')
-    <header>
+    <header id="header-guest">
         @include('guest.partials.navbar-top')
+
+        <section id="jumbotron-homepage">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1>Benvenuto</h1>
+                    </div>
+
+                </div>
+            </div>
+        </section>
 
     </header>
 @endsection
