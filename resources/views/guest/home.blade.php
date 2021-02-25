@@ -7,13 +7,13 @@
 @endsection
 
 @section('header')
-    <header>
+    <header id="header-home">
         @include('guest.partials.navbar-top')
     </header>
 @endsection
 
 @section('content')
-    <main>
+    <main id="main-home">
         <div id="home" class="container">
         <div class="row">
             <div class="col-3">

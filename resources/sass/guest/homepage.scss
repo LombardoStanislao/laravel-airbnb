@@ -1,7 +1,4 @@
-body {
-     min-height: 200vh ;
-}
-header {
+#header-home {
     position: fixed;
     top: 0;
     left:0 ;
@@ -89,7 +86,7 @@ header {
     }
 }
 
-main {
+#main-home {
     position: relative;
     padding: 200px 100px;
 
@@ -100,6 +97,7 @@ main {
         }
     }
 }
+
 footer {
     background-color: #ccc;
     ul {

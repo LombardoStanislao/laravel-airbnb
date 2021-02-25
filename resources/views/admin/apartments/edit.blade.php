@@ -253,12 +253,12 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group row">
-                        <div class=" img-cont col-sm-12 col-md-6">
-                            <label class="d-block">Immagine principale: </label>
-                            <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
+                    <label>Immagine principale: </label>
+                    <div class="form-group d-flex flex-wrap main-image">
+                        <div>
+                            <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="w-100 h-100">
                         </div>
-                        <div class="img-cont col-sm-12 col-md-6">
+                        <div>
                             <label>Scegli un'altra immagine principale: </label>
                             <div class="drop-zone">
                                 <span class="drop-zone__prompt">Drop file here or click to upload</span>
@@ -267,7 +267,7 @@
                         </div>
                         {{-- <input ref="mainImage" type="file" class="form-control-file" name="image" accept="image/*"> --}}
                         <div v-if="!mainImageValid" class="alert alert-danger">
-                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                            L'immagine principale deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
                         @error ('image')
                             <div class="alert alert-danger">
@@ -279,9 +279,9 @@
                         @if ($images->count())
                             <label class="d-block">Modifica immagini secondarie già presenti: </label>
                         @endif
-                        <div class="d-flex">
+                        <div class="d-flex flex-wrap">
                             @foreach ($images as $index => $image)
-                                <div class="w-25 d-flex flex-column justify-content-between m-2">
+                                <div class="d-flex flex-column justify-content-between secondary-images">
                                     <img class="mb-2" src="{{ asset("storage/" . $image->url) }}" class="mw-100">
                                     <div class="drop-zone mini">
                                         <span class="drop-zone__prompt">Drop file here or click to upload</span>
@@ -296,13 +296,19 @@
                         </div>
                         @if ($images->count() < 4)
                             <label>Aggiungi altre immagini secondarie</label>
-                            <input ref="newSecondaryImages" type="file" accept="image/*" class="form-control-file" name="new_images[]" accept="image/*" multiple>
+                            <div class="d-flex flex-wrap">
+                                @for ($i=0; $i < 4 - $images->count(); $i++)
+                                    <div class="secondary-images">
+                                        <div class="drop-zone mini">
+                                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                            <input ref="newSecondaryImages{{ $i }}" type="file" accept="image/*" class="form-control-file drop-zone__input" name="new_images[]" accept="image/*">
+                                        </div>
+                                    </div>
+                                @endfor
+                            </div>
                         @endif
                         <div v-if="!newSecondaryImagesValid" class="alert alert-danger">
                             Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
-                        </div>
-                        <div v-if="numNewSecondaryImages > (4 - numOldSecondaryImages)" class="alert alert-danger">
-                            Puoi caricare al massimo 4 immagini secondarie in totale
                         </div>
                         @error ('image')
                             <div class="alert alert-danger">
