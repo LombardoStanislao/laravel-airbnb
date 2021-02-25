@@ -1,8 +1,7 @@
 header {
-    height: 1000px;
-    // background-image: url('/../img/bg-header.jpg');
     background-image: url('https://a0.muscache.com/im/pictures/cf39f4c4-e860-43d4-85be-deddd7b2da90.jpg?im_w=1440');
     background-repeat: no-repeat;
+    height: 1000px;
     background-size: cover;
     color: $text-white;
     a {
@@ -15,12 +14,57 @@ header {
 }
 
 #logo {
-    font-weight: 500;
-    font-size: 22px;
+    width: 100px;
+}
+
+#header-form {
+
+
+    .navbarSearch {
+        padding: 10px;
+        margin: 45px 100px;
+        &.sticky {
+            margin: 5px 100px;
+        }
+
+    }
+    .input-menu {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        background-color: transparent;
+        border-radius: 30px;
+        transition: all 1s;
+
+        input {
+            border: 0;
+            background-color: transparent;
+            &:focus {
+                outline: 0;
+            }
+
+
+    }
+    &:hover {
+        border-radius: 30px;
+        background-color: #ccc ;
+        }
+    }
 }
 
 .navbar-top {
     display: none;
+    position: fixed;
+    top: 0;
+    left:0;
+    transition: 0.6s;
+    width: 100%;
+    z-index: 5;
+    padding: 25px 100px;
+    &.sticky  {
+       padding: 0px 100px;
+       background: white;
+    }
 }
 
 .navbar-bottom {
