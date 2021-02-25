@@ -96,8 +96,8 @@ window.addEventListener("scroll",function(){
 
         <div id="header-form">
             <form  class="input-menu navbar-search" action="{{ route('search') }}" method="get">
-                <input type="text" name="location" value=""  placeholder="Inserisci dove vuoi andare">
-                <button type="submit" class="btn btn-primary ">
+                <input type="text" name="location" value=""  placeholder="Dove vuoi andare?">
+                <button type="submit" class="navbar-top-button">
                     <i class="fas fa-search">
 
                     </i>
@@ -215,4 +215,10 @@ window.addEventListener("scroll",function(){
     navbarTop.classList.toggle("sticky", window.scrollY > 0);
     navbarSearch.classList.toggle("sticky", window.scrollY > 0);
 });
+
+document.getElementById('user-icon').addEventListener("click", openMenu);
+
+function openMenu() {
+    document.getElementById('user-dropdown-menu').classList.toggle("open");
+}
 </script>

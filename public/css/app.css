@@ -17131,13 +17131,49 @@ header a:hover {
   width: 100px;
 }
 
-#header-form .navbarSearch {
+#header-form .navbar-search {
   padding: 10px;
   margin: 45px 100px;
 }
 
-#header-form .navbarSearch.sticky {
+#header-form .navbar-search .navbar-top-button {
+  background: none;
+  border: none;
+}
+
+#header-form .navbar-search .navbar-top-button i {
+  color: white;
+  padding: 15px;
+  display: inline-block;
+  border-radius: 50%;
+  transition: all 0.6s;
+  background-color: #ff385c;
+}
+
+#header-form .navbar-search .navbar-top-button i:hover {
+  background-color: #ff1f47;
+}
+
+#header-form .navbar-search.sticky {
   margin: 5px 100px;
+  border: 1.5px solid #DDDDDD;
+  transition: all 0.5s;
+}
+
+#header-form .navbar-search.sticky input::-moz-placeholder {
+  color: black;
+}
+
+#header-form .navbar-search.sticky input:-ms-input-placeholder {
+  color: black;
+}
+
+#header-form .navbar-search.sticky input::placeholder {
+  color: black;
+}
+
+#header-form .navbar-search.sticky:hover {
+  box-shadow: 0px 6px 15px -4px rgba(127, 121, 124, 0.8);
 }
 
 #header-form .input-menu {
@@ -17147,6 +17183,7 @@ header a:hover {
   background-color: transparent;
   border-radius: 30px;
   transition: all 1s;
+  background-color: white;
 }
 
 #header-form .input-menu input {
@@ -17156,11 +17193,6 @@ header a:hover {
 
 #header-form .input-menu input:focus {
   outline: 0;
-}
-
-#header-form .input-menu:hover {
-  border-radius: 30px;
-  background-color: #ccc;
 }
 
 .navbar-top {
@@ -17187,6 +17219,7 @@ header a:hover {
   width: 100%;
   background-color: white;
   color: black;
+  z-index: 3;
 }
 
 .navbar-bottom .container {
@@ -17274,6 +17307,10 @@ header a:hover {
     display: flex;
     cursor: pointer;
     position: relative;
+  }
+
+  .navbar-top .user-menu:hover {
+    text-decoration: none;
   }
 
   .navbar-top .user-menu .fa-user-circle {
