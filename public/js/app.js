@@ -87400,7 +87400,9 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     mainImageType: null,
     mainImageValid: true,
     secondaryImagesValid: true,
-    numSecondaryImages: 0
+    numSecondaryImages: 0,
+    allComforts: [],
+    invalidComforts: []
   },
   methods: {
     submitForm: function submitForm() {
@@ -87408,6 +87410,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
       this.submitted = true;
       window.scrollTo(0, 0);
+      this.invalidComforts = [];
       var titleValid = this.title && this.title.length <= 255;
       var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
       var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
@@ -87437,7 +87440,15 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var mainImageValid = this.mainImageType && this.mainImageValid;
       var descriptionValid = this.description.length <= 65535;
       var addressValid = this.address.length <= 255;
-      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && descriptionValid;
+
+      for (var i = 0; i < this.allComforts.length; i++) {
+        if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+          this.invalidComforts.push(i);
+        }
+      }
+
+      var comfortsValid = !this.invalidComforts.length;
+      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && comfortsValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
         countryCode: 'IT',
@@ -87472,12 +87483,78 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       });
     }
   },
-  mounted: function mounted() {// let dropArea = document.getElementById('drop-area');
-    //
-    // dropArea.addEventListener('dragenter', handlerFunction, false);
-    // dropArea.addEventListener('dragleave', handlerFunction, false);
-    // dropArea.addEventListener('dragover', handlerFunction, false);
-    // dropArea.addEventListener('drop', handlerFunction, false);
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.get('/api/getAllComforts').then(function (response) {
+      _this2.allComforts = response.data.results;
+    });
+    document.querySelectorAll(".drop-zone__input").forEach(function (inputElement) {
+      var dropZoneElement = inputElement.closest(".drop-zone");
+      dropZoneElement.addEventListener("click", function (e) {
+        inputElement.click();
+      });
+      dropZoneElement.addEventListener("change", function (e) {
+        if (inputElement.files.length) {
+          updateThumbnail(dropZoneElement, inputElement.files[0]);
+        }
+      });
+      dropZoneElement.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        dropZoneElement.classList.add("drop-zone--over");
+      });
+      ["dragleave", "dragend"].forEach(function (type) {
+        dropZoneElement.addEventListener(type, function (e) {
+          dropZoneElement.classList.remove('drop-zone--over');
+        });
+      });
+      dropZoneElement.addEventListener("drop", function (e) {
+        e.preventDefault();
+
+        if (e.dataTransfer.files.length) {
+          inputElement.files = e.dataTransfer.files;
+          console.log(inputElement.files);
+          updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+        }
+
+        dropZoneElement.classList.remove("drop-zone--over");
+      });
+    });
+
+    function updateThumbnail(dropZoneElement, file) {
+      console.log(dropZoneElement);
+      console.log(file);
+      var thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+      if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+        dropZoneElement.querySelector(".drop-zone__prompt").remove();
+      } //add file in drop-area
+
+
+      if (!thumbnailElement) {
+        thumbnailElement = document.createElement("div");
+        thumbnailElement.classList.add("drop-zone__thumb");
+        dropZoneElement.appendChild(thumbnailElement);
+        var imgTag = document.createElement("img");
+        thumbnailElement.appendChild(imgTag);
+      } //show file name
+
+
+      thumbnailElement.dataset.label = file.name; //show image
+
+      if (file.type.startsWith("image/")) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function () {
+          imgTag.src = reader.result;
+        };
+      } else {
+        imgTag.src = null;
+      }
+    }
+
+    ;
   }
 });
 
@@ -87496,9 +87573,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tomtom-international/web-sdk-services */ "./node_modules/@tomtom-international/web-sdk-services/dist/services.min.js");
 /* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
-var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+
+var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a(_defineProperty({
   el: '#edit-apartment',
   data: {
     title: title,
@@ -87517,11 +87596,20 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     description: description,
     submitted: false,
     noAdressFound: false,
-    imageValid: true
+    mainImageValid: true,
+    numOldSecondaryImages: parseInt(numOldSecondaryImages),
+    oldSecondaryImagesValid: true,
+    newSecondaryImagesValid: true,
+    numNewSecondaryImages: 0,
+    allComforts: [],
+    invalidComforts: []
   },
   mounted: function mounted() {
     var _this = this;
 
+    axios.get('/api/getAllComforts').then(function (response) {
+      _this.allComforts = response.data.results;
+    });
     _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
       key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
       position: {
@@ -87540,6 +87628,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
       this.submitted = true;
       window.scrollTo(0, 0);
+      this.invalidComforts = [];
       var titleValid = this.title && this.title.length <= 255;
       var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
       var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
@@ -87549,13 +87638,36 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
       var mucipalityValid = this.municipality;
       var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
+      var descriptionValid = this.description.length <= 65535;
 
-      if (this.$refs.inputFile.files[0]) {
-        this.imageValid = this.availableTypes.includes(this.$refs.inputFile.files[0].type);
+      if (this.$refs.mainImage.files[0]) {
+        this.mainImageValid = this.availableTypes.includes(this.$refs.mainImage.files[0].type);
       }
 
-      var descriptionValid = this.description.length <= 65535;
-      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.imageValid && descriptionValid;
+      for (var i = 0; i < this.numOldSecondaryImages; i++) {
+        if (this.$refs['oldSecondaryImages' + i].files[0]) {
+          this.oldSecondaryImagesValid = this.availableTypes.includes(this.$refs['oldSecondaryImages' + i].files[0].type);
+        }
+      }
+
+      if (this.$refs.newSecondaryImages) {
+        this.numNewSecondaryImages = this.$refs.newSecondaryImages.files.length;
+
+        if (this.numNewSecondaryImages) {
+          Array.from(this.$refs.newSecondaryImages.files).forEach(function (file) {
+            _this2.newSecondaryImagesValid = _this2.availableTypes.includes(file.type);
+          });
+        }
+      }
+
+      for (var i = 0; i < this.allComforts.length; i++) {
+        if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+          this.invalidComforts.push(i);
+        }
+      }
+
+      var comfortsValid = !this.invalidComforts.length;
+      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= 4 - this.numOldSecondaryImages && comfortsValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
         countryCode: 'IT',
@@ -87590,7 +87702,74 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       });
     }
   }
-});
+}, "mounted", function mounted() {
+  document.querySelectorAll(".drop-zone__input").forEach(function (inputElement) {
+    var dropZoneElement = inputElement.closest(".drop-zone");
+    dropZoneElement.addEventListener("click", function (e) {
+      inputElement.click();
+    });
+    dropZoneElement.addEventListener("change", function (e) {
+      if (inputElement.files.length) {
+        updateThumbnail(dropZoneElement, inputElement.files[0]);
+      }
+    });
+    dropZoneElement.addEventListener("dragover", function (e) {
+      e.preventDefault();
+      dropZoneElement.classList.add("drop-zone--over");
+    });
+    ["dragleave", "dragend"].forEach(function (type) {
+      dropZoneElement.addEventListener(type, function (e) {
+        dropZoneElement.classList.remove('drop-zone--over');
+      });
+    });
+    dropZoneElement.addEventListener("drop", function (e) {
+      e.preventDefault();
+
+      if (e.dataTransfer.files.length) {
+        inputElement.files = e.dataTransfer.files;
+        console.log(inputElement.files);
+        updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+      }
+
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+
+  function updateThumbnail(dropZoneElement, file) {
+    console.log(dropZoneElement);
+    console.log(file);
+    var thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+    if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+      dropZoneElement.querySelector(".drop-zone__prompt").remove();
+    } //add file in drop-area
+
+
+    if (!thumbnailElement) {
+      thumbnailElement = document.createElement("div");
+      thumbnailElement.classList.add("drop-zone__thumb");
+      dropZoneElement.appendChild(thumbnailElement);
+      var imgTag = document.createElement("img");
+      thumbnailElement.appendChild(imgTag);
+    } //show file name
+
+
+    thumbnailElement.dataset.label = file.name; //show image
+
+    if (file.type.startsWith("image/")) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function () {
+        imgTag.src = reader.result;
+      };
+    } else {
+      imgTag.src = null;
+    }
+  }
+
+  ;
+}));
 
 /***/ }),
 
@@ -87611,7 +87790,8 @@ var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   data: {
     nonce: '',
     dropin: null,
-    loaded: false
+    loaded: false,
+    selectedSponsorship: undefined
   },
   mounted: function mounted() {
     var self = this;
@@ -87636,6 +87816,16 @@ var payment = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           self.$refs.paymentForm.submit();
         });
       });
+    },
+    selectSponsorship: function selectSponsorship(id) {
+      document.getElementById('sponsorship-' + id + '-input').checked = true;
+
+      if (this.selectedSponsorship) {
+        document.getElementById('sponsorship-' + this.selectedSponsorship + '-card').classList.remove('active');
+      }
+
+      document.getElementById('sponsorship-' + id + '-card').classList.add('active');
+      this.selectedSponsorship = id;
     }
   }
 });

@@ -5,7 +5,8 @@ var payment = new Vue({
     data: {
         nonce: '',
         dropin: null,
-        loaded: false
+        loaded: false,
+        selectedSponsorship: undefined
     },
     mounted() {
         var self = this;
@@ -30,6 +31,17 @@ var payment = new Vue({
                     self.$refs.paymentForm.submit();
                 });
             });
+        },
+        selectSponsorship(id) {
+            document.getElementById('sponsorship-' + id + '-input').checked = true;
+
+            if (this.selectedSponsorship) {
+                document.getElementById('sponsorship-' + this.selectedSponsorship + '-card').classList.remove('active');
+            }
+
+            document.getElementById('sponsorship-' + id + '-card').classList.add('active');
+
+            this.selectedSponsorship = id;
         }
     }
 });

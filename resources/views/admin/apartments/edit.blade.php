@@ -14,10 +14,69 @@
         var address = "{{ $apartment->adress }}";
         var pricePerNight = "{{ $apartment->price_per_night }}";
         var description = "{{ $apartment->description }}";
+        var numOldSecondaryImages = "{{ $images->count() }}";
     </script>
 @endsection
 
 @section('content')
+    <style media="screen">
+    .drop-zone{
+        max-width: 100%;
+        height: 365px;
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 20px;
+        cursor: pointer;
+        color: #ccc;
+        border: 4px dashed #009578;
+        border-radius: 10px;
+    }
+    .mini{
+        height: 180px;
+    }
+    .drop-zone--over{
+        border-style: solid;
+    }
+    .drop-zone__input{
+        display: none;
+    }
+    .drop-zone__thumb{
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #ccc;
+        background-size: cover;
+        position: relative;
+    }
+    .drop-zone__thumb>img{
+        width: 100%;
+        height: 100%;
+    }
+    .drop-zone__thumb::after{
+        content: attr(data-label);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 5px 0;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.75);
+        font-size: 14px;
+        text-align: center;
+    }
+    .img-cont{
+        height: 400px;
+    }
+    .img-cont>img{
+        width: 100%;
+        height: 90%;
+        object-fit: contain;
+    }
+    </style>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -194,12 +253,20 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label class="d-block">Immagine principale: </label>
-                        <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
-                        <label>Scegli un'altra immagine: </label>
-                        <input ref="inputFile" type="file" class="form-control-file" name="image" accept="image/*">
-                        <div v-if="!imageValid" class="alert alert-danger">
+                    <div class="form-group row">
+                        <div class=" img-cont col-sm-12 col-md-6">
+                            <label class="d-block">Immagine principale: </label>
+                            <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
+                        </div>
+                        <div class="img-cont col-sm-12 col-md-6">
+                            <label>Scegli un'altra immagine principale: </label>
+                            <div class="drop-zone">
+                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                <input ref="mainImage" type="file" class="form-control-file drop-zone__input" name="image" accept="image/*">
+                            </div>
+                        </div>
+                        {{-- <input ref="mainImage" type="file" class="form-control-file" name="image" accept="image/*"> --}}
+                        <div v-if="!mainImageValid" class="alert alert-danger">
                             L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
                         @error ('image')
@@ -209,35 +276,55 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label class="d-block">Immagini secondarie: </label>
-                        @foreach ($images as $image)
-                            <div class="w-25 h-25 d-inline-block">
-                                <img src="{{ asset("storage/" . $image->url) }}" class="mw-100 mh-100">
-                            </div>
-                        @endforeach
-                        <input ref="inputFile" type="file" multiple accept="image/*" class="form-control-file " name="images[]" accept="image/*">
-                        <div v-if="!imageValid" class="alert alert-danger">
-                            L'immagine deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        @if ($images->count())
+                            <label class="d-block">Modifica immagini secondarie già presenti: </label>
+                        @endif
+                        <div class="d-flex">
+                            @foreach ($images as $index => $image)
+                                <div class="w-25 d-flex flex-column justify-content-between m-2">
+                                    <img class="mb-2" src="{{ asset("storage/" . $image->url) }}" class="mw-100">
+                                    <div class="drop-zone mini">
+                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                        <input ref="oldSecondaryImages{{ $index }}" type="file" class="form-control-file drop-zone__input" name="old_images[{{ $index }}]" accept="image/*">
+                                    </div>
+                                    {{-- <input ref="oldSecondaryImages{{ $index }}" type="file" accept="image/*" class="form-control-file" name="old_images[{{ $index }}]" accept="image/*"> --}}
+                                </div>
+                            @endforeach
+                        </div>
+                        <div v-if="!oldSecondaryImagesValid" class="alert alert-danger">
+                            Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        @if ($images->count() < 4)
+                            <label>Aggiungi altre immagini secondarie</label>
+                            <input ref="newSecondaryImages" type="file" accept="image/*" class="form-control-file" name="new_images[]" accept="image/*" multiple>
+                        @endif
+                        <div v-if="!newSecondaryImagesValid" class="alert alert-danger">
+                            Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                        </div>
+                        <div v-if="numNewSecondaryImages > (4 - numOldSecondaryImages)" class="alert alert-danger">
+                            Puoi caricare al massimo 4 immagini secondarie in totale
                         </div>
                         @error ('image')
                             <div class="alert alert-danger">
                                 {{ $message }}
                             </div>
                         @enderror
-
                     </div>
                     <div class="form-group">
                         <label>Comforts:</label>
-                            @foreach ($comforts as $comfort)
+                            @foreach ($comforts as $index => $comfort)
                                 <div class="form-check">
                                     @if($errors->any())
-                                        <input type="checkbox" name="comforts[]" value="{{$comfort->id}}"
+                                        <input ref="comfort{{ $index }}" type="checkbox" name="comforts[]" value="{{$comfort->id}}"
                                         {{ in_array($comfort->id, old('comforts', [])) ? 'checked=checked' : ''}}>
                                     @else
-                                        <input type="checkbox" name="comforts[]" value="{{$comfort->id}}"
+                                        <input ref="comfort{{ $index }}" type="checkbox" name="comforts[]" value="{{$comfort->id}}"
                                         {{ $apartment->comforts->contains($comfort) ? 'checked=checked' : '' }}>
                                     @endif
                                     <label class="form-check-label">{{$comfort->name}}</label>
+                                    <div v-if="invalidComforts.includes({{ $index }})" class="alert alert-danger">
+                                        Il valore di questo comfort non è valido
+                                    </div>
                                 </div>
                             @endforeach
                             @error ('comforts')

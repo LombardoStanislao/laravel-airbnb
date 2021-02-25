@@ -30,13 +30,17 @@ var create = new Vue({
         mainImageType: null,
         mainImageValid: true,
         secondaryImagesValid: true,
-        numSecondaryImages: 0
+        numSecondaryImages: 0,
+        allComforts: [],
+        invalidComforts: []
     },
     methods: {
         submitForm() {
             this.submitted = true;
 
             window.scrollTo(0, 0);
+
+            this.invalidComforts = [];
 
             var titleValid = this.title && this.title.length <= 255;
             var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
@@ -69,7 +73,16 @@ var create = new Vue({
             var descriptionValid = this.description.length <= 65535;
             var addressValid = this.address.length <= 255;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && descriptionValid;
+
+            for (var i = 0; i < this.allComforts.length; i++) {
+                if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+                    this.invalidComforts.push(i);
+                }
+            }
+
+            var comfortsValid = !this.invalidComforts.length;
+
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && comfortsValid && descriptionValid;
 
 
             tt.services.structuredGeocode({
@@ -107,14 +120,93 @@ var create = new Vue({
             }).catch(error => {
                 this.noAdressFound = true;
             });
-        }
+        },
     },
     mounted() {
-        // let dropArea = document.getElementById('drop-area');
-        //
-        // dropArea.addEventListener('dragenter', handlerFunction, false);
-        // dropArea.addEventListener('dragleave', handlerFunction, false);
-        // dropArea.addEventListener('dragover', handlerFunction, false);
-        // dropArea.addEventListener('drop', handlerFunction, false);
+        axios.get('/api/getAllComforts').then((response) => {
+            this.allComforts = response.data.results;
+        });
+
+        document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
+
+            const dropZoneElement = inputElement.closest(".drop-zone");
+
+            dropZoneElement.addEventListener("click", e =>{
+                inputElement.click();
+            });
+
+            dropZoneElement.addEventListener("change", e =>{
+                if(inputElement.files.length){
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
+                }
+            });
+
+            dropZoneElement.addEventListener("dragover", e =>{
+                e.preventDefault();
+                dropZoneElement.classList.add("drop-zone--over");
+            });
+
+            ["dragleave", "dragend"].forEach(type => {
+                dropZoneElement.addEventListener(type, e =>{
+                    dropZoneElement.classList.remove('drop-zone--over');
+                });
+            });
+
+            dropZoneElement.addEventListener("drop", e =>{
+                e.preventDefault();
+
+                if(e.dataTransfer.files.length){
+                    inputElement.files = e.dataTransfer.files;
+                    console.log(inputElement.files);
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+                }
+
+                dropZoneElement.classList.remove("drop-zone--over");
+
+            });
+
+        });
+
+        function updateThumbnail(dropZoneElement, file){
+            console.log(dropZoneElement);
+            console.log(file);
+            let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+            if(dropZoneElement.querySelector(".drop-zone__prompt")){
+                dropZoneElement.querySelector(".drop-zone__prompt").remove();
+            }
+
+
+            //add file in drop-area
+            if(!thumbnailElement){
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
+
+            }
+
+            //show file name
+            thumbnailElement.dataset.label = file.name;
+
+            //show image
+            if(file.type.startsWith("image/")){
+                var reader = new FileReader();
+
+                reader.readAsDataURL(file);
+                reader.onload=()=>{
+
+                    imgTag.src = reader.result;
+
+                };
+
+            }else{
+                imgTag.src = null;
+            }
+
+
+        };
+
     }
 });

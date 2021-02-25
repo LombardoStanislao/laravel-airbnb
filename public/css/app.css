@@ -17119,8 +17119,18 @@ body [v-cloak] {
   min-width: 0;
 }
 
+.sidebar {
+  border-bottom: 1px solid #80808033;
+}
+
 .sidebar .active {
   color: #11079d;
+}
+
+@media only screen and (min-width: 768px) {
+  .sidebar {
+    border-bottom: 0;
+  }
 }
 
 #messages-table {
@@ -17241,6 +17251,83 @@ footer {
 
 footer ul {
   list-style-type: none;
+}
+
+#show-apartment .primary-image {
+  height: 240px;
+}
+
+@media only screen and (min-width: 576px) {
+  #show-apartment .primary-image {
+    height: 300px;
+  }
+}
+
+@media only screen and (min-width: 960px) {
+  #show-apartment .primary-image {
+    height: 360px;
+  }
+}
+
+#show-apartment [class^=secondary-image] {
+  height: 115px;
+}
+
+@media only screen and (min-width: 576px) {
+  #show-apartment [class^=secondary-image] {
+    height: 145px;
+  }
+}
+
+@media only screen and (min-width: 960px) {
+  #show-apartment [class^=secondary-image] {
+    height: 175px;
+  }
+}
+
+#show-apartment .secondary-image-1,
+#show-apartment .secondary-image-2 {
+  margin-bottom: 10px;
+}
+
+#show-apartment img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#edit-apartment .secondary-images {
+  width: calc(50% - 20px);
+  margin: 10px;
+}
+
+@media only screen and (min-width: 1140px) {
+  #edit-apartment .secondary-images {
+    width: calc(25% - 20px);
+  }
+}
+
+#edit-apartment .secondary-images img {
+  height: 120px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media only screen and (min-width: 576px) {
+  #edit-apartment .secondary-images img {
+    height: 240px;
+  }
+}
+
+#payment-form .card {
+  cursor: pointer;
+}
+
+#payment-form .card:hover {
+  background-color: #00d8ff38;
+}
+
+#payment-form .card.active {
+  background-color: #00d8ff38;
 }
 
 #apartment-page .address {

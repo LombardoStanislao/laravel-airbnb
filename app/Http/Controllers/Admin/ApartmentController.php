@@ -68,6 +68,7 @@ class ApartmentController extends Controller
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'images' => 'nullable|max:4',
+            'images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535'
@@ -96,11 +97,15 @@ class ApartmentController extends Controller
 
         if (array_key_exists('images', $data)) {
             for ($i=0; $i < count($data["images"]) ; $i++) {
+                // dd($data["images"]);
+
                 $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
                 $new_apartment_image = new Image();
                 $new_apartment_image->apartment_id = $new_apartment->id;
                 $new_apartment_image->url = $secondary_images;
                 $new_apartment_image->save();
+
+
             }
         }
 
@@ -188,6 +193,9 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
+        $oldImages = Image::where('apartment_id', $apartment->id)->get();
+        $maxNumNewImages = 4 - $oldImages->count();
+
         $request->validate([
             'title' => 'required|max:255',
             'rooms_number' => 'required|integer|min:1|max:255',
@@ -202,7 +210,10 @@ class ApartmentController extends Controller
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
-            'images' => 'nullable|max:4',
+            'old_images' => 'nullable|max:4',
+            'old_images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
+            'new_images' => 'nullable|max:' . $maxNumNewImages,
+            'new_images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535',
@@ -225,22 +236,35 @@ class ApartmentController extends Controller
             $data["slug"] = $new_slug;
         }
 
-        if(array_key_exists('image',$data)){
+        if(array_key_exists('image', $data)){
             $main_image = Storage::put('apartment_images', $data["image"]);
             $data["main-image"] = $main_image;
         }
 
-        $oldImages = Image::where('apartment_id', $apartment->id)->get();
-        foreach ($oldImages as $oldImage) {
-            $oldImage->delete();
+        if (array_key_exists('old_images', $data)) {
+            foreach ($oldImages as $index => $oldImage) {
+                if (array_key_exists($index, $data['old_images'])) {
+                    $oldImage->delete();
+                }
+            }
+            foreach ($data['old_images'] as $image) {
+                $secondary_images = Storage::put('apartment_images', $image);
+                $new_apartment_image = new Image();
+                $new_apartment_image->apartment_id = $apartment->id;
+                $new_apartment_image->url = $secondary_images;
+                $new_apartment_image->save();
+            }
         }
 
-        for ($i=0; $i < count($data["images"]) ; $i++) {
-            $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
-            $new_apartment_image = new Image();
-            $new_apartment_image->apartment_id = $apartment->id;
-            $new_apartment_image->url = $secondary_images;
-            $new_apartment_image->save();
+
+        if (array_key_exists('new_images', $data)) {
+            for ($i=0; $i < count($data["new_images"]) ; $i++) {
+                $secondary_images = Storage::put('apartment_images', $data["new_images"][$i]);
+                $new_apartment_image = new Image();
+                $new_apartment_image->apartment_id = $apartment->id;
+                $new_apartment_image->url = $secondary_images;
+                $new_apartment_image->save();
+            }
         }
 
         $apartment->update($data);

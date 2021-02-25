@@ -3,6 +3,56 @@
 @section('page-title', 'Aggiungi appartamento')
 
 @section('content')
+    <style media="screen">
+    .drop-zone{
+        max-width: 100%;
+        height: 365px;
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 20px;
+        cursor: pointer;
+        color: #ccc;
+        border: 4px dashed #009578;
+        border-radius: 10px;
+    }
+    .mini{
+        height: 180px;
+    }
+    .drop-zone--over{
+        border-style: solid;
+    }
+    .drop-zone__input{
+        display: none;
+    }
+    .drop-zone__thumb{
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #ccc;
+        background-size: cover;
+        position: relative;
+    }
+    .drop-zone__thumb>img{
+        width: 100%;
+        height: 100%;
+    }
+    .drop-zone__thumb::after{
+        content: attr(data-label);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 5px 0;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.75);
+        font-size: 14px;
+        text-align: center;
+    }
+    </style>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -178,9 +228,12 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-sm-12 col-md-6 float-left">
                         <label>Immagine principale: </label>
-                        <input ref="mainImage" type="file" class="form-control-file" name="image" accept="image/*" required>
+                        <div class="drop-zone">
+                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                            <input ref="mainImage" type="file" class="form-control-file drop-zone__input" name="image" accept="image/*" required>
+                        </div>
                         <div v-if="submitted && !mainImageType" class="alert alert-danger">
                             L'immagine principale è obbligatoria
                         </div>
@@ -193,9 +246,17 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label>Immagini secondarie: </label>
-                        <input ref="secondaryImages" type="file" multiple accept="image/*" class="form-control-file " name="images[]" accept="image/*">
+
+                    <div class="form-group col-sm-12 col-md-6 float-left">
+                        <label class="d-block">Immagini secondarie: </label>
+                        @for ($i=0; $i < 4; $i++)
+                            <div class="col-sm-12 col-md-6 float-left pb-2">
+                                <div class="drop-zone mini">
+                                    <span class="drop-zone__prompt">Drop files here or click to upload</span>
+                                    <input ref="secondaryImages" type="file" accept="image/*" class="form-control-file drop-zone__input" name="images[]" accept="image/*">
+                                </div>
+                            </div>
+                        @endfor
                         <div v-if="!secondaryImagesValid" class="alert alert-danger">
                             Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
                         </div>
@@ -210,12 +271,15 @@
                     </div>
                     <div class="form-group">
                         <label>Comforts: </label>
-                        @foreach ($comforts as $comfort)
+                        @foreach ($comforts as $index => $comfort)
                             <div class="form-check">
-                                <input name="comforts[]" class="form-check-input" type="checkbox" value="{{ $comfort->id }}" {{ in_array($comfort->id, old('comforts', [])) ? 'checked' : '' }}>
+                                <input ref="comfort{{ $index }}" name="comforts[]" class="form-check-input" type="checkbox" value="{{ $comfort->id }}" {{ in_array($comfort->id, old('comforts', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label">
                                     {{ $comfort->name }}
                                 </label>
+                                <div v-if="invalidComforts.includes({{ $index }})" class="alert alert-danger">
+                                    Il valore di questo comfort non è valido
+                                </div>
                             </div>
                         @endforeach
                         @error ('comforts')
