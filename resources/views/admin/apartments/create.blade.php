@@ -267,12 +267,15 @@
                     </div>
                     <div class="form-group">
                         <label>Comforts: </label>
-                        @foreach ($comforts as $comfort)
+                        @foreach ($comforts as $index => $comfort)
                             <div class="form-check">
-                                <input name="comforts[]" class="form-check-input" type="checkbox" value="{{ $comfort->id }}" {{ in_array($comfort->id, old('comforts', [])) ? 'checked' : '' }}>
+                                <input ref="comfort{{ $index }}" name="comforts[]" class="form-check-input" type="checkbox" value="{{ $comfort->id }}" {{ in_array($comfort->id, old('comforts', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label">
                                     {{ $comfort->name }}
                                 </label>
+                                <div v-if="invalidComforts.includes({{ $index }})" class="alert alert-danger">
+                                    Il valore di questo comfort non è valido
+                                </div>
                             </div>
                         @endforeach
                         @error ('comforts')
