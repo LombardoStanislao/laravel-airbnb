@@ -61,8 +61,16 @@ header {
             }
         }
     }
+    .navbar .container, .navbar .container-fluid, .navbar .container-sm, .navbar .container-md, .navbar .container-lg, .navbar .container-xl {
 
-
+        align-items: flex-start;
+    }
+    ul {
+        .navbar-nav {
+            height: 100px;
+            align-self: flex-start;
+        }
+    }
     img {
         width: 100px;
     }
@@ -71,10 +79,14 @@ header {
         display: inline-block;
         border-radius: 30px;
         transition: all 1s;
+        &.btn-primary {
+            background-color: $main-color;
+            border: 1px solid $main-color;
+            &:hover {
+                background-color: $main-color;
+            }
+        }
     }
-    button:hover {
-    }
-
 }
 
 main {
@@ -86,5 +98,11 @@ main {
         &:hover{
             transform: scale(1.2);
         }
+    }
+}
+footer {
+    background-color: #ccc;
+    ul {
+        list-style-type: none;
     }
 }

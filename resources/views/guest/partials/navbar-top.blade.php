@@ -16,12 +16,12 @@
             <div id="header-form">
                 <form  class="input-menu" action="{{ route('search') }}" method="get">
                     <input type="text" name="location" value=""  placeholder="Inserisci dove vuoi andare">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary ">
                         <i class="fas fa-search">
 
                         </i>
                     </button>
-                </form>    
+                </form>
             </div>
 
 

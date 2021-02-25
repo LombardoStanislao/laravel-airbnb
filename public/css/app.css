@@ -17189,6 +17189,20 @@ header #header-form .input-menu:hover {
   background-color: #ccc;
 }
 
+header .navbar .container,
+header .navbar .container-fluid,
+header .navbar .container-sm,
+header .navbar .container-md,
+header .navbar .container-lg,
+header .navbar .container-xl {
+  align-items: flex-start;
+}
+
+header ul .navbar-nav {
+  height: 100px;
+  align-self: flex-start;
+}
+
 header img {
   width: 100px;
 }
@@ -17197,6 +17211,15 @@ header button {
   display: inline-block;
   border-radius: 30px;
   transition: all 1s;
+}
+
+header button.btn-primary {
+  background-color: #ff385c;
+  border: 1px solid #ff385c;
+}
+
+header button.btn-primary:hover {
+  background-color: #ff385c;
 }
 
 main {
@@ -17210,6 +17233,14 @@ main .card {
 
 main .card:hover {
   transform: scale(1.2);
+}
+
+footer {
+  background-color: #ccc;
+}
+
+footer ul {
+  list-style-type: none;
 }
 
 #apartment-page .address {
