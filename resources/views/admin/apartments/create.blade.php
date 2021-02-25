@@ -253,15 +253,12 @@
                             <div class="col-sm-12 col-md-6 float-left pb-2">
                                 <div class="drop-zone mini">
                                     <span class="drop-zone__prompt">Drop files here or click to upload</span>
-                                    <input ref="secondaryImages" type="file" accept="image/*" class="form-control-file drop-zone__input" name="images[]" accept="image/*">
+                                    <input ref="secondaryImage{{ $i }}" type="file" accept="image/*" class="form-control-file drop-zone__input" name="images[]" accept="image/*">
                                 </div>
                             </div>
                         @endfor
-                        <div v-if="!secondaryImagesValid" class="alert alert-danger">
+                        <div v-if="!secondaryImagesValid" class="alert alert-danger float-left">
                             Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
-                        </div>
-                        <div v-if="numSecondaryImages > 4" class="alert alert-danger">
-                            Puoi caricare al massimo 4 immagini secondarie
                         </div>
                         @error ('image')
                             <div class="alert alert-danger">

@@ -61,6 +61,19 @@
 }
 
 #edit-apartment {
+    .main-image > div {
+        width: 100%;
+        
+        @media only screen and (min-width: 960px) {
+            width: calc(50% - 20px);
+            margin: 10px;
+        }
+
+        img {
+            object-fit: cover;
+        }
+    }
+
     .secondary-images {
         width: calc(50% - 20px);
         margin: 10px;
