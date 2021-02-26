@@ -16,11 +16,11 @@
     <script src="{{ asset('js/app.js') }}" charset="utf-8" defer></script>
 </head>
 <body>
-    <header>
+    <header id="header-dashboard">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="{{asset('./img/logo.png')}}" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -72,7 +72,7 @@
                 </div>
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 py-4">
+            <main id="dashboard-main" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 py-4">
                 @yield('content')
             </main>
         </div>

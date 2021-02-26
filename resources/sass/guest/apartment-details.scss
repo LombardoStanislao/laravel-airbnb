@@ -1,8 +1,7 @@
 $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\f593', '6': '\f773');
 
 #header-apartment-details > nav {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 30px;
     background-color: white;
 
     form {
@@ -15,6 +14,14 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
 
     @media only screen and (min-width: 768px) {
         padding-top: 160px;
+    }
+
+    h1 {
+        font-size: 26px;
+
+        @media only screen and (min-width: 368px) {
+            font-size: 36px;
+        }
     }
 
     .address {
@@ -111,6 +118,14 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
     }
 
     #map {
-        height: 500px;
+        height: 250px;
+
+        @media only screen and (min-width: 468px) {
+            height: 500px;
+        }
+
+        @media only screen and (min-width: 992px) {
+            height: 650px;
+        }
     }
 }

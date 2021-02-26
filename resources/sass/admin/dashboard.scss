@@ -1,3 +1,18 @@
+#header-dashboard {
+    img {
+        height: 100px;
+        width: 100px;
+    }
+}
+
+#dashboard-main h1 {
+    font-size: 26px;
+
+    @media only screen and (min-width: 368px) {
+        font-size: 36px;
+    }
+}
+
 #bt-dropin {
     [data-braintree-id='toggle'] {
         display: none;
@@ -36,6 +51,10 @@
         @media only screen and (min-width: 960px) {
             height: 360px;
         }
+
+        @media only screen and (min-width: 1240px) {
+            height: 420px;
+        }
     }
 
     [class^="secondary-image"] {
@@ -47,6 +66,10 @@
 
         @media only screen and (min-width: 960px) {
             height: 175px;
+        }
+
+        @media only screen and (min-width: 1240px) {
+            height: 205px;
         }
     }
 
