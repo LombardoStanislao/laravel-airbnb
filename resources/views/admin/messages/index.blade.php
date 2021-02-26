@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('page-title', 'I tuoi messaggi')
+@section('page-title', 'Messaggi appartamento')
 
 @section('content')
     <div class="row">
