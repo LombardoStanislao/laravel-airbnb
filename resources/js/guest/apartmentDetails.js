@@ -10,7 +10,8 @@ var app = new Vue({
         map : {},
         marker: {},
         imgIndex: 0,
-        nummberOfImages
+        nummberOfImages,
+        showMessageForm: false
     },
 
     methods: {

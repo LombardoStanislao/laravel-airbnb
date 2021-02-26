@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('page-title', 'Aggiungi appartamento')
+@section('page-title', 'Modifica appartamento')
 
 @section('scripts')
     <script type="text/javascript" defer>
