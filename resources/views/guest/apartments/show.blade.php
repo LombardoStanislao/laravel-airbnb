@@ -53,6 +53,13 @@
         </div>
         <div class="container">
             <div class="row mt-4 mb-4">
+                @if (session('message-sent'))
+                    <div class="col-12">
+                        <div class="alert alert-success" role="alert">
+                            {{ session('message-sent') }}
+                        </div>
+                    </div>
+                @endif
                 <div class="col-12 mb-2">
                     <h1>{{ $apartment->title }}</h1>
                 </div>
@@ -152,7 +159,7 @@
                         @endif
                     </p>
                     @if (!Auth::user() || Auth::user()->id != $apartment->user_id)
-                        <a class="btn btn-primary mt-4" href="{{ route('guest.apartments.message', [ 'slug' => $apartment->slug]) }}">
+                        <a @click.prevent="showMessageForm = true" class="btn btn-primary mt-4" href="#">
                             Contatta l'host
                         </a>
                     @endif
@@ -183,6 +190,29 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+        <div v-if="showMessageForm" id="message-form">
+            <div class="form-container">
+                <div @click="showMessageForm = false" class="close">
+                    <i class="fas fa-times fa-2x"></i>
+                </div>
+                <form action="{{ route('guest.apartments.sendMessage', [ 'slug' => $apartment->slug ]) }}" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label class="d-block" for="mail_sender">Indirizzo email:</label>
+                        <input class="form-control" placeholder="Inserire indirizzo email..." id="mail_sender" type="email" name="mail_sender" value="{{ Auth::user() ? Auth::user()->email : '' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="d-block" for="body_message">Messaggio:</label>
+                        <textarea class="form-control" id="body_message" name="body_message" rows="10" placeholder="Inserire messaggio..."></textarea>
+                    </div>
+
+                    <input class="d-none" type="text" name="apartment_id" value="{{ $apartment->id }}">
+
+                    <input class="btn btn-success" type="submit" value="Invia">
+                </form>
             </div>
         </div>
     </div>

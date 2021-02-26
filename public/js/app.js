@@ -88305,7 +88305,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     map: {},
     marker: {},
     imgIndex: 0,
-    nummberOfImages: nummberOfImages
+    nummberOfImages: nummberOfImages,
+    showMessageForm: false
   },
   methods: {
     prev: function prev() {
