@@ -17473,6 +17473,31 @@ body [v-cloak] {
   }
 }
 
+#create-apartment .main-image {
+  width: 100%;
+}
+
+@media only screen and (min-width: 960px) {
+  #create-apartment .main-image {
+    width: 50%;
+  }
+}
+
+#create-apartment .secondary-images {
+  width: 100%;
+}
+
+@media only screen and (min-width: 960px) {
+  #create-apartment .secondary-images {
+    width: 50%;
+  }
+}
+
+#create-apartment .secondary-images .secondary-image {
+  width: calc(50% - 10px);
+  margin: 5px;
+}
+
 #payment-form .card {
   cursor: pointer;
 }

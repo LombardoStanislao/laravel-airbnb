@@ -63,7 +63,7 @@
 #edit-apartment {
     .main-image > div {
         width: 100%;
-        
+
         @media only screen and (min-width: 960px) {
             width: calc(50% - 20px);
             margin: 10px;
@@ -89,6 +89,29 @@
             @media only screen and (min-width: 576px) {
                 height: 240px;
             }
+        }
+    }
+}
+
+#create-apartment {
+    .main-image {
+        width: 100%;
+
+        @media only screen and (min-width: 960px) {
+            width: 50%;
+        }
+    }
+
+    .secondary-images {
+        width: 100%;
+
+        @media only screen and (min-width: 960px) {
+            width: 50%;
+        }
+
+        .secondary-image {
+            width: calc(50% - 10px);
+            margin: 5px;
         }
     }
 }

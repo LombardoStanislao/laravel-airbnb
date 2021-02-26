@@ -228,43 +228,44 @@
                             </div>
                         @enderror
                     </div>
-                    <div class="form-group col-sm-12 col-md-6 float-left">
-                        <label>Immagine principale: </label>
-                        <div class="drop-zone">
-                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
-                            <input ref="mainImage" type="file" class="form-control-file drop-zone__input" name="image" accept="image/*" required>
-                        </div>
-                        <div v-if="submitted && !mainImageType" class="alert alert-danger">
-                            L'immagine principale è obbligatoria
-                        </div>
-                        <div v-else-if="!mainImageValid" class="alert alert-danger">
-                            L'immagine principale deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
-                        </div>
-                        @error ('image')
-                            <div class="alert alert-danger">
-                                {{ $message }}
+                    <div class="d-flex flex-wrap">
+                        <div class="form-group main-image">
+                            <label>Immagine principale: </label>
+                            <div class="drop-zone mt-2">
+                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                <input ref="mainImage" type="file" class="form-control-file drop-zone__input" name="image" accept="image/*" required>
                             </div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group col-sm-12 col-md-6 float-left">
-                        <label class="d-block">Immagini secondarie: </label>
-                        @for ($i=0; $i < 4; $i++)
-                            <div class="col-sm-12 col-md-6 float-left pb-2">
-                                <div class="drop-zone mini">
-                                    <span class="drop-zone__prompt">Drop files here or click to upload</span>
-                                    <input ref="secondaryImage{{ $i }}" type="file" accept="image/*" class="form-control-file drop-zone__input" name="images[]" accept="image/*">
+                            <div v-if="submitted && !mainImageType" class="alert alert-danger">
+                                L'immagine principale è obbligatoria
+                            </div>
+                            <div v-else-if="!mainImageValid" class="alert alert-danger">
+                                L'immagine principale deve essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                            </div>
+                            @error ('image')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
                                 </div>
-                            </div>
-                        @endfor
-                        <div v-if="!secondaryImagesValid" class="alert alert-danger float-left">
-                            Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                            @enderror
                         </div>
-                        @error ('image')
-                            <div class="alert alert-danger">
-                                {{ $message }}
+                        <div class="form-group secondary-images">
+                            <label class="d-block">Immagini secondarie: </label>
+                            <div class="d-flex flex-wrap">
+                                @for ($i=0; $i < 4; $i++)
+                                    <div class="drop-zone mini secondary-image">
+                                        <span class="drop-zone__prompt">Drop files here or click to upload</span>
+                                        <input ref="secondaryImage{{ $i }}" type="file" accept="image/*" class="form-control-file drop-zone__input" name="images[]" accept="image/*">
+                                    </div>
+                                @endfor
                             </div>
-                        @enderror
+                            <div v-if="!secondaryImagesValid" class="alert alert-danger">
+                                Le immagini secondarie devono essere di uno dei seguenti tipi: jpeg, png, jpg, gif, svg
+                            </div>
+                            @error ('images')
+                                <div class="alert alert-danger">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Comforts: </label>

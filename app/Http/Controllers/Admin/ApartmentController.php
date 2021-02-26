@@ -66,7 +66,7 @@ class ApartmentController extends Controller
             'longitude' => 'required',
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
-            'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,swg|max:2024',
             'images' => 'nullable|max:4',
             'images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
