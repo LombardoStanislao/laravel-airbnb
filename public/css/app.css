@@ -17451,8 +17451,15 @@ body [v-cloak] {
 }
 
 #edit-apartment .secondary-images {
-  width: calc(50% - 20px);
-  margin: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 960px) {
+  #edit-apartment .secondary-images {
+    width: calc(50% - 20px);
+    margin: 10px;
+  }
 }
 
 @media only screen and (min-width: 1140px) {
@@ -17494,8 +17501,14 @@ body [v-cloak] {
 }
 
 #create-apartment .secondary-images .secondary-image {
-  width: calc(50% - 10px);
-  margin: 5px;
+  margin-bottom: 5px;
+}
+
+@media only screen and (min-width: 368px) {
+  #create-apartment .secondary-images .secondary-image {
+    width: calc(50% - 10px);
+    margin: 5px;
+  }
 }
 
 #payment-form .card {
@@ -17518,6 +17531,10 @@ body [v-cloak] {
 
 #header-apartment-details > nav form {
   border: 1px solid #dddddd;
+}
+
+#apartment-page {
+  padding-bottom: 100px;
 }
 
 @media only screen and (min-width: 768px) {

@@ -87603,7 +87603,6 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     numOldSecondaryImages: parseInt(numOldSecondaryImages),
     oldSecondaryImagesValid: true,
     newSecondaryImagesValid: true,
-    numNewSecondaryImages: 0,
     allComforts: [],
     invalidComforts: []
   },
@@ -87650,7 +87649,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       }
 
       var comfortsValid = !this.invalidComforts.length;
-      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= 4 - this.numOldSecondaryImages && comfortsValid && descriptionValid;
+      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && comfortsValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
         countryCode: 'IT',

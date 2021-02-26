@@ -75,8 +75,13 @@
     }
 
     .secondary-images {
-        width: calc(50% - 20px);
-        margin: 10px;
+        width: 100%;
+        margin-bottom: 20px;
+
+        @media only screen and (min-width: 960px) {
+            width: calc(50% - 20px);
+            margin: 10px;
+        }
 
         @media only screen and (min-width: 1140px) {
             width: calc(25% - 20px);
@@ -110,8 +115,12 @@
         }
 
         .secondary-image {
-            width: calc(50% - 10px);
-            margin: 5px;
+            margin-bottom: 5px;
+
+            @media only screen and (min-width: 368px) {
+                width: calc(50% - 10px);
+                margin: 5px;
+            }
         }
     }
 }

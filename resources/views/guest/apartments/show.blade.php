@@ -179,7 +179,7 @@
                 <div class="col-12">
                     <h3 class="border-top pt-4 pb-4 mb-0">Posizione:</h3>
                     <span>{{ $apartment->address }}</span>
-                    <div id="map" class="mt-4 mb-4 mb-0 overflow-hidden rounded">
+                    <div id="map" class="mt-4 overflow-hidden rounded">
 
                     </div>
                 </div>

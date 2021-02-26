@@ -115,7 +115,6 @@
                     </ul>
                 </div>
             </div>
-            <canvas id="chart" width="400" height="200"></canvas>
         </div>
     </div>
 @endsection
