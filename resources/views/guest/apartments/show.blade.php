@@ -29,7 +29,9 @@
 @endsection
 
 @section('header')
-    @include('guest.partials.navbar-top')
+    <header id="header-apartment-details">
+        @include('guest.partials.navbar-top')
+    </header>
 @endsection
 
 @section('content')
