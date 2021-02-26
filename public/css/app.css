@@ -17649,6 +17649,8 @@ body [v-cloak] {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  cursor: pointer;
+  transition: all 0.6s;
 }
 
 @media only screen and (min-width: 1200px) {
@@ -17657,17 +17659,27 @@ body [v-cloak] {
   }
 }
 
+#apartment-page .main-image:hover {
+  filter: brightness(0.8);
+}
+
 #apartment-page .secondary-image {
   height: 178px;
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  cursor: pointer;
+  transition: all 0.6s;
 }
 
 @media only screen and (min-width: 1200px) {
   #apartment-page .secondary-image {
     height: 248px;
   }
+}
+
+#apartment-page .secondary-image:hover {
+  filter: brightness(0.8);
 }
 
 #apartment-page #secondary-image-1,
@@ -17763,6 +17775,80 @@ body [v-cloak] {
   position: absolute;
   top: 15px;
   left: 15px;
+  color: red;
+  cursor: pointer;
+}
+
+#apartment-page .slider-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 150px 100px;
+  background-color: white;
+  z-index: 6;
+  background-color: white;
+}
+
+@media only screen and (min-width: 1200px) {
+  #apartment-page .slider-container {
+    padding: 100px;
+  }
+}
+
+@media only screen and (min-width: 1450px) {
+  #apartment-page .slider-container {
+    padding: 100px 150px;
+  }
+}
+
+#apartment-page .slider-container .prev,
+#apartment-page .slider-container .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 15px 20px;
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: #000000ad;
+  color: white;
+}
+
+#apartment-page .slider-container .prev {
+  left: 20px;
+}
+
+@media only screen and (min-width: 1450px) {
+  #apartment-page .slider-container .prev {
+    left: 45px;
+  }
+}
+
+#apartment-page .slider-container .next {
+  right: 20px;
+}
+
+@media only screen and (min-width: 1450px) {
+  #apartment-page .slider-container .next {
+    right: 45px;
+  }
+}
+
+#apartment-page .slider-container .counter {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  background-color: #000000ad;
+  color: white;
+}
+
+#apartment-page .slider-container .close {
+  position: absolute;
+  top: 20px;
+  left: 20px;
   color: red;
   cursor: pointer;
 }
