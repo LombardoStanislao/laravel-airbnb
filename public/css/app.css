@@ -17366,6 +17366,21 @@ body [v-cloak] {
   padding-top: 500px;
 }
 
+#header-dashboard img {
+  height: 100px;
+  width: 100px;
+}
+
+#dashboard-main h1 {
+  font-size: 26px;
+}
+
+@media only screen and (min-width: 368px) {
+  #dashboard-main h1 {
+    font-size: 36px;
+  }
+}
+
 #bt-dropin [data-braintree-id=toggle] {
   display: none;
 }
@@ -17408,6 +17423,12 @@ body [v-cloak] {
   }
 }
 
+@media only screen and (min-width: 1240px) {
+  #show-apartment .primary-image {
+    height: 420px;
+  }
+}
+
 #show-apartment [class^=secondary-image] {
   height: 115px;
 }
@@ -17421,6 +17442,12 @@ body [v-cloak] {
 @media only screen and (min-width: 960px) {
   #show-apartment [class^=secondary-image] {
     height: 175px;
+  }
+}
+
+@media only screen and (min-width: 1240px) {
+  #show-apartment [class^=secondary-image] {
+    height: 205px;
   }
 }
 
@@ -17524,8 +17551,7 @@ body [v-cloak] {
 }
 
 #header-apartment-details > nav {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0 30px;
   background-color: white;
 }
 
@@ -17540,6 +17566,16 @@ body [v-cloak] {
 @media only screen and (min-width: 768px) {
   #apartment-page {
     padding-top: 160px;
+  }
+}
+
+#apartment-page h1 {
+  font-size: 26px;
+}
+
+@media only screen and (min-width: 368px) {
+  #apartment-page h1 {
+    font-size: 36px;
   }
 }
 
@@ -17680,6 +17716,18 @@ body [v-cloak] {
 }
 
 #apartment-page #map {
-  height: 500px;
+  height: 250px;
+}
+
+@media only screen and (min-width: 468px) {
+  #apartment-page #map {
+    height: 500px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  #apartment-page #map {
+    height: 650px;
+  }
 }
 
