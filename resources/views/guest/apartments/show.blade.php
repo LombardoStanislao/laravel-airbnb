@@ -24,6 +24,8 @@
 
         callbackFn();
     </script>
+
+
 @endsection
 
 @section('header')

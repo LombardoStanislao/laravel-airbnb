@@ -19,7 +19,7 @@ use Carbon\Carbon;
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 // Route::get('/advancedsearch', 'Guest\ApartmentController');
 
 Route::get('/search', 'HomeController@search')->name('search');
