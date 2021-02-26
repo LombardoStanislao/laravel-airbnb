@@ -288,7 +288,7 @@ class ApartmentController extends Controller
 
         $apartment->delete();
 
-        return redirect()->route('admin.apartments.index');
+        return back()->with('confirm-deletion', "L'appartamento " . $apartment->id . " è stato eliminato con successo");
     }
 
     public function statistics($apartment_id) {

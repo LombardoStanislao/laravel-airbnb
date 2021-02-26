@@ -30,7 +30,6 @@ var create = new Vue({
         numOldSecondaryImages: parseInt(numOldSecondaryImages),
         oldSecondaryImagesValid: true,
         newSecondaryImagesValid: true,
-        numNewSecondaryImages: 0,
         allComforts: [],
         invalidComforts: []
     },
@@ -80,7 +79,7 @@ var create = new Vue({
 
             var comfortsValid = !this.invalidComforts.length;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= (4-this.numOldSecondaryImages) && comfortsValid && descriptionValid;
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && comfortsValid && descriptionValid;
 
             tt.services.structuredGeocode({
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',

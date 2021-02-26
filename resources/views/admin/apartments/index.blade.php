@@ -5,6 +5,15 @@
 @section('content')
     <div class="row">
         <div class="col-12 col-lg-10">
+            @if (session('confirm-deletion'))
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-success" role="alert">
+                            {{ session('confirm-deletion') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
             <div class="row mt-4 mb-4">
                 <div class="col-12 col-sm-6 mb-2">
                     <h1>
