@@ -17511,6 +17511,8 @@ body [v-cloak] {
 }
 
 #header-apartment-details > nav {
+  padding-top: 0;
+  padding-bottom: 0;
   background-color: white;
 }
 
@@ -17518,8 +17520,10 @@ body [v-cloak] {
   border: 1px solid #dddddd;
 }
 
-#apartment-page {
-  padding-top: 206px;
+@media only screen and (min-width: 768px) {
+  #apartment-page {
+    padding-top: 160px;
+  }
 }
 
 #apartment-page .address {
