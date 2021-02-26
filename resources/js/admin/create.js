@@ -61,7 +61,6 @@ var create = new Vue({
                 this.mainImageValid = true;
             }
 
-
             for (var i = 0; i < 4; i++) {
                 if (this.$refs['secondaryImage' + i].files[0] && !this.availableTypes.includes(this.$refs['secondaryImage' + i].files[0].type)) {
                     this.secondaryImagesValid = false;
