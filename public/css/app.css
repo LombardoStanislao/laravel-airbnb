@@ -17510,6 +17510,18 @@ body [v-cloak] {
   background-color: #00d8ff38;
 }
 
+#header-apartment-details > nav {
+  background-color: white;
+}
+
+#header-apartment-details > nav form {
+  border: 1px solid #dddddd;
+}
+
+#apartment-page {
+  padding-top: 206px;
+}
+
 #apartment-page .address {
   color: #717171;
 }
