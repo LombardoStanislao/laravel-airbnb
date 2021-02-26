@@ -28,8 +28,8 @@
             </div>
             @if (count($apartments))
                 <div class="row">
-                    <div class="col-12">
-                        <table class="table">
+                    <div class="col-12" style="overflow-x:auto;">
+                        <table id="apartments-table" class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Id</th>

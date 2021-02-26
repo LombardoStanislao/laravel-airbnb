@@ -73,12 +73,12 @@ class PaymentController extends Controller
             $new_payment->save();
             $transaction = $result->transaction;
 
-            return redirect()->route('admin.apartments.show', ['apartment' => $apartment_id])->with('success_message', 'La transazione è avvenuta con successo. Id transazione: ' . $transaction->id);
+            return redirect()->route('admin.apartments.show', ['apartment' => $apartment_id])->with('success_message', 'La transazione è avvenuta con successo. Ora il tuo appartamento è sponsorizzato.');
         } else {
             $new_payment->accepted = 0;
             $new_payment->save();
 
-            return back()->with('error_message', 'La transazione è fallita');
+            return back()->with('error_message', 'La transazione è fallita.');
         }
 
     }
