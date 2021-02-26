@@ -88373,6 +88373,11 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     this.marker = new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_1___default.a.Marker().setLngLat(this.home).addTo(this.map);
   }
 });
+document.getElementById('user-icon').addEventListener("click", openMenu);
+
+function openMenu() {
+  document.getElementById('user-dropdown-menu').classList.toggle("open");
+}
 
 /***/ }),
 

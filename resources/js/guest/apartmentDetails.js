@@ -79,3 +79,9 @@ var app = new Vue({
         this.marker = new tt.Marker().setLngLat(this.home).addTo(this.map);
     }
 });
+
+document.getElementById('user-icon').addEventListener("click", openMenu);
+
+function openMenu() {
+    document.getElementById('user-dropdown-menu').classList.toggle("open");
+}

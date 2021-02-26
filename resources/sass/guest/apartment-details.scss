@@ -1,6 +1,8 @@
 $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\f593', '6': '\f773');
 
 #header-apartment-details > nav {
+    padding-top: 0;
+    padding-bottom: 0;
     background-color: white;
 
     form {
@@ -9,8 +11,11 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
 }
 
 #apartment-page {
-    padding-top: 206px;
+    @media only screen and (min-width: 768px) {
+        padding-top: 160px;
 
+    }
+    
     .address {
         color: rgb(113, 113, 113);
     }
