@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-3">
                 <a href="#">
-                    <div class="card">
+                    <div id="sponsoredapartment-card"class="card">
                         <img src="{{asset('./img/logo.png')}}" alt="">
                         <h2>TITOLO</h2>
                         <p>DESCRIZIONE</p>
@@ -47,9 +47,9 @@
             </div>
             @foreach ($sponsored_apartments as $apartment)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-5">
-                    <a href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" class="card h-100 m-3">
+                    <a id="sponsored-apartment-card" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" class="card h-100 m-3">
                         <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
-                        <div class="card-body">
+                        <div  class="card-body">
                             <h5 class="card-title">Id: {{$apartment->id}}</h5>
                             <p class="card-text">{{ $apartment->title }}</p>
                             <p class="card-text">Sponsorizzazione attiva: {{ isSponsored($apartment) ? 'Sì' : 'No' }}</p>
@@ -70,7 +70,7 @@
                 <div class="row">
                     @foreach ($non_sponsored_apartments as $apartment)
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-5">
-                            <a href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" class="card h-100 m-3">
+                            <a id="sponsored-apartment-card" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" class="card h-100 m-3">
                                 <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="mw-100">
                                 <div class="card-body">
                                     <h5 class="card-title">Id: {{$apartment->id}}</h5>

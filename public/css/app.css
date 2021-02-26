@@ -17523,6 +17523,14 @@ body [v-cloak] {
   background-color: #00d8ff38;
 }
 
+#sponsored-apartment-card {
+  transition: 1s;
+}
+
+#sponsored-apartment-card:hover {
+  transform: scale(1.1);
+}
+
 #header-apartment-details > nav {
   padding-top: 0;
   padding-bottom: 0;
