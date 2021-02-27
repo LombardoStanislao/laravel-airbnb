@@ -31,3 +31,7 @@ if(document.getElementById('message-page')) {
 if(document.getElementById('statistics')) {
     require('./admin/statistics')
 }
+
+if (document.getElementById('container-register-signin')) {
+    require('./auth/loginPage')
+}
