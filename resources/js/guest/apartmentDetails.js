@@ -11,9 +11,9 @@ var app = new Vue({
         marker: {},
         imgIndex: 0,
         nummberOfImages,
-        showMessageForm: false
+        showMessageForm: false,
+        sliderVisible: false
     },
-
     methods: {
         prev() {
             this.imgIndex--;
@@ -27,6 +27,15 @@ var app = new Vue({
 
             if (this.imgIndex > this.nummberOfImages-1) {
                 this.imgIndex = 0;
+            }
+        },
+        showSlider(index) {
+            this.sliderVisible = true;
+            this.imgIndex = index;
+        },
+        watchViewport() {
+            if (window.innerWidth < 992) {
+                this.sliderVisible = false;
             }
         }
     },
@@ -70,6 +79,8 @@ var app = new Vue({
     //     }
     // },
     mounted() {
+        window.onresize = this.watchViewport;
+
         this.map = tt.map({
             key: APIKEY,
             center: this.home,

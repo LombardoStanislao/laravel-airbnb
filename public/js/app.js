@@ -88306,7 +88306,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     marker: {},
     imgIndex: 0,
     nummberOfImages: nummberOfImages,
-    showMessageForm: false
+    showMessageForm: false,
+    sliderVisible: false
   },
   methods: {
     prev: function prev() {
@@ -88321,6 +88322,15 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
       if (this.imgIndex > this.nummberOfImages - 1) {
         this.imgIndex = 0;
+      }
+    },
+    showSlider: function showSlider(index) {
+      this.sliderVisible = true;
+      this.imgIndex = index;
+    },
+    watchViewport: function watchViewport() {
+      if (window.innerWidth < 992) {
+        this.sliderVisible = false;
       }
     }
   },
@@ -88364,6 +88374,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   //     }
   // },
   mounted: function mounted() {
+    window.onresize = this.watchViewport;
     this.map = _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_1___default.a.map({
       key: APIKEY,
       center: this.home,
