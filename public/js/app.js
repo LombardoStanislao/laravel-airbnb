@@ -88127,6 +88127,29 @@ if (document.getElementById('statistics')) {
   __webpack_require__(/*! ./admin/statistics */ "./resources/js/admin/statistics.js");
 }
 
+if (document.getElementById('container-register-signin')) {
+  __webpack_require__(/*! ./auth/loginPage */ "./resources/js/auth/loginPage.js");
+}
+
+/***/ }),
+
+/***/ "./resources/js/auth/loginPage.js":
+/*!****************************************!*\
+  !*** ./resources/js/auth/loginPage.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var signInButton = document.querySelector("#sign-in-button");
+var signUpButton = document.querySelector("#sign-up-button");
+var container = document.querySelector("#container-register-signin");
+signUpButton.addEventListener('click', function () {
+  container.classList.add("sign-up-mode");
+});
+signInButton.addEventListener('click', function () {
+  container.classList.remove("sign-up-mode");
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -88306,7 +88329,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     marker: {},
     imgIndex: 0,
     nummberOfImages: nummberOfImages,
-    showMessageForm: false
+    showMessageForm: false,
+    sliderVisible: false
   },
   methods: {
     prev: function prev() {
@@ -88321,6 +88345,15 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
       if (this.imgIndex > this.nummberOfImages - 1) {
         this.imgIndex = 0;
+      }
+    },
+    showSlider: function showSlider(index) {
+      this.sliderVisible = true;
+      this.imgIndex = index;
+    },
+    watchViewport: function watchViewport() {
+      if (window.innerWidth < 992) {
+        this.sliderVisible = false;
       }
     }
   },
@@ -88364,6 +88397,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   //     }
   // },
   mounted: function mounted() {
+    window.onresize = this.watchViewport;
     this.map = _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_1___default.a.map({
       key: APIKEY,
       center: this.home,
@@ -88432,8 +88466,8 @@ function openMenu() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/Corsoboolean/esercizi/laravel-airbnb/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/Corsoboolean/esercizi/laravel-airbnb/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\Boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\Boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
