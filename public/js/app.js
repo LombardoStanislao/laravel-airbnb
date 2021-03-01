@@ -87525,19 +87525,6 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         //show file name
 
         thumbnailElement.dataset.label = file[i].name; //show image
-        // if(file[i].type.startsWith("image/")){
-        //     var reader = new FileReader();
-        //
-        //     reader.readAsDataURL(file[i]);
-        //     reader.onload=()=>{
-        //
-        //         imgTag.src = reader.result;
-        //
-        //     };
-        //
-        // }else{
-        //     imgTag.src = null;
-        // }
 
         loadImage(file, i, imgTag);
       }
@@ -87546,14 +87533,12 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     ;
 
     function loadImage(file, i, imgTag) {
-      //show image
       if (file[i].type.startsWith("image/")) {
         var reader = new FileReader();
         reader.readAsDataURL(file[i]);
 
         reader.onload = function () {
           imgTag.src = reader.result;
-          console.log(imgTag.src);
         };
       } else {
         imgTag.src = null;
@@ -88106,8 +88091,9 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#root',
   data: {
     radius: 20000,
-    minimumRooms: 1,
-    minimumSleepsAccomodations: 1,
+    minimumRooms: 0,
+    minimumSleepsAccomodations: 0,
+    minimumBathrooms: 0,
     locationName: null,
     locationCoordinates: null,
     checkedComfortsId: [],
@@ -88139,14 +88125,20 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         comfortIdString += id;
       }); // Validazione
 
-      if (!this.minimumRooms) {
-        this.minimumRooms = 1;
+      if (this.minimumRooms < 0) {
+        this.minimumRooms = 0;
       } else if (this.minimumRooms > 255) {
         this.minimumRooms = 255;
       }
 
-      if (!this.minimumSleepsAccomodations) {
-        this.minimumSleepsAccomodations = 1;
+      if (this.minimumBathrooms < 0) {
+        this.minimumBathrooms = 0;
+      } else if (this.minimumBathrooms > 255) {
+        this.minimumBathrooms = 255;
+      }
+
+      if (this.minimumSleepsAccomodations < 0) {
+        this.minimumSleepsAccomodations = 0;
       } else if (this.minimumSleepsAccomodations > 255) {
         this.minimumSleepsAccomodations = 255;
       }
@@ -88166,12 +88158,25 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           radius: this.radius,
           minimumRooms: this.minimumRooms,
           minimumSleepsAccomodations: this.minimumSleepsAccomodations,
+          minimumBathrooms: this.minimumBathrooms,
           locationName: this.locationName,
           comfortIdString: comfortIdString
         }
       }).then(function (response) {
         _this.apartments = response.data.results;
+        console.log(_this.apartments);
       });
+    },
+    toggleFilterDropdown: function toggleFilterDropdown() {
+      var element = document.getElementById('dropdown-filters-menu');
+      element.classList.toggle('d-none');
+    },
+    clearFilters: function clearFilters() {
+      this.radius = 20000;
+      this.minimumRooms = 0;
+      this.minimumBathrooms = 0;
+      this.minimumSleepsAccomodations = 0;
+      this.checkedComfortsId = [];
     }
   },
   mounted: function mounted() {
@@ -88322,8 +88327,8 @@ var home = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
