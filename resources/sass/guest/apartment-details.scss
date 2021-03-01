@@ -1,6 +1,30 @@
 $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\f593', '6': '\f773');
 
+#header-apartment-details > nav {
+    padding: 0 30px;
+    background-color: white;
+
+    form {
+        border: 1px solid rgb(221, 221, 221);
+    }
+}
+
 #apartment-page {
+    position: relative;
+    padding-bottom: 100px;
+
+    @media only screen and (min-width: 768px) {
+        padding-top: 160px;
+    }
+
+    h1 {
+        font-size: 26px;
+
+        @media only screen and (min-width: 368px) {
+            font-size: 36px;
+        }
+    }
+
     .address {
         color: rgb(113, 113, 113);
     }
@@ -33,9 +57,15 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
         height: 360px;
         width: 100%;
         object-fit: cover;
+        cursor: pointer;
+        transition: all 0.6s;
 
         @media only screen and (min-width: 1200px) {
             height: 500px;
+        }
+
+        &:hover {
+            filter: brightness(0.8);
         }
     }
 
@@ -43,9 +73,15 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
         height: 178px;
         width: 100%;
         object-fit: cover;
+        cursor: pointer;
+        transition: all 0.6s;
 
         @media only screen and (min-width: 1200px) {
             height: 248px;
+        }
+
+        &:hover {
+            filter: brightness(0.8);
         }
     }
 
@@ -56,9 +92,15 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
 
     .slider {
         position: relative;
+        overflow: hidden;
         height: 350px;
 
         img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
             height: 100%;
             object-fit: cover;
         }
@@ -95,6 +137,168 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
     }
 
     #map {
-        height: 500px;
+        height: 250px;
+
+        @media only screen and (min-width: 468px) {
+            height: 500px;
+        }
+
+        @media only screen and (min-width: 992px) {
+            height: 650px;
+        }
+    }
+
+    #message-form {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 6;
+
+        .form-container {
+            padding: 80px 20px 20px 20px;
+            width: 90%;
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            box-shadow: 0px 0px 15px 8px rgba(0,0,0,0.69);
+
+            @media only screen and (min-width: 992px) {
+                padding: 100px 60px 60px 60px;
+                width: 65%;
+            }
+
+            .close {
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                color: red;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .slider-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        padding: 150px 100px;
+        background-color: white;
+        z-index: 6;
+
+        background-color: white;
+
+        @media only screen and (min-width: 1200px) {
+            padding: 100px;
+
+        }
+
+        @media only screen and (min-width: 1450px) {
+            padding: 100px 150px;
+
+        }
+
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 15px 20px;
+            border-radius: 100%;
+            cursor: pointer;
+            background-color: #000000ad;
+            color: white;
+        }
+
+        .prev {
+            left: 20px;
+
+            @media only screen and (min-width: 1450px) {
+                left: 45px;
+            }
+        }
+
+        .next {
+            right: 20px;
+
+            @media only screen and (min-width: 1450px) {
+                right: 45px;
+            }
+        }
+
+        .counter {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background-color: #000000ad;
+            color: white;
+
+            @media only screen and (min-width: 1450px) {
+                right: 45px;
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: red;
+            cursor: pointer;
+        }
+    }
+
+    .next-leave-active,
+    .next-enter-active {
+        transition: 1s;
+    }
+    .next-enter {
+        transform: translate(100%, 0);
+    }
+    .next-leave-to {
+        transform: translate(-100%, 0);
+    }
+
+    .prev-leave-active,
+    .prev-enter-active {
+        transition: 1s;
+    }
+    .prev-enter {
+        transform: translate(-100%, 0);
+    }
+    .prev-leave-to {
+        transform: translate(100%, 0);
+    }
+
+    .fade-slider-container-leave-active,
+    .fade-slider-container-enter-active {
+        transition: 0.8s;
+    }
+    .fade-slider-container-enter {
+        transform: translate(0, 100%);
+    }
+    .fade-slider-container-leave-to {
+        transform: translate(0, 100%);
+    }
+
+    .alert-enter-active {
+        animation: alert-in 0.6s;
+    }
+    .alert-leave-active {
+        animation: alert-in 0.6s reverse;
+    }
+    @keyframes alert-in {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 }

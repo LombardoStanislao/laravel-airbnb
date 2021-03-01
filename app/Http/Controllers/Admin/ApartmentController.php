@@ -60,14 +60,15 @@ class ApartmentController extends Controller
             'bathrooms_number' => 'required|integer|min:1|max:255',
             'mq' => 'required|integer|min:1|max:255',
             'street_name' => 'required',
-            'street_number' => 'required|min:1',
+            'street_number' => 'required|integer|min:1',
             'municipality' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'latitude' => 'required|numeric|min:-999.9999999|max:999.9999999',
+            'longitude' => 'required|numeric|min:-999.9999999|max:999.9999999',
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
-            'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,swg|max:2024',
             'images' => 'nullable|max:4',
+            'images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535'
@@ -95,20 +96,22 @@ class ApartmentController extends Controller
         $new_apartment->save();
 
         if (array_key_exists('images', $data)) {
-            for ($i=0; $i < count($data["images"]) ; $i++) {
-                $secondary_images = Storage::put('apartment_images', $data["images"][$i]);
+
+            foreach ($data["images"] as $image) {
+                $secondary_images = Storage::put('apartment_images', $image);
                 $new_apartment_image = new Image();
                 $new_apartment_image->apartment_id = $new_apartment->id;
                 $new_apartment_image->url = $secondary_images;
                 $new_apartment_image->save();
             }
+
         }
 
         if (array_key_exists('comforts', $data)) {
             $new_apartment->comforts()->sync($data["comforts"]);
         }
 
-        return redirect()->route('admin.apartments.show', ['apartment' => $new_apartment->id]);
+        return redirect()->route('admin.apartments.show', ['apartment' => $new_apartment->id])->with('apartment-created', 'L\'appartamento è stato aggiunto con successo');
     }
 
     /**
@@ -198,15 +201,17 @@ class ApartmentController extends Controller
             'bathrooms_number' => 'required|integer|min:1|max:255',
             'mq' => 'required|integer|min:1|max:255',
             'street_name' => 'required',
-            'street_number' => 'required|min:1',
+            'street_number' => 'required|integer|min:1',
             'municipality' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'latitude' => 'required|numeric|min:-999.9999999|max:999.9999999',
+            'longitude' => 'required|numeric|min:-999.9999999|max:999.9999999',
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'old_images' => 'nullable|max:4',
+            'old_images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'new_images' => 'nullable|max:' . $maxNumNewImages,
+            'new_images.*' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
             'comforts' => 'exists:comforts,id',
             'available' => 'required|boolean',
             'description' => 'nullable|max:65535',
@@ -251,8 +256,8 @@ class ApartmentController extends Controller
 
 
         if (array_key_exists('new_images', $data)) {
-            for ($i=0; $i < count($data["new_images"]) ; $i++) {
-                $secondary_images = Storage::put('apartment_images', $data["new_images"][$i]);
+            foreach ($data['new_images'] as $image) {
+                $secondary_images = Storage::put('apartment_images', $image);
                 $new_apartment_image = new Image();
                 $new_apartment_image->apartment_id = $apartment->id;
                 $new_apartment_image->url = $secondary_images;
@@ -266,7 +271,7 @@ class ApartmentController extends Controller
             $apartment->comforts()->sync($data["comforts"]);
         }
 
-        return redirect()->route('admin.apartments.show', ['apartment' => $apartment->id]);
+        return redirect()->route('admin.apartments.show', ['apartment' => $apartment->id])->with('apartment-modified', 'L\'appartamento è stato modificato con successo');
 
     }
 
@@ -283,7 +288,7 @@ class ApartmentController extends Controller
 
         $apartment->delete();
 
-        return redirect()->route('admin.apartments.index');
+        return back()->with('confirm-deletion', "L'appartamento " . $apartment->id . " è stato eliminato con successo");
     }
 
     public function statistics($apartment_id) {

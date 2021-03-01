@@ -17,6 +17,8 @@
 @import "~@fortawesome/fontawesome-free/scss/brands";
 
 @import 'partials/common';
+@import 'partials/header';
+@import 'partials/footer';
 
 @import "./../../node_modules/@tomtom-international/web-sdk-maps/dist/maps.css";
 
@@ -25,3 +27,5 @@
 @import 'guest/homepage';
 @import 'guest/advanced-search';
 @import 'guest/apartment-details';
+
+@import 'auth/register';

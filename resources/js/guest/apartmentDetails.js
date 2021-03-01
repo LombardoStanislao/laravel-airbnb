@@ -10,12 +10,16 @@ var app = new Vue({
         map : {},
         marker: {},
         imgIndex: 0,
-        nummberOfImages
+        nummberOfImages,
+        showMessageForm: false,
+        sliderVisible: false,
+        slidingDirection: ''
     },
-
     methods: {
         prev() {
             this.imgIndex--;
+
+            this.slidingDirection = 'prev';
 
             if (this.imgIndex < 0) {
                 this.imgIndex = this.nummberOfImages-1;
@@ -24,9 +28,23 @@ var app = new Vue({
         next() {
             this.imgIndex++;
 
+            this.slidingDirection = 'next';
+
             if (this.imgIndex > this.nummberOfImages-1) {
                 this.imgIndex = 0;
             }
+        },
+        showSlider(index) {
+            this.sliderVisible = true;
+            this.imgIndex = index;
+        },
+        watchViewport() {
+            if (window.innerWidth < 992) {
+                this.sliderVisible = false;
+            }
+        },
+        preventClosure() {
+            event.stopPropagation();
         }
     },
     // methods: {
@@ -69,6 +87,8 @@ var app = new Vue({
     //     }
     // },
     mounted() {
+        window.onresize = this.watchViewport;
+
         this.map = tt.map({
             key: APIKEY,
             center: this.home,
@@ -79,3 +99,9 @@ var app = new Vue({
         this.marker = new tt.Marker().setLngLat(this.home).addTo(this.map);
     }
 });
+
+document.getElementById('user-icon').addEventListener("click", openMenu);
+
+function openMenu() {
+    document.getElementById('user-dropdown-menu').classList.toggle("open");
+}

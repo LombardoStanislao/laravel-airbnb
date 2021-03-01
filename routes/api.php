@@ -17,6 +17,10 @@ Route::get('/filteredSearch', 'Api\ApartmentController@filteredSearch');
 
 Route::get('/showViews', 'Api\ApartmentController@showViews');
 
+Route::get('/getApartment', 'Api\ApartmentController@getApartment');
+
 Route::post('/viewedMessage', 'Api\MessageController@viewedMessage');
 
 Route::get('/clientToken', 'Api\PaymentController@clientToken');
+
+Route::get('/getAllComforts', 'Api\ComfortController@getAllComforts');

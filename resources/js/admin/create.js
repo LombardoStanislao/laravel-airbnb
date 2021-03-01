@@ -30,23 +30,31 @@ var create = new Vue({
         mainImageType: null,
         mainImageValid: true,
         secondaryImagesValid: true,
-        numSecondaryImages: 0,
+        allComforts: [],
+        invalidComforts: [],
+        noErrors: true
     },
     methods: {
         submitForm() {
             this.submitted = true;
 
+            this.noErrors = true;
+
             window.scrollTo(0, 0);
 
+            this.invalidComforts = [];
+
+            this.secondaryImagesValid = true;
+
             var titleValid = this.title && this.title.length <= 255;
-            var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
-            var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
-            var bathroomsNumberValid = this.bathroomsNumber && this.bathroomsNumber >= 1 && this.bathroomsNumber <= 255;
-            var mqValid = this.mq && this.mq >= 1 && this.mq <= 255;
+            var roomsNumberValid = this.roomsNumber && !isNaN(parseInt(this.roomsNumber)) && Number.isInteger(Number(this.roomsNumber)) && this.roomsNumber >= 1 && this.roomsNumber <= 255;
+            var sleepsAccomodationsValid = this.sleepsAccomodations && !isNaN(parseInt(this.sleepsAccomodations)) && Number.isInteger(Number(this.sleepsAccomodations)) && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
+            var bathroomsNumberValid = this.bathroomsNumber && !isNaN(parseInt(this.bathroomsNumber)) && Number.isInteger(Number(this.bathroomsNumber)) && this.bathroomsNumber >= 1 && this.bathroomsNumber <= 255;
+            var mqValid = this.mq && !isNaN(parseInt(this.mq)) && Number.isInteger(Number(this.mq)) && this.mq >= 1 && this.mq <= 255;
             var streetNameValid = this.streetName;
-            var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
+            var streetNumberValid = this.streetNumber && !isNaN(parseInt(this.streetNumber)) && Number.isInteger(Number(this.streetNumber)) && this.streetNumber >= 1;
             var mucipalityValid = this.municipality;
-            var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
+            var pricePerNightValid = this.pricePerNight && !isNaN(parseInt(this.pricePerNight)) && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
 
             if (this.$refs.mainImage.files[0]) {
                 this.mainImageType = this.$refs.mainImage.files[0].type;
@@ -56,20 +64,26 @@ var create = new Vue({
                 this.mainImageValid = true;
             }
 
-            this.numSecondaryImages = this.$refs.secondaryImages.files.length;
-
-            if (this.numSecondaryImages) {
-                Array.from(this.$refs.secondaryImages.files).forEach(file => {
-                    this.secondaryImagesValid = this.availableTypes.includes(file.type);
-                });
+            for (var i = 0; i < 4; i++) {
+                if (this.$refs['secondaryImage' + i].files[0] && !this.availableTypes.includes(this.$refs['secondaryImage' + i].files[0].type)) {
+                    this.secondaryImagesValid = false;
+                }
             }
 
             var mainImageValid = this.mainImageType && this.mainImageValid;
 
             var descriptionValid = this.description.length <= 65535;
-            var addressValid = this.address.length <= 255;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && mainImageValid && this.numSecondaryImages <= 4 && this.secondaryImagesValid && descriptionValid;
+
+            for (var i = 0; i < this.allComforts.length; i++) {
+                if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+                    this.invalidComforts.push(i);
+                }
+            }
+
+            var comfortsValid = !this.invalidComforts.length;
+
+            this.noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && mainImageValid && this.secondaryImagesValid && comfortsValid && descriptionValid;
 
 
             tt.services.structuredGeocode({
@@ -98,7 +112,7 @@ var create = new Vue({
                     this.address = `${streetName} ${streetNumber}, ${municipality}`;
 
                     this.$nextTick(() => {
-                        if (noErrors) {
+                        if (this.noErrors) {
                             this.$refs.createApartment.submit();
                         }
                     });
@@ -106,14 +120,14 @@ var create = new Vue({
 
             }).catch(error => {
                 this.noAdressFound = true;
+                this.noErrors = false;
             });
         },
-
-
-
     },
     mounted() {
-
+        axios.get('/api/getAllComforts').then((response) => {
+            this.allComforts = response.data.results;
+        });
 
         document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
 
@@ -125,7 +139,7 @@ var create = new Vue({
 
             dropZoneElement.addEventListener("change", e =>{
                 if(inputElement.files.length){
-                    updateThumbnail(dropZoneElement, inputElement.files);//[0]
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
                 }
             });
 
@@ -146,7 +160,7 @@ var create = new Vue({
                 if(e.dataTransfer.files.length){
                     inputElement.files = e.dataTransfer.files;
                     console.log(inputElement.files);
-                    updateThumbnail(dropZoneElement, e.dataTransfer.files);//[0]
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
                 }
 
                 dropZoneElement.classList.remove("drop-zone--over");
@@ -164,40 +178,43 @@ var create = new Vue({
                 dropZoneElement.querySelector(".drop-zone__prompt").remove();
             }
 
-            for (var i = 0; i < file.length; i++) {
-                //add file in drop-area
-                //if(!thumbnailElement){
-                    thumbnailElement = document.createElement("div");
-                    thumbnailElement.classList.add("drop-zone__thumb");
-                    dropZoneElement.appendChild(thumbnailElement);
-                    var imgTag = document.createElement("img");
-                    thumbnailElement.appendChild(imgTag);
 
-                //}
-
-                //show file name
-                thumbnailElement.dataset.label = file[i].name;
-
-                //show image
-                loadImage(file,i,imgTag);
+            //add file in drop-area
+            if(!thumbnailElement){
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
+            }else{
+                dropZoneElement.removeChild(thumbnailElement);
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
             }
 
-        };
+            //show file name
+            thumbnailElement.dataset.label = file.name;
 
-        function loadImage(file,i,imgTag){
-            if(file[i].type.startsWith("image/")){
+            //show image
+            if(file.type.startsWith("image/")){
                 var reader = new FileReader();
 
-                reader.readAsDataURL(file[i]);
+                reader.readAsDataURL(file);
                 reader.onload=()=>{
 
                     imgTag.src = reader.result;
-                    
+
                 };
 
             }else{
                 imgTag.src = null;
             }
+
+
         };
+
     }
 });

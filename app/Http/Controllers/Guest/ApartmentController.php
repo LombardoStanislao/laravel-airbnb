@@ -30,9 +30,15 @@ class ApartmentController extends Controller
 
         $this->addViewIfCorrect($apartment->id, $request->session());
 
+        $images = $apartment->images->map(function ($image) {
+            return $image->url;
+        });
+
+        $images->prepend($apartment->{'main-image'});
+
         $data = [
             'apartment' => $apartment,
-            'images' => Image::where('apartment_id', $apartment->id)->get(),
+            'images' => $images,
         ];
 
         return view('guest.apartments.show', $data);
@@ -66,7 +72,7 @@ class ApartmentController extends Controller
 
         $apartment = Apartment::find($request->input('apartment_id'));
 
-        return redirect()->route('guest.apartments.show', [ 'slug' => $apartment->slug ]);
+        return back()->with('message-sent', 'Il messaggio è stato inviato correttamente.');
 
     }
 
@@ -74,7 +80,7 @@ class ApartmentController extends Controller
         //controlla se l'utente è loggato
         if(Auth::check()) {
             $userId = Auth::user()->id;
-            
+
             $apartment = Apartment::find($apartmentId);
             // Controlla che l'appartamento trovato appartenga all'utente loggato
             if($apartment->user_id != $userId) {

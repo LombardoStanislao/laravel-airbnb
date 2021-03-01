@@ -1,62 +1,116 @@
-{{-- registrazione e login --}}
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-top">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+            <img id="logo" src="{{asset('./img/logo.png')}}" alt="">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
+        <div id="header-form">
+            <form  class="input-menu navbar-search" action="{{ route('search') }}" method="get">
+                <input type="text" name="location" value=""  placeholder="Dove vuoi andare?">
+                <button type="submit" class="navbar-top-button">
+                    <i class="fas fa-search">
 
-            </ul>
+                    </i>
+                </button>
+            </form>
+        </div>
+
+
+        <div class="collapse navbar-collapse user-menu-container" id="navbarSupportedContent">
 
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->
+            <a class="user-menu" id="user-icon">
+                <i class="fas fa-user-circle fa-2x"></i>
+            </a>
+            <div id="user-dropdown-menu">
+
                 @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
+                    <ul>
+                        <li>
+                            <a class="" href="{{ route('login') }}">
+                                Accedi
+                            </a>
+                        </li>
                     @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <li>
+                            <a class="" href="{{ route('register') }}">
+                                Registrati
+                            </a>
                         </li>
                     @endif
+
+                    </ul>
                 @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
+                    <ul>
+                        <li>
+                            <p>
+                                {{ Auth::user()->name }}
+                            </p>
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('admin.index') }}">
                                 Area privata
                             </a>
-
+                        </li>
+                        <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                             </a>
+                        </li>
+                    </ul>
 
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </div>
-                    </li>
+
                 @endguest
-            </ul>
+            </div>
         </div>
     </div>
 </nav>
 
-{{-- ricerca --}}
-<nav>
-    {{-- input --}}
+{{-- Navbar per mobile --}}
+
+<nav class="navbar-bottom">
+    <div class="container">
+
+        <div class="navbar-bottom-link">
+            <a href="{{url('/')}}" class="{{ Request::route()->getName() == 'home' ? 'active-link' : ' ' }}">
+                <i class="fas fa-search"></i>
+                <p>Esplora</p>
+            </a>
+        </div>
+
+        @guest
+            <div class="navbar-bottom-link">
+                <a class=""  href="{{ route('login') }}">
+                    <i class="far fa-user"></i>
+                    <p>Accedi</p>
+                </a>
+            </div>
+
+
+            @if (Route::has('register'))
+                <div class="navbar-bottom-link">
+                    <a class=""  href="{{ route('register') }}">
+                        <i class="far fa-user"></i>
+                        <p>Registrati</p>
+                    </a>
+                </div>
+
+            @endif
+        @else
+            <a class=""  href="{{ route('admin.index') }}">
+                <i class="far fa-user"></i>
+                <p>{{ Auth::user()->name }}</p>
+            </a>
+        @endguest
+
+    </div>
 </nav>

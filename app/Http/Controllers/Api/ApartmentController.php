@@ -123,4 +123,18 @@ class ApartmentController extends Controller
             'results' => $views
         ]);
     }
+
+    public function getApartment(Request $request) {
+        $apartment_id = $request->query('id');
+        $apartment = Apartment::where('id', $apartment_id)->first();
+        $apartment_secondary_images = $apartment->images;
+
+        return response()->json([
+            'success' => true,
+            'results' => [
+                'apartment' => $apartment,
+                'apartment_secondary_images' => $apartment_secondary_images
+            ]
+        ]);
+    }
 }

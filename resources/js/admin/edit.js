@@ -4,18 +4,19 @@ import tt from '@tomtom-international/web-sdk-services';
 var create = new Vue({
     el: '#edit-apartment',
     data: {
-        title,
-        roomsNumber,
-        sleepsAccomodations,
-        bathroomsNumber,
-        mq,
+        apartmentId,
+        title: '',
+        roomsNumber: null,
+        sleepsAccomodations: null,
+        bathroomsNumber: null,
+        mq: null,
         streetName: '',
         streetNumber: null,
         municipality: '',
-        latitude,
-        longitude,
-        address,
-        pricePerNight,
+        latitude: null,
+        longitude: null,
+        address: '',
+        pricePerNight: null,
         availableTypes: [
             'image/jpeg',
             'image/png',
@@ -23,66 +24,65 @@ var create = new Vue({
             'image/gif',
             'image/svg'
         ],
-        description,
-        submitted: false,
+        description: '',
         noAdressFound: false,
         mainImageValid: true,
-        numOldSecondaryImages: parseInt(numOldSecondaryImages),
+        numOldSecondaryImages: null,
         oldSecondaryImagesValid: true,
         newSecondaryImagesValid: true,
-        numNewSecondaryImages: 0
-    },
-    mounted() {
-        tt.services.reverseGeocode({
-            key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-            position: {
-                longitude: this.longitude,
-                latitude: this.latitude
-            }
-        }).then(response => {
-            this.streetName = response.addresses[0].address.streetName;
-            this.streetNumber = response.addresses[0].address.streetNumber;
-            this.municipality = response.addresses[0].address.municipality;
-        })
+        allComforts: [],
+        invalidComforts: [],
+        noErrors: true,
+        apartmentInfoLoaded: false
     },
     methods: {
         submitForm() {
-            this.submitted = true;
+            this.noErrors = true;
 
             window.scrollTo(0, 0);
 
+            this.invalidComforts = [];
+
+            this.oldSecondaryImagesValid = true;
+            this.newSecondaryImagesValid = true;
+
             var titleValid = this.title && this.title.length <= 255;
-            var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
-            var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
-            var bathroomsNumberValid = this.bathroomsNumber && this.bathroomsNumber >= 1 && this.bathroomsNumber <= 255;
-            var mqValid = this.mq && this.mq >= 1 && this.mq <= 255;
+            var roomsNumberValid = this.roomsNumber && !isNaN(parseInt(this.roomsNumber)) && Number.isInteger(Number(this.roomsNumber)) && this.roomsNumber >= 1 && this.roomsNumber <= 255;
+            var sleepsAccomodationsValid = this.sleepsAccomodations && !isNaN(parseInt(this.sleepsAccomodations)) && Number.isInteger(Number(this.sleepsAccomodations)) && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
+            var bathroomsNumberValid = this.bathroomsNumber && !isNaN(parseInt(this.bathroomsNumber)) && Number.isInteger(Number(this.bathroomsNumber)) && this.bathroomsNumber >= 1 && this.bathroomsNumber <= 255;
+            var mqValid = this.mq && !isNaN(parseInt(this.mq)) && Number.isInteger(Number(this.mq)) && this.mq >= 1 && this.mq <= 255;
             var streetNameValid = this.streetName;
-            var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
+            var streetNumberValid = this.streetNumber && !isNaN(parseInt(this.streetNumber)) && Number.isInteger(Number(this.streetNumber)) && this.streetNumber >= 1;
             var mucipalityValid = this.municipality;
-            var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
-            var descriptionValid = this.description.length <= 65535;
+            var pricePerNightValid = this.pricePerNight && !isNaN(parseInt(this.pricePerNight)) && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
 
             if (this.$refs.mainImage.files[0]) {
                 this.mainImageValid = this.availableTypes.includes(this.$refs.mainImage.files[0].type);
             }
 
             for (var i = 0; i < this.numOldSecondaryImages; i++) {
-                if (this.$refs['oldSecondaryImages' + i].files[0]) {
-                    this.oldSecondaryImagesValid = this.availableTypes.includes(this.$refs['oldSecondaryImages' + i].files[0].type);
+                if (this.$refs['oldSecondaryImages' + i].files[0] && !this.availableTypes.includes(this.$refs['oldSecondaryImages' + i].files[0].type)) {
+                    this.oldSecondaryImagesValid = false;
                 }
             }
 
-            if (this.$refs.newSecondaryImages) {
-                this.numNewSecondaryImages = this.$refs.newSecondaryImages.files.length;
-
-                if (this.numNewSecondaryImages) {
-                    Array.from(this.$refs.newSecondaryImages.files).forEach(file => {
-                        this.newSecondaryImagesValid = this.availableTypes.includes(file.type);
-                    });
+            for (var i = 0; i < 4 - this.numOldSecondaryImages; i++) {
+                if (this.$refs['newSecondaryImages' + i].files[0] && !this.availableTypes.includes(this.$refs['newSecondaryImages' + i].files[0].type)) {
+                    this.newSecondaryImagesValid = false;
                 }
             }
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && this.numNewSecondaryImages <= (4-this.numOldSecondaryImages) && descriptionValid;
+            var descriptionValid = this.description.length <= 65535;
+
+            for (var i = 0; i < this.allComforts.length; i++) {
+                if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
+                    this.invalidComforts.push(i);
+                }
+            }
+
+            var comfortsValid = !this.invalidComforts.length;
+
+            this.noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && comfortsValid && descriptionValid;
 
             tt.services.structuredGeocode({
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
@@ -110,7 +110,7 @@ var create = new Vue({
                     this.address = `${streetName} ${streetNumber}, ${municipality}`;
 
                     this.$nextTick(() => {
-                        if (noErrors) {
+                        if (this.noErrors) {
                             this.$refs.editApartment.submit();
                         }
                     });
@@ -118,7 +118,131 @@ var create = new Vue({
 
             }).catch(error => {
                 this.noAdressFound = true;
+                this.noErrors = false;
             });
         }
+    },
+    mounted() {
+        axios.get('/api/getAllComforts').then((response) => {
+            this.allComforts = response.data.results;
+        });
+
+        axios.get('/api/getApartment', {params: {id: this.apartmentId}}).then((response) => {
+            this.title = response.data.results.apartment.title;
+            this.roomsNumber = response.data.results.apartment['rooms_number'];
+            this.sleepsAccomodations = response.data.results.apartment['sleeps_accomodations'];
+            this.bathroomsNumber = response.data.results.apartment['bathrooms_number'];
+            this.mq = response.data.results.apartment['mq'];
+            this.latitude = response.data.results.apartment['latitude'];
+            this.longitude = response.data.results.apartment['longitude'];
+            this.address = response.data.results.apartment['address'];
+            this.pricePerNight = response.data.results.apartment['price_per_night'];
+
+            if (response.data.results.apartment['description']) {
+                this.description = response.data.results.apartment['description'];
+            }
+
+            this.numOldSecondaryImages = response.data.results['apartment_secondary_images'].length;
+
+            tt.services.reverseGeocode({
+                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                position: {
+                    longitude: this.longitude,
+                    latitude: this.latitude
+                }
+            }).then((response) => {
+                this.streetName = response.addresses[0].address.streetName;
+                this.streetNumber = response.addresses[0].address.streetNumber;
+                this.municipality = response.addresses[0].address.municipality;
+
+                this.apartmentInfoLoaded = true;
+            });
+        });
+
+        document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
+
+            const dropZoneElement = inputElement.closest(".drop-zone");
+
+            dropZoneElement.addEventListener("click", e =>{
+                inputElement.click();
+            });
+
+            dropZoneElement.addEventListener("change", e =>{
+                if(inputElement.files.length){
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
+                }
+            });
+
+            dropZoneElement.addEventListener("dragover", e =>{
+                e.preventDefault();
+                dropZoneElement.classList.add("drop-zone--over");
+            });
+
+            ["dragleave", "dragend"].forEach(type => {
+                dropZoneElement.addEventListener(type, e =>{
+                    dropZoneElement.classList.remove('drop-zone--over');
+                });
+            });
+
+            dropZoneElement.addEventListener("drop", e =>{
+                e.preventDefault();
+
+                if(e.dataTransfer.files.length){
+                    inputElement.files = e.dataTransfer.files;
+                    console.log(inputElement.files);
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+                }
+
+                dropZoneElement.classList.remove("drop-zone--over");
+
+            });
+
+        });
+
+        function updateThumbnail(dropZoneElement, file){
+            console.log(dropZoneElement);
+            console.log(file);
+            let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+
+            if(dropZoneElement.querySelector(".drop-zone__prompt")){
+                dropZoneElement.querySelector(".drop-zone__prompt").remove();
+            }
+
+            //add file in drop-area
+            if(!thumbnailElement){
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
+            }else{
+                dropZoneElement.removeChild(thumbnailElement);
+                thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("drop-zone__thumb");
+                dropZoneElement.appendChild(thumbnailElement);
+                var imgTag = document.createElement("img");
+                thumbnailElement.appendChild(imgTag);
+            }
+
+            //show file name
+            thumbnailElement.dataset.label = file.name;
+
+            //show image
+            if(file.type.startsWith("image/")){
+                var reader = new FileReader();
+
+                reader.readAsDataURL(file);
+                reader.onload=()=>{
+
+                    imgTag.src = reader.result;
+
+                };
+
+            }else{
+                imgTag.src = null;
+            }
+
+        }
+
     }
 });

@@ -24,19 +24,24 @@
 
         callbackFn();
     </script>
+
+
 @endsection
 
 @section('header')
-    @include('guest.partials.navbar-top')
+    <header id="header-apartment-details">
+        @include('guest.partials.navbar-top')
+    </header>
 @endsection
 
 @section('content')
     <div id="apartment-page" v-cloak>
         <div class="slider d-lg-none">
-            <img v-if="imgIndex == 0" src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block w-100">
-            @foreach ($apartment->images as $index => $image)
-                <img v-if="imgIndex == {{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="w-100">
-            @endforeach
+            <transition-group :name="slidingDirection">
+                @foreach ($images as $index => $image_url)
+                        <img v-show="imgIndex == {{ $index }}" src="{{ asset("storage/" . $image_url) }}" class="w-100" :key="{{ $index }}">
+                @endforeach
+            </transition-group>
             <div v-if="nummberOfImages>1" class="prev" @click="prev()">
                 <i class="fas fa-arrow-left"></i>
             </div>
@@ -47,8 +52,15 @@
                 @{{ imgIndex+1 }}/@{{ nummberOfImages }}
             </div>
         </div>
-        <div class="container">
+        <div v-show="!sliderVisible" class="container">
             <div class="row mt-4 mb-4">
+                @if (session('message-sent'))
+                    <div class="col-12">
+                        <div class="alert alert-success" role="alert">
+                            {{ session('message-sent') }}
+                        </div>
+                    </div>
+                @endif
                 <div class="col-12 mb-2">
                     <h1>{{ $apartment->title }}</h1>
                 </div>
@@ -70,7 +82,7 @@
                 </div>
                 <div class="col-6 mb-2 d-none d-lg-block">
                     <div class="overflow-hidden rounded">
-                        <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block main-image">
+                        <img @click="showSlider(0)" src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block main-image">
                     </div>
                 </div>
                 <div class="col-6 mb-2 d-none d-lg-block">
@@ -78,7 +90,7 @@
                         @foreach ($apartment->images as $index => $image)
                             <div class="col-6">
                                 <div class="overflow-hidden rounded">
-                                    <img id="secondary-image-{{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="d-block secondary-image">
+                                    <img @click="showSlider({{ $index+1 }})" id="secondary-image-{{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="d-block secondary-image">
                                 </div>
                             </div>
                         @endforeach
@@ -148,7 +160,7 @@
                         @endif
                     </p>
                     @if (!Auth::user() || Auth::user()->id != $apartment->user_id)
-                        <a class="btn btn-primary mt-4" href="{{ route('guest.apartments.message', [ 'slug' => $apartment->slug]) }}">
+                        <a @click.prevent="showMessageForm = true" class="btn btn-primary mt-4" href="#">
                             Contatta l'host
                         </a>
                     @endif
@@ -175,12 +187,60 @@
                 <div class="col-12">
                     <h3 class="border-top pt-4 pb-4 mb-0">Posizione:</h3>
                     <span>{{ $apartment->address }}</span>
-                    <div id="map" class="mt-4 mb-4 mb-0 overflow-hidden rounded">
+                    <div id="map" class="mt-4 overflow-hidden rounded">
 
                     </div>
                 </div>
             </div>
         </div>
+        <transition name="fade-slider-container">
+            <div v-if="sliderVisible" class="slider-container d-none d-lg-block">
+                <div @click="sliderVisible = false" class="close">
+                    <i class="fas fa-times fa-2x"></i>
+                </div>
+                <div class="slider h-100 overflow-hidden rounded">
+                    <transition-group :name="slidingDirection">
+                        @foreach ($images as $index => $image_url)
+                                <img v-show="imgIndex == {{ $index }}" src="{{ asset("storage/" . $image_url) }}" class="w-100" :key="{{ $index }}">
+                        @endforeach
+                    </transition-group>
+                </div>
+                <div v-if="nummberOfImages>1" class="prev" @click="prev()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div v-if="nummberOfImages>1" class="next" @click="next()">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div v-if="nummberOfImages>1" class="counter">
+                    @{{ imgIndex+1 }}/@{{ nummberOfImages }}
+                </div>
+            </div>
+        </transition>
+        <transition name="alert">
+            <div @click="showMessageForm = false" v-show="showMessageForm" id="message-form">
+                <div @click="preventClosure()" class="form-container">
+                    <div @click="showMessageForm = false" class="close">
+                        <i class="fas fa-times fa-2x"></i>
+                    </div>
+                    <form action="{{ route('guest.apartments.sendMessage', [ 'slug' => $apartment->slug ]) }}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label class="d-block" for="mail_sender">Indirizzo email:</label>
+                            <input class="form-control" placeholder="Inserire indirizzo email..." id="mail_sender" type="email" name="mail_sender" value="{{ Auth::user() ? Auth::user()->email : '' }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="d-block" for="body_message">Messaggio:</label>
+                            <textarea class="form-control" id="body_message" name="body_message" rows="10" placeholder="Inserire messaggio..."></textarea>
+                        </div>
+
+                        <input class="d-none" type="text" name="apartment_id" value="{{ $apartment->id }}">
+
+                        <input class="btn btn-success" type="submit" value="Invia">
+                    </form>
+                </div>
+            </div>
+        </transition>
     </div>
     <form class="d-none" action="index.html" method="post">
         <input type="text" name="user" value="{{ Auth::user() ? Auth::user()->id : '' }}">
