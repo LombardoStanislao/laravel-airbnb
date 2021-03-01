@@ -45,15 +45,14 @@ var create = new Vue({
             this.newSecondaryImagesValid = true;
 
             var titleValid = this.title && this.title.length <= 255;
-            var roomsNumberValid = this.roomsNumber && this.roomsNumber >= 1 && this.roomsNumber <= 255;
-            var sleepsAccomodationsValid = this.sleepsAccomodations && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
-            var bathroomsNumberValid = this.bathroomsNumber && this.bathroomsNumber >= 1 && this.bathroomsNumber <= 255;
-            var mqValid = this.mq && this.mq >= 1 && this.mq <= 255;
+            var roomsNumberValid = this.roomsNumber && !isNaN(parseInt(this.roomsNumber)) && Number.isInteger(Number(this.roomsNumber)) && this.roomsNumber >= 1 && this.roomsNumber <= 255;
+            var sleepsAccomodationsValid = this.sleepsAccomodations && !isNaN(parseInt(this.sleepsAccomodations)) && Number.isInteger(Number(this.sleepsAccomodations)) && this.sleepsAccomodations >= 1 && this.sleepsAccomodations <= 255;
+            var bathroomsNumberValid = this.bathroomsNumber && !isNaN(parseInt(this.bathroomsNumber)) && Number.isInteger(Number(this.bathroomsNumber)) && this.bathroomsNumber >= 1 && this.bathroomsNumber <= 255;
+            var mqValid = this.mq && !isNaN(parseInt(this.mq)) && Number.isInteger(Number(this.mq)) && this.mq >= 1 && this.mq <= 255;
             var streetNameValid = this.streetName;
-            var streetNumberValid = this.streetNumber && this.streetNumber >= 1;
+            var streetNumberValid = this.streetNumber && !isNaN(parseInt(this.streetNumber)) && Number.isInteger(Number(this.streetNumber)) && this.streetNumber >= 1;
             var mucipalityValid = this.municipality;
-            var pricePerNightValid = this.pricePerNight && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
-            var descriptionValid = this.description.length <= 65535;
+            var pricePerNightValid = this.pricePerNight && !isNaN(parseInt(this.pricePerNight)) && this.pricePerNight >= 0 && this.pricePerNight <= 9999.99;
 
             if (this.$refs.mainImage.files[0]) {
                 this.mainImageValid = this.availableTypes.includes(this.$refs.mainImage.files[0].type);
@@ -71,6 +70,8 @@ var create = new Vue({
                 }
             }
 
+            var descriptionValid = this.description.length <= 65535;
+
             for (var i = 0; i < this.allComforts.length; i++) {
                 if (this.$refs['comfort' + i].checked && this.allComforts[i].id != this.$refs['comfort' + i].value) {
                     this.invalidComforts.push(i);
@@ -79,7 +80,7 @@ var create = new Vue({
 
             var comfortsValid = !this.invalidComforts.length;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && comfortsValid && descriptionValid;
+            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && comfortsValid && descriptionValid;
 
             tt.services.structuredGeocode({
                 key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
