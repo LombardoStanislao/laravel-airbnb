@@ -11,8 +11,9 @@ const advancedResearch = new Vue({
     el: '#root',
     data: {
         radius: 20000,
-        minimumRooms: 1,
-        minimumSleepsAccomodations: 1,
+        minimumRooms: 0,
+        minimumSleepsAccomodations: 0,
+        minimumBathrooms: 0,
         locationName: null,
         locationCoordinates: null,
         checkedComfortsId: [],
@@ -41,14 +42,20 @@ const advancedResearch = new Vue({
                 comfortIdString += id;
             });
             // Validazione
-            if(!this.minimumRooms) {
-                this.minimumRooms = 1;
+            if(this.minimumRooms < 0) {
+                this.minimumRooms = 0;
             } else if (this.minimumRooms > 255) {
                 this.minimumRooms = 255
             }
 
-            if(!this.minimumSleepsAccomodations) {
-                this.minimumSleepsAccomodations = 1;
+            if(this.minimumBathrooms < 0) {
+                this.minimumBathrooms = 0;
+            } else if (this.minimumBathrooms > 255) {
+                this.minimumBathrooms = 255
+            }
+
+            if(this.minimumSleepsAccomodations < 0) {
+                this.minimumSleepsAccomodations = 0;
             } else if (this.minimumSleepsAccomodations > 255) {
                 this.minimumSleepsAccomodations = 255
             }
@@ -68,13 +75,27 @@ const advancedResearch = new Vue({
                     radius: this.radius,
                     minimumRooms: this.minimumRooms,
                     minimumSleepsAccomodations: this.minimumSleepsAccomodations,
+                    minimumBathrooms: this.minimumBathrooms,
                     locationName: this.locationName,
                     comfortIdString: comfortIdString
                 }
             }).then(response => {
                 this.apartments = response.data.results;
+                console.log(this.apartments);
             });
+        },
+        toggleFilterDropdown() {
+            let element = document.getElementById('dropdown-filters-menu');
+            element.classList.toggle('d-none');
+        },
+        clearFilters() {
+            this.radius = 20000;
+            this.minimumRooms = 0;
+            this.minimumBathrooms = 0;
+            this.minimumSleepsAccomodations = 0;
+            this.checkedComfortsId = [];
         }
+
 
     },
     mounted() {

@@ -1,0 +1,406 @@
+#advanced-research-page {
+    color: black;
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    button:focus {
+        outline: none
+    }
+    .sp-primary-btn {
+        background-color: #222;
+        color: white;
+        transition: background-color 0.5s ease-in-out;
+
+
+        &:hover {
+            background-color: black;
+        }
+    }
+
+    .sp-secondary-btn {
+        color: black;
+        transition: background-color 0.5s ease-in-out;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    }
+
+    .sp-transparent-btn {
+        color: #222;
+        border: 1px solid rgb(176, 176, 176);
+        background-color: transparent;
+        border-radius: 50px;
+        transition: border-color 0.5s ease-in-out;
+
+        &:hover {
+            border-color: #484848;
+        }
+    }
+
+    .mobile-header{
+        padding: $spacing/2;
+        border-bottom: 1px solid rgb(235, 235, 235);
+
+        .location-container {
+            height: 100%;
+            @include flex-center(flex-start);
+
+            h3 {
+                white-space: nowrap;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+                margin: 0;
+                font-size: 18px
+            }
+        }
+
+        .filters-dropdown {
+            height: 100%;
+            @include flex-center(flex-end);
+
+            .fa-sliders-h {
+                border-left: 1px solid rgb(235, 235, 235);
+                font-size: 20px;
+            }
+        }
+    }
+
+    #dropdown-filters-menu {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        background-color: white;
+
+        .header-dropdown {
+            padding: 0 $spacing/2;
+            height: 60px;
+            @include flex-center(space-between);
+            border-bottom: 1px solid rgb(235, 235, 235);
+
+            .fa-times {
+                font-size: 20px;
+            }
+
+            u {
+                font-size: 14px;
+                font-weight: 500;
+                color: black;
+            }
+
+            h4 {
+                font-size: 18px;
+                margin-bottom: 0;
+                padding-left: 53.2px;
+            }
+        }
+
+        .filter-section-list {
+            padding: 0 $spacing/2;
+            margin: 0;
+            height: calc(100% - 60px - 60px);
+            overflow: auto;
+
+            &>li {
+                padding: $spacing*2 $spacing;
+                border-bottom: 1px solid rgb(235, 235, 235);
+
+                &:last-of-type {
+                    border-color: transparent;
+                }
+
+                h2 {
+                    font-size: 22px;
+                    font-weight: 600;
+                    color: #484848;
+                }
+
+                label {
+                    font-size: 18px;
+                    color: #717171;
+
+                    &[for="radius"] {
+                        display: block;
+                        text-align: center;
+                    }
+                }
+
+                #radius {
+                    -webkit-appearance: none;
+                    display: block;
+                    width: calc(100% - #{$spacing});
+                    margin: $spacing/2;
+
+                    /*Chrome*/
+                    &::-webkit-slider-runnable-track {
+                        height: 5px;
+                        background: #ddd;
+                        border: none;
+                        border-radius: 3px;
+                    }
+
+                    &::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        border: none;
+                        height: 16px;
+                        width: 16px;
+                        border-radius: 50%;
+                        background: #484848;
+                        margin-top: -4px;
+                    }
+
+                    &:focus {
+                        outline: none;
+                    }
+
+                    &:focus::-webkit-slider-runnable-track {
+                        background: #ccc;
+                    }
+
+                    /*Firefox*/
+                    /* fix for FF unable to apply focus style bug  */
+                    border: 1px solid white;
+
+                    &::-moz-range-track {
+                        width: 300px;
+                        height: 5px;
+                        background: #ddd;
+                        border: none;
+                        border-radius: 3px;
+                    }
+
+                    &::-moz-range-thumb {
+                        border: none;
+                        height: 16px;
+                        width: 16px;
+                        border-radius: 50%;
+                        background: #484848;
+                    }
+
+                    /*hide the outline behind the border*/
+                    &:-moz-focusring{
+                        outline: 1px solid white;
+                        outline-offset: -1px;
+                    }
+
+                    &:focus::-moz-range-track {
+                        background: #ccc;
+                    }
+
+                    &::-ms-track {
+                        height: 5px;
+
+                        /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+                        background: transparent;
+
+                        /*leave room for the larger thumb to overflow with a transparent border */
+                        border-color: transparent;
+                        border-width: 6px 0;
+
+                        /*remove default tick marks*/
+                        color: transparent;
+                    }
+
+                    &::-ms-fill-lower {
+                        background: #777;
+                        border-radius: 10px;
+                    }
+
+                    &::-ms-fill-upper {
+                        background: #ddd;
+                        border-radius: 10px;
+                    }
+
+                    &::-ms-thumb {
+                        border: none;
+                        height: 16px;
+                        width: 16px;
+                        border-radius: 50%;
+                        background: #484848;
+                    }
+
+                    &:focus::-ms-fill-lower {
+                        background: #888;
+                    }
+
+                    &:focus::-ms-fill-upper {
+                        background: #ccc;
+                    }
+                }
+
+                ul {
+                    list-style-type: none;
+                    padding: 0;
+
+                    li {
+                        height: 60px;
+
+                        .left,
+                        .right {
+                            float: left;
+                            width: 50%;
+                            height: 100%;
+                        }
+
+                        label {
+                            line-height: 60px;
+                            margin: none;
+                        }
+
+                        .right {
+                            @include flex-center(flex-end);
+
+                            .value-modifier {
+                                height: 40px;
+                                width: 40px;
+                                border-radius: 50%;
+                                border: 2px solid #717171;
+                                background-color: transparent;
+                                color: #717171;
+                                font-weight: 700;
+                                @include flex-center;
+
+                                &.unavailable {
+                                    border-color: rgb(235, 235, 235);
+                                    color: rgb(235, 235, 235);
+                                }
+                            }
+
+                            .input-value {
+                                width: 20px;
+                                text-align: center;
+                                margin: 0 $spacing;
+                            }
+                        }
+
+                    }
+
+                    &.comfort-list {
+
+                        label {
+                            width: calc(100% - 20px);
+                            float: left;
+                            margin: 0;
+                        }
+
+                        input.checkbox {
+                            width: 20px;
+                            height: 20px;
+                            margin: 20px 0;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        .footer-dropdown {
+            height: 60px;
+            padding: 13.3px 20px;
+            border-top: 1px solid rgb(235, 235, 235);
+
+
+            button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+    }
+
+    #main-content {
+
+        .content-header {
+            padding: $spacing*1.5 0;
+            color: #484848;
+            border-bottom: 1px solid rgb(235, 235, 235);
+
+            p {
+                padding: 0;
+                margin: 0;
+            }
+
+            h2 {
+                margin-top: $spacing/2;
+                font-weight: 700;
+            }
+        }
+
+        .apartment-list {
+            list-style-type: none;
+
+            li {
+
+                .apartment-card {
+                    padding: $spacing 0;
+                    border-bottom: 1px solid rgb(235, 235, 235);
+                    color: #484848;
+                    display: block;
+
+                    .img-container {
+                        position: relative;
+
+                        img {
+                            width: 100%;
+                            float: left;
+                            border-radius: 20px;
+                            margin-bottom: $spacing/4;
+                        }
+
+                        .sponsored {
+                            position: absolute;
+                            top: 10px;
+                            right: 15px;
+                            display: inline-block;
+                            padding: 0 $spacing/4;
+                            font-size: 10px;
+                            border-radius: 10px;
+                            color: white;
+                            background-color: $main-color;
+                        }
+                    }
+
+
+                    .apartment-info-container {
+
+                        & > *:not(:last-child) {
+                            margin: 0 0 $spacing/4;
+                        }
+
+                        .sponsored {
+                        }
+
+                        h3 {
+                            font-weight: 600;
+                            font-size: 18px;
+                            white-space: nowrap;
+                            overflow-x: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        p {
+                            color: #ccc;
+                            font-size: 12px
+                        }
+
+                        .price {
+                            color: #484848;
+                            margin: 0;
+                        }
+                    }
+                }
+
+                &:last-child .apartment-card {
+                    border-color: transparent;
+                }
+            }
+        }
+    }
+
+}
