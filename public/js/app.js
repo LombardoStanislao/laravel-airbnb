@@ -88384,6 +88384,9 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       if (window.innerWidth < 992) {
         this.sliderVisible = false;
       }
+    },
+    preventClosure: function preventClosure() {
+      event.stopPropagation();
     }
   },
   // methods: {

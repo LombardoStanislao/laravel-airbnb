@@ -17846,7 +17846,6 @@ footer #footer-privacy-menu li {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #0000004f;
   z-index: 6;
 }
 
@@ -17858,6 +17857,7 @@ footer #footer-privacy-menu li {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
+  box-shadow: 0px 0px 15px 8px rgba(0, 0, 0, 0.69);
 }
 
 @media only screen and (min-width: 992px) {
@@ -17941,6 +17941,12 @@ footer #footer-privacy-menu li {
   color: white;
 }
 
+@media only screen and (min-width: 1450px) {
+  #apartment-page .slider-container .counter {
+    right: 45px;
+  }
+}
+
 #apartment-page .slider-container .close {
   position: absolute;
   top: 20px;
@@ -17951,7 +17957,7 @@ footer #footer-privacy-menu li {
 
 #apartment-page .next-leave-active,
 #apartment-page .next-enter-active {
-  transition: 1.5s;
+  transition: 1s;
 }
 
 #apartment-page .next-enter {
@@ -17964,7 +17970,7 @@ footer #footer-privacy-menu li {
 
 #apartment-page .prev-leave-active,
 #apartment-page .prev-enter-active {
-  transition: 1.5s;
+  transition: 1s;
 }
 
 #apartment-page .prev-enter {
@@ -17977,7 +17983,7 @@ footer #footer-privacy-menu li {
 
 #apartment-page .fade-slider-container-leave-active,
 #apartment-page .fade-slider-container-enter-active {
-  transition: 1s;
+  transition: 0.8s;
 }
 
 #apartment-page .fade-slider-container-enter {
@@ -17986,6 +17992,35 @@ footer #footer-privacy-menu li {
 
 #apartment-page .fade-slider-container-leave-to {
   transform: translate(0, 100%);
+}
+
+#apartment-page .alert-enter-active {
+  -webkit-animation: alert-in 0.6s;
+          animation: alert-in 0.6s;
+}
+
+#apartment-page .alert-leave-active {
+  animation: alert-in 0.6s reverse;
+}
+
+@-webkit-keyframes alert-in {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes alert-in {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .container-sign-in {

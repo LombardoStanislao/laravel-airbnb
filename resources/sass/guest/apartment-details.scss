@@ -154,7 +154,6 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
         position: absolute;
         top: 0;
         left: 0;
-        background-color: #0000004f;
         z-index: 6;
 
         .form-container {
@@ -165,6 +164,7 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: white;
+            box-shadow: 0px 0px 15px 8px rgba(0,0,0,0.69);
 
             @media only screen and (min-width: 992px) {
                 padding: 100px 60px 60px 60px;
@@ -239,6 +239,10 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
             border-radius: 10px;
             background-color: #000000ad;
             color: white;
+
+            @media only screen and (min-width: 1450px) {
+                right: 45px;
+            }
         }
 
         .close {
@@ -252,7 +256,7 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
 
     .next-leave-active,
     .next-enter-active {
-        transition: 1.5s;
+        transition: 1s;
     }
     .next-enter {
         transform: translate(100%, 0);
@@ -263,7 +267,7 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
 
     .prev-leave-active,
     .prev-enter-active {
-        transition: 1.5s;
+        transition: 1s;
     }
     .prev-enter {
         transform: translate(-100%, 0);
@@ -274,12 +278,27 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
 
     .fade-slider-container-leave-active,
     .fade-slider-container-enter-active {
-        transition: 1s;
+        transition: 0.8s;
     }
     .fade-slider-container-enter {
         transform: translate(0, 100%);
     }
     .fade-slider-container-leave-to {
         transform: translate(0, 100%);
+    }
+
+    .alert-enter-active {
+        animation: alert-in 0.6s;
+    }
+    .alert-leave-active {
+        animation: alert-in 0.6s reverse;
+    }
+    @keyframes alert-in {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 }

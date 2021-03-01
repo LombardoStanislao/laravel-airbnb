@@ -42,6 +42,9 @@ var app = new Vue({
             if (window.innerWidth < 992) {
                 this.sliderVisible = false;
             }
+        },
+        preventClosure() {
+            event.stopPropagation();
         }
     },
     // methods: {

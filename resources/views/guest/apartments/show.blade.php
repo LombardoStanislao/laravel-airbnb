@@ -216,29 +216,31 @@
                 </div>
             </div>
         </transition>
-        <div v-if="showMessageForm" id="message-form">
-            <div class="form-container">
-                <div @click="showMessageForm = false" class="close">
-                    <i class="fas fa-times fa-2x"></i>
+        <transition name="alert">
+            <div @click="showMessageForm = false" v-show="showMessageForm" id="message-form">
+                <div @click="preventClosure()" class="form-container">
+                    <div @click="showMessageForm = false" class="close">
+                        <i class="fas fa-times fa-2x"></i>
+                    </div>
+                    <form action="{{ route('guest.apartments.sendMessage', [ 'slug' => $apartment->slug ]) }}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label class="d-block" for="mail_sender">Indirizzo email:</label>
+                            <input class="form-control" placeholder="Inserire indirizzo email..." id="mail_sender" type="email" name="mail_sender" value="{{ Auth::user() ? Auth::user()->email : '' }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="d-block" for="body_message">Messaggio:</label>
+                            <textarea class="form-control" id="body_message" name="body_message" rows="10" placeholder="Inserire messaggio..."></textarea>
+                        </div>
+
+                        <input class="d-none" type="text" name="apartment_id" value="{{ $apartment->id }}">
+
+                        <input class="btn btn-success" type="submit" value="Invia">
+                    </form>
                 </div>
-                <form action="{{ route('guest.apartments.sendMessage', [ 'slug' => $apartment->slug ]) }}" method="post">
-                    @csrf
-                    <div class="form-group">
-                        <label class="d-block" for="mail_sender">Indirizzo email:</label>
-                        <input class="form-control" placeholder="Inserire indirizzo email..." id="mail_sender" type="email" name="mail_sender" value="{{ Auth::user() ? Auth::user()->email : '' }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="d-block" for="body_message">Messaggio:</label>
-                        <textarea class="form-control" id="body_message" name="body_message" rows="10" placeholder="Inserire messaggio..."></textarea>
-                    </div>
-
-                    <input class="d-none" type="text" name="apartment_id" value="{{ $apartment->id }}">
-
-                    <input class="btn btn-success" type="submit" value="Invia">
-                </form>
             </div>
-        </div>
+        </transition>
     </div>
     <form class="d-none" action="index.html" method="post">
         <input type="text" name="user" value="{{ Auth::user() ? Auth::user()->id : '' }}">
