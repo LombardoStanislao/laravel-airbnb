@@ -15,13 +15,12 @@
                     <input type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                     placeholder="Inserisci la tua email">
 
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
                 </div>
+                @error('email')
+                    <div class="invalid-feedback display-error" role="alert">
+                            <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
@@ -29,13 +28,12 @@
                     <input type="password" class=" @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"
                     placeholder="Inserisci qui la tua password">
 
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
                 </div>
+                @error('password')
+                    <div class="invalid-feedback display-error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
