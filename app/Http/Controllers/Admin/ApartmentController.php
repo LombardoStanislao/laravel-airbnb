@@ -256,8 +256,8 @@ class ApartmentController extends Controller
 
 
         if (array_key_exists('new_images', $data)) {
-            for ($i=0; $i < count($data["new_images"]) ; $i++) {
-                $secondary_images = Storage::put('apartment_images', $data["new_images"][$i]);
+            foreach ($data['new_images'] as $image) {
+                $secondary_images = Storage::put('apartment_images', $image);
                 $new_apartment_image = new Image();
                 $new_apartment_image->apartment_id = $apartment->id;
                 $new_apartment_image->url = $secondary_images;
