@@ -17779,10 +17779,16 @@ footer #footer-privacy-menu li {
 
 #apartment-page .slider {
   position: relative;
+  overflow: hidden;
   height: 350px;
 }
 
 #apartment-page .slider img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
@@ -17941,6 +17947,45 @@ footer #footer-privacy-menu li {
   left: 20px;
   color: red;
   cursor: pointer;
+}
+
+#apartment-page .next-leave-active,
+#apartment-page .next-enter-active {
+  transition: 1.5s;
+}
+
+#apartment-page .next-enter {
+  transform: translate(100%, 0);
+}
+
+#apartment-page .next-leave-to {
+  transform: translate(-100%, 0);
+}
+
+#apartment-page .prev-leave-active,
+#apartment-page .prev-enter-active {
+  transition: 1.5s;
+}
+
+#apartment-page .prev-enter {
+  transform: translate(-100%, 0);
+}
+
+#apartment-page .prev-leave-to {
+  transform: translate(100%, 0);
+}
+
+#apartment-page .fade-slider-container-leave-active,
+#apartment-page .fade-slider-container-enter-active {
+  transition: 1s;
+}
+
+#apartment-page .fade-slider-container-enter {
+  transform: translate(0, 100%);
+}
+
+#apartment-page .fade-slider-container-leave-to {
+  transform: translate(0, 100%);
 }
 
 .container-sign-in {

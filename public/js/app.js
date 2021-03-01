@@ -88356,11 +88356,13 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     imgIndex: 0,
     nummberOfImages: nummberOfImages,
     showMessageForm: false,
-    sliderVisible: false
+    sliderVisible: false,
+    slidingDirection: ''
   },
   methods: {
     prev: function prev() {
       this.imgIndex--;
+      this.slidingDirection = 'prev';
 
       if (this.imgIndex < 0) {
         this.imgIndex = this.nummberOfImages - 1;
@@ -88368,6 +88370,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     },
     next: function next() {
       this.imgIndex++;
+      this.slidingDirection = 'next';
 
       if (this.imgIndex > this.nummberOfImages - 1) {
         this.imgIndex = 0;

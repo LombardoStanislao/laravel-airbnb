@@ -30,9 +30,15 @@ class ApartmentController extends Controller
 
         $this->addViewIfCorrect($apartment->id, $request->session());
 
+        $images = $apartment->images->map(function ($image) {
+            return $image->url;
+        });
+
+        $images->prepend($apartment->{'main-image'});
+
         $data = [
             'apartment' => $apartment,
-            'images' => Image::where('apartment_id', $apartment->id)->get(),
+            'images' => $images,
         ];
 
         return view('guest.apartments.show', $data);
