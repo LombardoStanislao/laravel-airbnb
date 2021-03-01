@@ -70,7 +70,6 @@ var create = new Vue({
             var mainImageValid = this.mainImageType && this.mainImageValid;
 
             var descriptionValid = this.description.length <= 65535;
-            var addressValid = this.address.length <= 255;
 
 
             for (var i = 0; i < this.allComforts.length; i++) {
