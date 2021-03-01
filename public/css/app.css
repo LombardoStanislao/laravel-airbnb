@@ -17550,6 +17550,7 @@ body [v-cloak] {
   background-color: #00d8ff38;
 }
 
+<<<<<<< HEAD
 #sponsored-apartment-card {
   transition: 1s;
 }
@@ -17558,6 +17559,8 @@ body [v-cloak] {
   transform: scale(1.1);
 }
 
+=======
+>>>>>>> main
 #header-apartment-details > nav {
   padding: 0 30px;
   background-color: white;
