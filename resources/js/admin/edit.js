@@ -4,18 +4,19 @@ import tt from '@tomtom-international/web-sdk-services';
 var create = new Vue({
     el: '#edit-apartment',
     data: {
-        title,
-        roomsNumber,
-        sleepsAccomodations,
-        bathroomsNumber,
-        mq,
+        apartmentId,
+        title: '',
+        roomsNumber: null,
+        sleepsAccomodations: null,
+        bathroomsNumber: null,
+        mq: null,
         streetName: '',
         streetNumber: null,
         municipality: '',
-        latitude,
-        longitude,
-        address,
-        pricePerNight,
+        latitude: null,
+        longitude: null,
+        address: '',
+        pricePerNight: null,
         availableTypes: [
             'image/jpeg',
             'image/png',
@@ -23,21 +24,19 @@ var create = new Vue({
             'image/gif',
             'image/svg'
         ],
-        description,
-        submitted: false,
+        description: '',
         noAdressFound: false,
         mainImageValid: true,
-        numOldSecondaryImages: parseInt(numOldSecondaryImages),
+        numOldSecondaryImages: null,
         oldSecondaryImagesValid: true,
         newSecondaryImagesValid: true,
         allComforts: [],
         invalidComforts: [],
-        noErrors: true
+        noErrors: true,
+        apartmentInfoLoaded: false
     },
     methods: {
         submitForm() {
-            this.submitted = true;
-
             this.noErrors = true;
 
             window.scrollTo(0, 0);
@@ -128,16 +127,36 @@ var create = new Vue({
             this.allComforts = response.data.results;
         });
 
-        tt.services.reverseGeocode({
-            key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-            position: {
-                longitude: this.longitude,
-                latitude: this.latitude
+        axios.get('/api/getApartment', {params: {id: this.apartmentId}}).then((response) => {
+            this.title = response.data.results.apartment.title;
+            this.roomsNumber = response.data.results.apartment['rooms_number'];
+            this.sleepsAccomodations = response.data.results.apartment['sleeps_accomodations'];
+            this.bathroomsNumber = response.data.results.apartment['bathrooms_number'];
+            this.mq = response.data.results.apartment['mq'];
+            this.latitude = response.data.results.apartment['latitude'];
+            this.longitude = response.data.results.apartment['longitude'];
+            this.address = response.data.results.apartment['address'];
+            this.pricePerNight = response.data.results.apartment['price_per_night'];
+
+            if (response.data.results.apartment['description']) {
+                this.description = response.data.results.apartment['description'];
             }
-        }).then((response) => {
-            this.streetName = response.addresses[0].address.streetName;
-            this.streetNumber = response.addresses[0].address.streetNumber;
-            this.municipality = response.addresses[0].address.municipality;
+
+            this.numOldSecondaryImages = response.data.results['apartment_secondary_images'].length;
+
+            tt.services.reverseGeocode({
+                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+                position: {
+                    longitude: this.longitude,
+                    latitude: this.latitude
+                }
+            }).then((response) => {
+                this.streetName = response.addresses[0].address.streetName;
+                this.streetNumber = response.addresses[0].address.streetNumber;
+                this.municipality = response.addresses[0].address.municipality;
+
+                this.apartmentInfoLoaded = true;
+            });
         });
 
         document.querySelectorAll(".drop-zone__input").forEach(inputElement =>{
@@ -223,7 +242,7 @@ var create = new Vue({
                 imgTag.src = null;
             }
 
-        };
+        }
 
     }
 });

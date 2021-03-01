@@ -87585,35 +87585,35 @@ __webpack_require__.r(__webpack_exports__);
 var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#edit-apartment',
   data: {
-    title: title,
-    roomsNumber: roomsNumber,
-    sleepsAccomodations: sleepsAccomodations,
-    bathroomsNumber: bathroomsNumber,
-    mq: mq,
+    apartmentId: apartmentId,
+    title: '',
+    roomsNumber: null,
+    sleepsAccomodations: null,
+    bathroomsNumber: null,
+    mq: null,
     streetName: '',
     streetNumber: null,
     municipality: '',
-    latitude: latitude,
-    longitude: longitude,
-    address: address,
-    pricePerNight: pricePerNight,
+    latitude: null,
+    longitude: null,
+    address: '',
+    pricePerNight: null,
     availableTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg'],
-    description: description,
-    submitted: false,
+    description: '',
     noAdressFound: false,
     mainImageValid: true,
-    numOldSecondaryImages: parseInt(numOldSecondaryImages),
+    numOldSecondaryImages: null,
     oldSecondaryImagesValid: true,
     newSecondaryImagesValid: true,
     allComforts: [],
     invalidComforts: [],
-    noErrors: true
+    noErrors: true,
+    apartmentInfoLoaded: false
   },
   methods: {
     submitForm: function submitForm() {
       var _this = this;
 
-      this.submitted = true;
       this.noErrors = true;
       window.scrollTo(0, 0);
       this.invalidComforts = [];
@@ -87696,16 +87696,38 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     axios.get('/api/getAllComforts').then(function (response) {
       _this2.allComforts = response.data.results;
     });
-    _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
-      key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-      position: {
-        longitude: this.longitude,
-        latitude: this.latitude
+    axios.get('/api/getApartment', {
+      params: {
+        id: this.apartmentId
       }
     }).then(function (response) {
-      _this2.streetName = response.addresses[0].address.streetName;
-      _this2.streetNumber = response.addresses[0].address.streetNumber;
-      _this2.municipality = response.addresses[0].address.municipality;
+      _this2.title = response.data.results.apartment.title;
+      _this2.roomsNumber = response.data.results.apartment['rooms_number'];
+      _this2.sleepsAccomodations = response.data.results.apartment['sleeps_accomodations'];
+      _this2.bathroomsNumber = response.data.results.apartment['bathrooms_number'];
+      _this2.mq = response.data.results.apartment['mq'];
+      _this2.latitude = response.data.results.apartment['latitude'];
+      _this2.longitude = response.data.results.apartment['longitude'];
+      _this2.address = response.data.results.apartment['address'];
+      _this2.pricePerNight = response.data.results.apartment['price_per_night'];
+
+      if (response.data.results.apartment['description']) {
+        _this2.description = response.data.results.apartment['description'];
+      }
+
+      _this2.numOldSecondaryImages = response.data.results['apartment_secondary_images'].length;
+      _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.reverseGeocode({
+        key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
+        position: {
+          longitude: _this2.longitude,
+          latitude: _this2.latitude
+        }
+      }).then(function (response) {
+        _this2.streetName = response.addresses[0].address.streetName;
+        _this2.streetNumber = response.addresses[0].address.streetNumber;
+        _this2.municipality = response.addresses[0].address.municipality;
+        _this2.apartmentInfoLoaded = true;
+      });
     });
     document.querySelectorAll(".drop-zone__input").forEach(function (inputElement) {
       var dropZoneElement = inputElement.closest(".drop-zone");
@@ -87778,8 +87800,6 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         imgTag.src = null;
       }
     }
-
-    ;
   }
 });
 
