@@ -1,23 +1,5 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <ul>
-                <li>
-                    <b class="text-uppercase">Informazioni</b>
-                </li>
-                <li>Come funziona Airbnb</li>
-                <li>Airbnb Plus</li>
-                <li>Airbnb for Work</li>
-                <li>Opportunità di lavoro</li>
-                <li>Newsroom</li>
-                <li>Airbnb Luxe</li>
-                <li>Grazie agli host puoi</li>
-                <li>Investitori</li>
-                <li>HotelTonight</li>
-                <li>Olimpiadi</li>
-            </ul>
-        </div>
-
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -27,6 +9,20 @@
         <small>
             © 2021 Airbnb, Inc. All rights reserved
         </small>
+        <ul id="footer-privacy-menu">
+            <li>
+                <a href="#">privacy</a>
+            </li>
+            <li>
+                <a href="#">termini</a>
+            </li>
+            <li>
+                <a href="#">mappa del sito</a>
+            </li>
+            <li>
+                <a href="#">dettagli dell'azienda </a>
+            </li>
+        </ul>
     </div>
     </div>
 </div>

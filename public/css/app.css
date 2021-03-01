@@ -17366,6 +17366,15 @@ body [v-cloak] {
   padding-top: 500px;
 }
 
+footer #footer-privacy-menu {
+  display: inline-block;
+}
+
+footer #footer-privacy-menu li {
+  display: inline-block;
+  padding: 0 10px;
+}
+
 #header-dashboard img {
   height: 100px;
   width: 100px;
@@ -17550,7 +17559,6 @@ body [v-cloak] {
   background-color: #00d8ff38;
 }
 
-<<<<<<< HEAD
 #sponsored-apartment-card {
   transition: 1s;
 }
@@ -17559,8 +17567,6 @@ body [v-cloak] {
   transform: scale(1.1);
 }
 
-=======
->>>>>>> main
 #header-apartment-details > nav {
   padding: 0 30px;
   background-color: white;
