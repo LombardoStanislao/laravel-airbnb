@@ -87401,13 +87401,15 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     mainImageValid: true,
     secondaryImagesValid: true,
     allComforts: [],
-    invalidComforts: []
+    invalidComforts: [],
+    noErrors: true
   },
   methods: {
     submitForm: function submitForm() {
       var _this = this;
 
       this.submitted = true;
+      this.noErrors = true;
       window.scrollTo(0, 0);
       this.invalidComforts = [];
       this.secondaryImagesValid = true;
@@ -87445,7 +87447,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       }
 
       var comfortsValid = !this.invalidComforts.length;
-      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && mainImageValid && this.secondaryImagesValid && comfortsValid && descriptionValid;
+      this.noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && mainImageValid && this.secondaryImagesValid && comfortsValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
         countryCode: 'IT',
@@ -87470,13 +87472,14 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           _this.address = "".concat(streetName, " ").concat(streetNumber, ", ").concat(municipality);
 
           _this.$nextTick(function () {
-            if (noErrors) {
+            if (_this.noErrors) {
               _this.$refs.createApartment.submit();
             }
           });
         });
       })["catch"](function (error) {
         _this.noAdressFound = true;
+        _this.noErrors = false;
       });
     }
   },
@@ -87603,13 +87606,15 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     oldSecondaryImagesValid: true,
     newSecondaryImagesValid: true,
     allComforts: [],
-    invalidComforts: []
+    invalidComforts: [],
+    noErrors: true
   },
   methods: {
     submitForm: function submitForm() {
       var _this = this;
 
       this.submitted = true;
+      this.noErrors = true;
       window.scrollTo(0, 0);
       this.invalidComforts = [];
       this.oldSecondaryImagesValid = true;
@@ -87649,7 +87654,7 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       }
 
       var comfortsValid = !this.invalidComforts.length;
-      var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && comfortsValid && descriptionValid;
+      this.noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && this.mainImageValid && this.oldSecondaryImagesValid && this.newSecondaryImagesValid && comfortsValid && descriptionValid;
       _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.structuredGeocode({
         key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
         countryCode: 'IT',
@@ -87674,13 +87679,14 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           _this.address = "".concat(streetName, " ").concat(streetNumber, ", ").concat(municipality);
 
           _this.$nextTick(function () {
-            if (noErrors) {
+            if (_this.noErrors) {
               _this.$refs.editApartment.submit();
             }
           });
         });
       })["catch"](function (error) {
         _this.noAdressFound = true;
+        _this.noErrors = false;
       });
     }
   },
@@ -88466,8 +88472,8 @@ function openMenu() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/Corsoboolean/esercizi/laravel-airbnb/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/Corsoboolean/esercizi/laravel-airbnb/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
