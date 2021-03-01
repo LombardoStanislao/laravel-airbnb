@@ -8,67 +8,6 @@
     </script>
 @endsection
 
-@section('style-sheets')
-    <style media="screen">
-        .drop-zone{
-            max-width: 100%;
-            height: 365px;
-            padding: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 20px;
-            cursor: pointer;
-            color: #ccc;
-            border: 4px dashed #009578;
-            border-radius: 10px;
-        }
-        .mini{
-            height: 180px;
-        }
-        .drop-zone--over{
-            border-style: solid;
-        }
-        .drop-zone__input{
-            display: none;
-        }
-        .drop-zone__thumb{
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-            background-color: #ccc;
-            background-size: cover;
-            position: relative;
-        }
-        .drop-zone__thumb>img{
-            width: 100%;
-            height: 100%;
-        }
-        .drop-zone__thumb::after{
-            content: attr(data-label);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 5px 0;
-            color: #fff;
-            background: rgba(0, 0, 0, 0.75);
-            font-size: 14px;
-            text-align: center;
-        }
-        .img-cont{
-            height: 400px;
-        }
-        .img-cont>img{
-            width: 100%;
-            height: 90%;
-            object-fit: contain;
-        }
-    </style>
-@endsection
-
 @section('content')
     <div class="row">
         <div class="col-12 col-lg-10">
