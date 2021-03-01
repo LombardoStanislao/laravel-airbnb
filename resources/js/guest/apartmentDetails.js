@@ -12,11 +12,14 @@ var app = new Vue({
         imgIndex: 0,
         nummberOfImages,
         showMessageForm: false,
-        sliderVisible: false
+        sliderVisible: false,
+        slidingDirection: ''
     },
     methods: {
         prev() {
             this.imgIndex--;
+
+            this.slidingDirection = 'prev';
 
             if (this.imgIndex < 0) {
                 this.imgIndex = this.nummberOfImages-1;
@@ -24,6 +27,8 @@ var app = new Vue({
         },
         next() {
             this.imgIndex++;
+
+            this.slidingDirection = 'next';
 
             if (this.imgIndex > this.nummberOfImages-1) {
                 this.imgIndex = 0;

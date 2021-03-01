@@ -37,10 +37,11 @@
 @section('content')
     <div id="apartment-page" v-cloak>
         <div class="slider d-lg-none">
-            <img v-if="imgIndex == 0" src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block w-100">
-            @foreach ($apartment->images as $index => $image)
-                <img v-if="imgIndex == {{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="w-100">
-            @endforeach
+            <transition-group :name="slidingDirection">
+                @foreach ($images as $index => $image_url)
+                        <img v-show="imgIndex == {{ $index }}" src="{{ asset("storage/" . $image_url) }}" class="w-100" :key="{{ $index }}">
+                @endforeach
+            </transition-group>
             <div v-if="nummberOfImages>1" class="prev" @click="prev()">
                 <i class="fas fa-arrow-left"></i>
             </div>
@@ -192,26 +193,29 @@
                 </div>
             </div>
         </div>
-        <div v-if="sliderVisible" class="slider-container d-none d-lg-block">
-            <div @click="sliderVisible = false" class="close">
-                <i class="fas fa-times fa-2x"></i>
+        <transition name="fade-slider-container">
+            <div v-if="sliderVisible" class="slider-container d-none d-lg-block">
+                <div @click="sliderVisible = false" class="close">
+                    <i class="fas fa-times fa-2x"></i>
+                </div>
+                <div class="slider h-100 overflow-hidden rounded">
+                    <transition-group :name="slidingDirection">
+                        @foreach ($images as $index => $image_url)
+                                <img v-show="imgIndex == {{ $index }}" src="{{ asset("storage/" . $image_url) }}" class="w-100" :key="{{ $index }}">
+                        @endforeach
+                    </transition-group>
+                </div>
+                <div v-if="nummberOfImages>1" class="prev" @click="prev()">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <div v-if="nummberOfImages>1" class="next" @click="next()">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div v-if="nummberOfImages>1" class="counter">
+                    @{{ imgIndex+1 }}/@{{ nummberOfImages }}
+                </div>
             </div>
-            <div class="slider h-100 overflow-hidden rounded">
-                <img v-if="imgIndex == 0" src="{{ asset("storage/" . $apartment->{"main-image"}) }}" class="d-block w-100">
-                @foreach ($apartment->images as $index => $image)
-                    <img v-if="imgIndex == {{ $index+1 }}" src="{{ asset("storage/" . $image->url) }}" class="w-100">
-                @endforeach
-            </div>
-            <div v-if="nummberOfImages>1" class="prev" @click="prev()">
-                <i class="fas fa-arrow-left"></i>
-            </div>
-            <div v-if="nummberOfImages>1" class="next" @click="next()">
-                <i class="fas fa-arrow-right"></i>
-            </div>
-            <div v-if="nummberOfImages>1" class="counter">
-                @{{ imgIndex+1 }}/@{{ nummberOfImages }}
-            </div>
-        </div>
+        </transition>
         <div v-if="showMessageForm" id="message-form">
             <div class="form-container">
                 <div @click="showMessageForm = false" class="close">

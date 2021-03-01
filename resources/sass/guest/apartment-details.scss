@@ -92,9 +92,15 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
 
     .slider {
         position: relative;
+        overflow: hidden;
         height: 350px;
 
         img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
             height: 100%;
             object-fit: cover;
         }
@@ -242,5 +248,38 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
             color: red;
             cursor: pointer;
         }
+    }
+
+    .next-leave-active,
+    .next-enter-active {
+        transition: 1.5s;
+    }
+    .next-enter {
+        transform: translate(100%, 0);
+    }
+    .next-leave-to {
+        transform: translate(-100%, 0);
+    }
+
+    .prev-leave-active,
+    .prev-enter-active {
+        transition: 1.5s;
+    }
+    .prev-enter {
+        transform: translate(-100%, 0);
+    }
+    .prev-leave-to {
+        transform: translate(100%, 0);
+    }
+
+    .fade-slider-container-leave-active,
+    .fade-slider-container-enter-active {
+        transition: 1s;
+    }
+    .fade-slider-container-enter {
+        transform: translate(0, 100%);
+    }
+    .fade-slider-container-leave-to {
+        transform: translate(0, 100%);
     }
 }
