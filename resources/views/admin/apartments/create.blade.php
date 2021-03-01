@@ -78,6 +78,9 @@
                     @endif
                     <form ref="createApartment" id="create-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.store') }}" @submit.prevent="submitForm()" v-cloak>
                         @csrf
+                        <div v-if="!noErrors" class="alert alert-danger">
+                            Impossibile aggiungere l'appartamento. Controlla che non ci siano errori
+                        </div>
                         <div class="form-group">
                             <label>Titolo riepilogativo: </label>
                             <input type="text" name="title" class="form-control" v-model="title" maxlength="255" required>

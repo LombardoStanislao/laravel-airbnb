@@ -5,11 +5,29 @@
 @section('content')
     <div id="show-apartment" class="row">
         <div class="col-12 col-lg-10">
-            @if (session('success_message'))
+            @if (session('apartment-created'))
                 <div class="row">
                     <div class="col-12">
                         <div class="alert alert-success" role="alert">
-                            {{ session('success_message') }}
+                            {{ session('apartment-created') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if (session('apartment-modified'))
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-success" role="alert">
+                            {{ session('apartment-modified') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if (session('success-transaction'))
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-success" role="alert">
+                            {{ session('success-transaction') }}
                         </div>
                     </div>
                 </div>

@@ -31,11 +31,14 @@ var create = new Vue({
         mainImageValid: true,
         secondaryImagesValid: true,
         allComforts: [],
-        invalidComforts: []
+        invalidComforts: [],
+        noErrors: true
     },
     methods: {
         submitForm() {
             this.submitted = true;
+
+            this.noErrors = true;
 
             window.scrollTo(0, 0);
 
@@ -80,7 +83,7 @@ var create = new Vue({
 
             var comfortsValid = !this.invalidComforts.length;
 
-            var noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && mainImageValid && this.secondaryImagesValid && comfortsValid && descriptionValid;
+            this.noErrors = titleValid && roomsNumberValid && sleepsAccomodationsValid && bathroomsNumberValid && mqValid && streetNameValid && streetNumberValid && mucipalityValid && pricePerNightValid && mainImageValid && this.secondaryImagesValid && comfortsValid && descriptionValid;
 
 
             tt.services.structuredGeocode({
@@ -109,7 +112,7 @@ var create = new Vue({
                     this.address = `${streetName} ${streetNumber}, ${municipality}`;
 
                     this.$nextTick(() => {
-                        if (noErrors) {
+                        if (this.noErrors) {
                             this.$refs.createApartment.submit();
                         }
                     });
@@ -117,6 +120,7 @@ var create = new Vue({
 
             }).catch(error => {
                 this.noAdressFound = true;
+                this.noErrors = false;
             });
         },
     },

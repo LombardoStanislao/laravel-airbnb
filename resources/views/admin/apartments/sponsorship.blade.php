@@ -11,9 +11,9 @@
         <div class="col-12 col-lg-10">
             <div class="row mt-4 mb-4">
                 <div class="col-12">
-                    @if (session('error_message'))
+                    @if (session('error-transaction'))
                         <div class="alert alert-danger" role="alert">
-                            {{ session('error_message') }}
+                            {{ session('error-transaction') }}
                         </div>
                     @endif
                     @error ('sponsorship_type_id')

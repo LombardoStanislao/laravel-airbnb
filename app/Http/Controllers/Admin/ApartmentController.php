@@ -60,10 +60,10 @@ class ApartmentController extends Controller
             'bathrooms_number' => 'required|integer|min:1|max:255',
             'mq' => 'required|integer|min:1|max:255',
             'street_name' => 'required',
-            'street_number' => 'required|min:1',
+            'street_number' => 'required|integer|min:1',
             'municipality' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'latitude' => 'required|numeric|min:-999.9999999|max:999.9999999',
+            'longitude' => 'required|numeric|min:-999.9999999|max:999.9999999',
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'required|mimes:jpeg,png,jpg,gif,swg|max:2024',
@@ -111,7 +111,7 @@ class ApartmentController extends Controller
             $new_apartment->comforts()->sync($data["comforts"]);
         }
 
-        return redirect()->route('admin.apartments.show', ['apartment' => $new_apartment->id]);
+        return redirect()->route('admin.apartments.show', ['apartment' => $new_apartment->id])->with('apartment-created', 'L\'appartamento è stato aggiunto con successo');
     }
 
     /**
@@ -201,10 +201,10 @@ class ApartmentController extends Controller
             'bathrooms_number' => 'required|integer|min:1|max:255',
             'mq' => 'required|integer|min:1|max:255',
             'street_name' => 'required',
-            'street_number' => 'required|min:1',
+            'street_number' => 'required|integer|min:1',
             'municipality' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'latitude' => 'required|numeric|min:-999.9999999|max:999.9999999',
+            'longitude' => 'required|numeric|min:-999.9999999|max:999.9999999',
             'address' => 'nullable|max:255',
             'price_per_night' => 'required|numeric|min:0|max:9999.99',
             'image' => 'mimes:jpeg,png,jpg,gif,swg|max:2024',
@@ -271,7 +271,7 @@ class ApartmentController extends Controller
             $apartment->comforts()->sync($data["comforts"]);
         }
 
-        return redirect()->route('admin.apartments.show', ['apartment' => $apartment->id]);
+        return redirect()->route('admin.apartments.show', ['apartment' => $apartment->id])->with('apartment-modified', 'L\'appartamento è stato modificato con successo');
 
     }
 

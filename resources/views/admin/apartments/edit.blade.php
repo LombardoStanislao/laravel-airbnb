@@ -103,6 +103,9 @@
                     <form ref="editApartment" id="edit-apartment" method="POST" enctype="multipart/form-data" action="{{ route('admin.apartments.update', ['apartment'=> $apartment->id]) }}" @submit.prevent="submitForm()" v-cloak>
                         @csrf
                         @method('PUT')
+                        <div v-if="!noErrors" class="alert alert-danger">
+                            Impossibile confermare le modifiche. Controlla che non ci siano errori
+                        </div>
                         <div class="form-group">
                             <label>Titolo riepilogativo: </label>
                             <input type="text" name="title" class="form-control" v-model="title" maxlength="255" required>
