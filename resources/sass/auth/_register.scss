@@ -1,3 +1,8 @@
+.display-error {
+    display: block;
+    max-width: 380px;
+}
+
 .container-sign-in {
     position: relative;
     width: 100%;
@@ -96,6 +101,15 @@
                     color: #aaa;
                     font-weight: 500;
                 }
+            }
+
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            input:-webkit-autofill:active
+            {
+            -webkit-box-shadow: 0 0 0 30px #f0f0f0 inset !important;
+            border-radius: 55px;
             }
 
         }
@@ -341,7 +355,7 @@
 
     .container-sign-in.sign-up-mode::before {
         transform: translate(-50%, 100%);
-        bottom: 24%;
+        bottom: 35%;
         right: initial;
     }
 
@@ -388,9 +402,24 @@
 
     .container-sign-in.sign-up-mode .signin-signup {
         top: 5%;
-        transform: translate(-50%, -10%) scale(0.8);
+        transform: translate(-50%, -22%) scale(0.6);
         left: 50%;
     }
 
+    .container-sign-in.sign-up-mode .right-panel .content{
+        transform: translate(0, -90%);
+    }
 
+
+}
+
+@media (max-width: 315px) {
+
+    .container-sign-in.sign-up-mode .right-panel .content h3{
+        display: none;
+    }
+
+    .container-sign-in.sign-up-mode .right-panel .content{
+        transform: translate(0, -130%);
+    }
 }

@@ -87546,14 +87546,9 @@ var create = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         thumbnailElement.appendChild(imgTag);
       } //show file name
 
-        thumbnailElement.dataset.label = file[i].name; //show image
 
       thumbnailElement.dataset.label = file.name; //show image
 
-    ;
-
-    function loadImage(file, i, imgTag) {
-      if (file[i].type.startsWith("image/")) {
       if (file.type.startsWith("image/")) {
         var reader = new FileReader();
         reader.readAsDataURL(file);
@@ -88523,8 +88518,8 @@ function openMenu() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\Boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\Boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
