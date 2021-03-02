@@ -10,11 +10,9 @@
 }
 
 #header-form {
-
-
     .navbar-search {
-        padding: 10px;
-        margin: 45px 100px;
+        padding: 5px;
+
 
         .navbar-top-button {
             background: none;
@@ -41,6 +39,7 @@
 
             input::placeholder {
                 color: black;
+                font-size: 0.8rem;
             }
 
             &:hover {
@@ -64,6 +63,7 @@
         input {
             border: 0;
             background-color: transparent;
+            width: 165px;
             &:focus {
                 outline: 0;
             }
@@ -72,17 +72,29 @@
 }
 
 .navbar-top {
-    display: none;
     position: fixed;
     top: 0;
     left:0;
     transition: 0.6s;
     width: 100%;
     z-index: 5;
-    padding: 25px 100px;
+    // padding: 25px 100px;
     &.sticky  {
        padding: 0px 100px;
        background: white;
+    }
+
+    .container {
+        padding-top: 10px;
+        justify-content: center;
+    }
+
+    .navbar-brand {
+        display: none;
+    }
+
+    #navbarSupportedContent {
+        display: none;
     }
 }
 
@@ -144,9 +156,31 @@
 
 @media (min-width: 768px) {
 
+    #header-form {
+        .navbar-search {
+
+            padding: 10px;
+            margin: 45px 100px;
+
+            input {
+                width: 215px;
+            }
+        }
+    }
 
     .navbar-top {
-        display: block;
+
+        .container {
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: block;
+        }
+
+        #navbarSupportedContent {
+            display: block;
+        }
 
         .navbar-collapse {
             flex-grow: 0;
@@ -260,14 +294,5 @@
 
     .navbar-bottom {
         display: none;
-    }
-}
-
-
-#jumbotron-homepage {
-    padding-top: 150px;
-
-    h1 {
-        padding-top: 500px;
     }
 }

@@ -4,3 +4,64 @@
         transform: scale(1.1);
     }
 }
+
+#jumbotron-homepage {
+    padding: 250px 0;
+
+    .jumbo-container {
+
+        height: 650px;
+        background-color: #f2f2f7;
+        padding: $spacing;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 0 35px rgba(15, 14, 15, 0.3)  ;
+    	-webkit-box-shadow: 0 0 35px rgba(15, 14, 15, 0.3)  ;
+    	-moz-box-shadow: 0 0 35px rgba(15, 14, 15, 0.3)  ;
+
+        #jumbo-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #595656;
+
+        }
+
+        .jumbo-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #595656;
+        }
+
+        a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+                color: inherit;
+            }
+        }
+    }
+
+
+}
+
+#logo-jumbo {
+    max-width: 125px;
+}
+
+@media (min-width: 576px) {
+
+    #jumbotron-homepage {
+        .jumbo-container {
+            #jumbo-title {
+                font-size: 3rem;
+            }
+        }
+    }
+
+}

@@ -13,8 +13,17 @@
         <section id="jumbotron-homepage">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 text-center">
-                        <h1>Benvenuto</h1>
+                    <div class="offset-xl-6 col-xl-6 col-lg-8 offset-lg-2 text-center">
+                        <div class="jumbo-container">
+                            <img id="logo-jumbo" src="{{asset('img/logo-jumbo.png')}}" alt="">
+                            <h1 id="jumbo-title">Benvenuto su Airbnb</h1>
+                            <p class="jumbo-text">Hai una camera o un appartamento che non utilizzi? Condivili con noi e guadagna facendo nuove esperienze.
+                            <br> Registrati subito!  </p>
+                            <a href="{{ route('register') }}" class="button button-solid">
+                                {{ __('Registrati') }}
+                            </a>
+                        </div>
+
                     </div>
 
                 </div>

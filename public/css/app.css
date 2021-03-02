@@ -17123,8 +17123,7 @@ body [v-cloak] {
 }
 
 #header-form .navbar-search {
-  padding: 10px;
-  margin: 45px 100px;
+  padding: 5px;
 }
 
 #header-form .navbar-search .navbar-top-button {
@@ -17153,14 +17152,17 @@ body [v-cloak] {
 
 #header-form .navbar-search.sticky input::-moz-placeholder {
   color: black;
+  font-size: 0.8rem;
 }
 
 #header-form .navbar-search.sticky input:-ms-input-placeholder {
   color: black;
+  font-size: 0.8rem;
 }
 
 #header-form .navbar-search.sticky input::placeholder {
   color: black;
+  font-size: 0.8rem;
 }
 
 #header-form .navbar-search.sticky:hover {
@@ -17180,6 +17182,7 @@ body [v-cloak] {
 #header-form .input-menu input {
   border: 0;
   background-color: transparent;
+  width: 165px;
 }
 
 #header-form .input-menu input:focus {
@@ -17187,19 +17190,30 @@ body [v-cloak] {
 }
 
 .navbar-top {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
   transition: 0.6s;
   width: 100%;
   z-index: 5;
-  padding: 25px 100px;
 }
 
 .navbar-top.sticky {
   padding: 0px 100px;
   background: white;
+}
+
+.navbar-top .container {
+  padding-top: 10px;
+  justify-content: center;
+}
+
+.navbar-top .navbar-brand {
+  display: none;
+}
+
+.navbar-top #navbarSupportedContent {
+  display: none;
 }
 
 .navbar-bottom {
@@ -17255,7 +17269,24 @@ body [v-cloak] {
 }
 
 @media (min-width: 768px) {
-  .navbar-top {
+  #header-form .navbar-search {
+    padding: 10px;
+    margin: 45px 100px;
+  }
+
+  #header-form .navbar-search input {
+    width: 215px;
+  }
+
+  .navbar-top .container {
+    justify-content: space-between;
+  }
+
+  .navbar-top .navbar-brand {
+    display: block;
+  }
+
+  .navbar-top #navbarSupportedContent {
     display: block;
   }
 
@@ -17356,14 +17387,6 @@ body [v-cloak] {
   .navbar-bottom {
     display: none;
   }
-}
-
-#jumbotron-homepage {
-  padding-top: 150px;
-}
-
-#jumbotron-homepage h1 {
-  padding-top: 500px;
 }
 
 footer #footer-privacy-menu {
@@ -17638,6 +17661,58 @@ footer #footer-privacy-menu li {
 
 #sponsored-apartment-card:hover {
   transform: scale(1.1);
+}
+
+#jumbotron-homepage {
+  padding: 250px 0;
+}
+
+#jumbotron-homepage .jumbo-container {
+  height: 650px;
+  background-color: #f2f2f7;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 0 35px rgba(15, 14, 15, 0.3);
+  -webkit-box-shadow: 0 0 35px rgba(15, 14, 15, 0.3);
+  -moz-box-shadow: 0 0 35px rgba(15, 14, 15, 0.3);
+}
+
+#jumbotron-homepage .jumbo-container #jumbo-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #595656;
+}
+
+#jumbotron-homepage .jumbo-container .jumbo-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #595656;
+}
+
+#jumbotron-homepage .jumbo-container a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#jumbotron-homepage .jumbo-container a:hover {
+  color: inherit;
+}
+
+#logo-jumbo {
+  max-width: 125px;
+}
+
+@media (min-width: 576px) {
+  #jumbotron-homepage .jumbo-container #jumbo-title {
+    font-size: 3rem;
+  }
 }
 
 #advanced-research-page {
