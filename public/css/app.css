@@ -17196,6 +17196,8 @@ body [v-cloak] {
   transition: 0.6s;
   width: 100%;
   z-index: 5;
+  background: none;
+  border: none;
 }
 
 .navbar-top.sticky {
@@ -17685,7 +17687,6 @@ footer #footer-privacy-menu li {
   transform: scale(1.1);
 }
 
-<<<<<<< HEAD
 #jumbotron-homepage {
   padding: 250px 0;
 }
@@ -17738,13 +17739,9 @@ footer #footer-privacy-menu li {
   }
 }
 
-#advanced-research-page {
-  color: black;
-=======
 .mobile-header {
   padding: 10px;
   border-bottom: 1px solid #ebebeb;
->>>>>>> main
 }
 
 .mobile-header .location-container {
