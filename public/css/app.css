@@ -17640,6 +17640,477 @@ footer #footer-privacy-menu li {
   transform: scale(1.1);
 }
 
+.mobile-header {
+  padding: 10px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.mobile-header .location-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.mobile-header .location-container h3 {
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  font-size: 18px;
+}
+
+.mobile-header .filters-dropdown {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.mobile-header .filters-dropdown .fa-sliders-h {
+  border-left: 1px solid #ebebeb;
+  font-size: 20px;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+button:focus {
+  outline: none;
+}
+
+.sp-primary-btn {
+  background-color: #222;
+  color: white;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.sp-primary-btn:hover {
+  background-color: black;
+}
+
+.sp-secondary-btn {
+  color: black;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.sp-secondary-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sp-transparent-btn {
+  color: #222;
+  border: 1px solid #b0b0b0;
+  background-color: transparent;
+  border-radius: 50px;
+  transition: border-color 0.5s ease-in-out;
+}
+
+.sp-transparent-btn:hover {
+  border-color: #484848;
+}
+
+#advanced-research-page {
+  color: black;
+}
+
+#advanced-research-page #dropdown-filters-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: white;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .header-dropdown {
+  padding: 0 10px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ebebeb;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .header-dropdown .fa-times {
+  font-size: 20px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .header-dropdown u {
+  font-size: 14px;
+  font-weight: 500;
+  color: black;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .header-dropdown h4 {
+  font-size: 18px;
+  margin-bottom: 0;
+  padding-left: 53.2px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list {
+  padding: 0 10px;
+  margin: 0;
+  height: calc(100% - 60px - 60px);
+  overflow: auto;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li {
+  padding: 40px 20px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li:last-of-type {
+  border-color: transparent;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #484848;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li label {
+  font-size: 18px;
+  color: #717171;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li label[for=radius] {
+  display: block;
+  text-align: center;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius {
+  -webkit-appearance: none;
+  display: block;
+  width: calc(100% - 20px);
+  margin: 10px;
+  /*Chrome*/
+  /*Firefox*/
+  /* fix for FF unable to apply focus style bug  */
+  border: 1px solid white;
+  /*hide the outline behind the border*/
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius::-webkit-slider-runnable-track {
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #484848;
+  margin-top: -4px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius:focus {
+  outline: none;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius:focus::-webkit-slider-runnable-track {
+  background: #ccc;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius::-moz-range-track {
+  width: 300px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius::-moz-range-thumb {
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #484848;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius:-moz-focusring {
+  outline: 1px solid white;
+  outline-offset: -1px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius:focus::-moz-range-track {
+  background: #ccc;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius::-ms-track {
+  height: 5px;
+  /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+  background: transparent;
+  /*leave room for the larger thumb to overflow with a transparent border */
+  border-color: transparent;
+  border-width: 6px 0;
+  /*remove default tick marks*/
+  color: transparent;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius::-ms-fill-lower {
+  background: #777;
+  border-radius: 10px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius::-ms-fill-upper {
+  background: #ddd;
+  border-radius: 10px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius::-ms-thumb {
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #484848;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius:focus::-ms-fill-lower {
+  background: #888;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li #radius:focus::-ms-fill-upper {
+  background: #ccc;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul li {
+  height: 60px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul li .left,
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul li .right {
+  float: left;
+  width: 50%;
+  height: 100%;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul li label {
+  line-height: 60px;
+  margin: none;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul li .right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul li .right .value-modifier {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid #717171;
+  background-color: transparent;
+  color: #717171;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul li .right .value-modifier.unavailable {
+  border-color: #ebebeb;
+  color: #ebebeb;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul li .right .input-value {
+  width: 20px;
+  text-align: center;
+  margin: 0 20px;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul.comfort-list label {
+  width: calc(100% - 20px);
+  float: left;
+  margin: 0;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .filter-section-list > li ul.comfort-list input.checkbox {
+  width: 20px;
+  height: 20px;
+  margin: 20px 0;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .footer-dropdown {
+  height: 60px;
+  padding: 13.3px 20px;
+  border-top: 1px solid #ebebeb;
+}
+
+#advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .footer-dropdown button {
+  width: 100%;
+  text-align: center;
+}
+
+#advanced-research-page #main-content .content-header {
+  padding: 30px 0;
+  color: #484848;
+  border-bottom: 1px solid #ebebeb;
+}
+
+#advanced-research-page #main-content .content-header p {
+  padding: 0;
+  margin: 0;
+}
+
+#advanced-research-page #main-content .content-header h2 {
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+#advanced-research-page #main-content .apartment-list {
+  list-style-type: none;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card {
+  padding: 20px 0;
+  color: #484848;
+  display: block;
+  position: relative;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card .sponsored {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  display: inline-block;
+  padding: 0 5px;
+  font-size: 10px;
+  border-radius: 10px;
+  color: white;
+  background-color: #ff385c;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card .img-container {
+  position: relative;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card .img-container img {
+  width: 100%;
+  float: left;
+  border-radius: 20px;
+  margin-bottom: 5px;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card .apartment-info-container > *:not(:last-child) {
+  margin: 0 0 5px;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card .apartment-info-container h3 {
+  font-weight: 600;
+  font-size: 18px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card .apartment-info-container p {
+  color: #888;
+  font-size: 12px;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card .apartment-info-container .price {
+  color: #484848;
+  margin: 0;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card::after {
+  content: "";
+  position: absolute;
+  bottom: -0.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 1px;
+  width: 95%;
+  background-color: gainsboro;
+}
+
+#advanced-research-page #main-content .apartment-list li .apartment-card:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#advanced-research-page #main-content .apartment-list li:last-child .apartment-card {
+  border-color: transparent;
+}
+
+nav {
+  border-bottom: 1px solid #ebebeb;
+  background-color: white;
+}
+
+@media (min-width: 768px) {
+  #root #advanced-research-page #main-content #location-data {
+    padding-top: 239px;
+  }
+
+  #root #advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container {
+    width: 60vw;
+    height: 80vh;
+    border-radius: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #root #advanced-research-page #apartment-card .img-container {
+    position: static;
+  }
+
+  #root #advanced-research-page #apartment-card .apartment-info-container {
+    padding-top: 20px;
+  }
+
+  #root #advanced-research-page #apartment-card .apartment-info-container h3 {
+    font-size: 24;
+  }
+
+  #root #advanced-research-page #apartment-card .apartment-info-container p {
+    font-size: 20px;
+  }
+
+  #root #advanced-research-page #apartment-card .apartment-info-container .price {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+  }
+}
+
+@media (min-width: 960px) {
+  #root #advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container {
+    width: 40vw;
+  }
+}
+
 #header-apartment-details > nav {
   padding: 0 30px;
   background-color: white;
@@ -17668,398 +18139,6 @@ footer #footer-privacy-menu li {
   #apartment-page h1 {
     font-size: 36px;
   }
-}
-
-#advanced-research-page {
-  color: black;
-}
-
-#advanced-research-page ul {
-  margin: 0;
-  padding: 0;
-}
-
-#advanced-research-page button:focus {
-  outline: none;
-}
-
-#advanced-research-page .sp-primary-btn {
-  background-color: #222;
-  color: white;
-  transition: background-color 0.5s ease-in-out;
-}
-
-#advanced-research-page .sp-primary-btn:hover {
-  background-color: black;
-}
-
-#advanced-research-page .sp-secondary-btn {
-  color: black;
-  transition: background-color 0.5s ease-in-out;
-}
-
-#advanced-research-page .sp-secondary-btn:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-#advanced-research-page .sp-transparent-btn {
-  color: #222;
-  border: 1px solid #b0b0b0;
-  background-color: transparent;
-  border-radius: 50px;
-  transition: border-color 0.5s ease-in-out;
-}
-
-#advanced-research-page .sp-transparent-btn:hover {
-  border-color: #484848;
-}
-
-#advanced-research-page .mobile-header {
-  padding: 10px;
-  border-bottom: 1px solid #ebebeb;
-}
-
-#advanced-research-page .mobile-header .location-container {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-#advanced-research-page .mobile-header .location-container h3 {
-  white-space: nowrap;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  margin: 0;
-  font-size: 18px;
-}
-
-#advanced-research-page .mobile-header .filters-dropdown {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#advanced-research-page .mobile-header .filters-dropdown .fa-sliders-h {
-  border-left: 1px solid #ebebeb;
-  font-size: 20px;
-}
-
-#advanced-research-page #dropdown-filters-menu {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  background-color: white;
-}
-
-#advanced-research-page #dropdown-filters-menu .header-dropdown {
-  padding: 0 10px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #ebebeb;
-}
-
-#advanced-research-page #dropdown-filters-menu .header-dropdown .fa-times {
-  font-size: 20px;
-}
-
-#advanced-research-page #dropdown-filters-menu .header-dropdown u {
-  font-size: 14px;
-  font-weight: 500;
-  color: black;
-}
-
-#advanced-research-page #dropdown-filters-menu .header-dropdown h4 {
-  font-size: 18px;
-  margin-bottom: 0;
-  padding-left: 53.2px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list {
-  padding: 0 10px;
-  margin: 0;
-  height: calc(100% - 60px - 60px);
-  overflow: auto;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li {
-  padding: 40px 20px;
-  border-bottom: 1px solid #ebebeb;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li:last-of-type {
-  border-color: transparent;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li h2 {
-  font-size: 22px;
-  font-weight: 600;
-  color: #484848;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li label {
-  font-size: 18px;
-  color: #717171;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li label[for=radius] {
-  display: block;
-  text-align: center;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius {
-  -webkit-appearance: none;
-  display: block;
-  width: calc(100% - 20px);
-  margin: 10px;
-  /*Chrome*/
-  /*Firefox*/
-  /* fix for FF unable to apply focus style bug  */
-  border: 1px solid white;
-  /*hide the outline behind the border*/
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius::-webkit-slider-runnable-track {
-  height: 5px;
-  background: #ddd;
-  border: none;
-  border-radius: 3px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  border: none;
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  background: #484848;
-  margin-top: -4px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius:focus {
-  outline: none;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius:focus::-webkit-slider-runnable-track {
-  background: #ccc;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius::-moz-range-track {
-  width: 300px;
-  height: 5px;
-  background: #ddd;
-  border: none;
-  border-radius: 3px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius::-moz-range-thumb {
-  border: none;
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  background: #484848;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius:-moz-focusring {
-  outline: 1px solid white;
-  outline-offset: -1px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius:focus::-moz-range-track {
-  background: #ccc;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius::-ms-track {
-  height: 5px;
-  /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
-  background: transparent;
-  /*leave room for the larger thumb to overflow with a transparent border */
-  border-color: transparent;
-  border-width: 6px 0;
-  /*remove default tick marks*/
-  color: transparent;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius::-ms-fill-lower {
-  background: #777;
-  border-radius: 10px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius::-ms-fill-upper {
-  background: #ddd;
-  border-radius: 10px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius::-ms-thumb {
-  border: none;
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  background: #484848;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius:focus::-ms-fill-lower {
-  background: #888;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li #radius:focus::-ms-fill-upper {
-  background: #ccc;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul li {
-  height: 60px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul li .left,
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul li .right {
-  float: left;
-  width: 50%;
-  height: 100%;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul li label {
-  line-height: 60px;
-  margin: none;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul li .right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul li .right .value-modifier {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  border: 2px solid #717171;
-  background-color: transparent;
-  color: #717171;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul li .right .value-modifier.unavailable {
-  border-color: #ebebeb;
-  color: #ebebeb;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul li .right .input-value {
-  width: 20px;
-  text-align: center;
-  margin: 0 20px;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul.comfort-list label {
-  width: calc(100% - 20px);
-  float: left;
-  margin: 0;
-}
-
-#advanced-research-page #dropdown-filters-menu .filter-section-list > li ul.comfort-list input.checkbox {
-  width: 20px;
-  height: 20px;
-  margin: 20px 0;
-}
-
-#advanced-research-page #dropdown-filters-menu .footer-dropdown {
-  height: 60px;
-  padding: 13.3px 20px;
-  border-top: 1px solid #ebebeb;
-}
-
-#advanced-research-page #dropdown-filters-menu .footer-dropdown button {
-  width: 100%;
-  text-align: center;
-}
-
-#advanced-research-page #main-content .content-header {
-  padding: 30px 0;
-  color: #484848;
-  border-bottom: 1px solid #ebebeb;
-}
-
-#advanced-research-page #main-content .content-header p {
-  padding: 0;
-  margin: 0;
-}
-
-#advanced-research-page #main-content .content-header h2 {
-  margin-top: 10px;
-  font-weight: 700;
-}
-
-#advanced-research-page #main-content .apartment-list {
-  list-style-type: none;
-}
-
-#advanced-research-page #main-content .apartment-list li .apartment-card {
-  padding: 20px 0;
-  border-bottom: 1px solid #ebebeb;
-  color: #484848;
-  display: block;
-}
-
-#advanced-research-page #main-content .apartment-list li .apartment-card .img-container {
-  position: relative;
-}
-
-#advanced-research-page #main-content .apartment-list li .apartment-card .img-container img {
-  width: 100%;
-  float: left;
-  border-radius: 20px;
-  margin-bottom: 5px;
-}
-
-#advanced-research-page #main-content .apartment-list li .apartment-card .img-container .sponsored {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  display: inline-block;
-  padding: 0 5px;
-  font-size: 10px;
-  border-radius: 10px;
-  color: white;
-  background-color: #ff385c;
-}
-
-#advanced-research-page #main-content .apartment-list li .apartment-card .apartment-info-container > *:not(:last-child) {
-  margin: 0 0 5px;
-}
-
-#advanced-research-page #main-content .apartment-list li .apartment-card .apartment-info-container h3 {
-  font-weight: 600;
-  font-size: 18px;
-  white-space: nowrap;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-}
-
-#advanced-research-page #main-content .apartment-list li .apartment-card .apartment-info-container p {
-  color: #ccc;
-  font-size: 12px;
-}
-
-#advanced-research-page #main-content .apartment-list li .apartment-card .apartment-info-container .price {
-  color: #484848;
-  margin: 0;
-}
-
-#advanced-research-page #main-content .apartment-list li:last-child .apartment-card {
-  border-color: transparent;
 }
 
 #apartment-page .address {
