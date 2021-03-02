@@ -15,13 +15,12 @@
                     <input type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                     placeholder="Inserisci la tua email">
 
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
                 </div>
+                @error('email')
+                    <div class="invalid-feedback display-error" role="alert">
+                            <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
@@ -29,13 +28,12 @@
                     <input type="password" class=" @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"
                     placeholder="Inserisci qui la tua password">
 
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
                 </div>
+                @error('password')
+                    <div class="invalid-feedback display-error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -89,24 +87,24 @@
                     <input id="name" type="text" class="@error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus
                     placeholder="Inserisci il tuo nome">
 
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                 </div>
+                @error('name')
+                    <div class="invalid-feedback display-error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="input-field">
                     <i class="fas fa-user"></i>
                     <input id="lastname" type="text" class="@error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname"
                     placeholder="Inserisci il tuo cognome" autofocus>
 
-                    @error('lastname')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                 </div>
+                @error('lastname')
+                    <div class="invalid-feedback display-error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="input-field">
                     <i class="fas fa-birthday-cake"></i>
@@ -114,36 +112,34 @@
 
                     <input id="date_of_birth" type="date" class="@error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required autocomplete="date_of_birth" autofocus>
 
-                    @error('date_of_birth')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
                 </div>
+                @error('date_of_birth')
+                    <div class="invalid-feedback display-error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
                     <input id="email" type="email" class="@error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"
                     placeholder="Inserisci qui la tua email">
 
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                 </div>
+                @error('email')
+                    <div class="invalid-feedback display-error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
                     <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Inserisci qui la password">
-
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                 </div>
+                @error('password')
+                    <div class="invalid-feedback display-error" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
 
                 <div class="input-field">
                     <i class="fas fa-lock"></i>

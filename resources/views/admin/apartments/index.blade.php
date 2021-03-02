@@ -42,30 +42,35 @@
                                     <tr>
                                         <td>{{ $apartment->id }}</td>
                                         <td>
-                                            {{ $apartment->title }}
+                                            <span class="mr-2">{{ $apartment->title }}</span>
+                                            @if (isSponsored($apartment))
+                                                <small class="sponsored">sponsorizzato</small>
+                                            @endif
                                         </td>
                                         <td>
-                                            <div class="dropdown d-lg-none mw-0">
+                                            <div class="dropdown d-xl-none mw-0">
                                                 <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Azioni
                                                 </button>
-                                                <div class="dropdown-menu text-center" aria-labelledby="dropdownMenu2">
-                                                    <a href="{{ route('admin.apartments.show', ['apartment' => $apartment->id]) }}" class="btn btn-info mb-1">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ route('admin.apartments.edit', ['apartment' => $apartment->id]) }}" class="btn btn-warning mb-1">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <form class="d-inline-block mb-1" method="post" action="{{ route('admin.apartments.destroy', ['apartment'=> $apartment->id])}}" >
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit" name="button">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+                                                <div class="dropdown-menu text-center w-100 overflow-hidden" aria-labelledby="dropdownMenu2">
+                                                    <div class="d-flex flex-column align-items-center w-100">
+                                                        <a href="{{ route('admin.apartments.show', ['apartment' => $apartment->id]) }}" class="btn btn-info mb-1 w-50">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                        <a href="{{ route('admin.apartments.edit', ['apartment' => $apartment->id]) }}" class="btn btn-warning mb-1 w-50">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <form class="d-inline-block mb-1 w-50" method="post" action="{{ route('admin.apartments.destroy', ['apartment'=> $apartment->id])}}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger w-100" type="submit" name="button">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="d-none d-lg-block">
+                                            <div class="d-none d-xl-block">
                                                 <a href="{{ route('admin.apartments.show', ['apartment' => $apartment->id]) }}" class="btn btn-info">
                                                     Dettagli
                                                 </a>

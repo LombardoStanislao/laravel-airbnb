@@ -89185,16 +89185,20 @@ var APIKEY = 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC';
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#apartment-page',
   data: {
-    home: [longitude_js, latitude_js],
+    apartmentId: apartmentId,
+    home: [],
     map: {},
     marker: {},
     imgIndex: 0,
-    nummberOfImages: nummberOfImages,
+    nummberOfImages: 0,
     showMessageForm: false,
     sliderVisible: false,
     slidingDirection: ''
   },
   methods: {
+    openMenu: function openMenu() {
+      document.getElementById('user-dropdown-menu').classList.toggle("open");
+    },
     prev: function prev() {
       this.imgIndex--;
       this.slidingDirection = 'prev';
@@ -89224,61 +89228,28 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       event.stopPropagation();
     }
   },
-  // methods: {
-  //     moveMap(lnglat) {
-  //         this.map.flyTo({
-  //             center: lnglat,
-  //             zoom: 14
-  //         });
-  //     },
-  //     handleResults(response) {
-  //         if (response.results) {
-  //             var position = response.results[0].position;
-  //
-  //             this.moveMap(position);
-  //
-  //             this.marker.remove();
-  //
-  //             this.marker = new tt.Marker().setLngLat(position).addTo(this.map);
-  //         }
-  //     },
-  //     search() {
-  //         TT.services.fuzzySearch({
-  //             key: APIKEY,
-  //             query: this.searchedAdress,
-  //
-  //         }).go().then(this.handleResults);
-  //     },
-  //     convertAdress() {
-  //         TT.services.fuzzySearch({
-  //             key: APIKEY,
-  //             query: this.inputAdress
-  //         }).go().then(response => {
-  //             if (response.results) {
-  //                 var position = response.results[0].position;
-  //
-  //                 this.latitude = position.lat;
-  //                 this.longitude = position.lng;
-  //             }
-  //         });
-  //     }
-  // },
   mounted: function mounted() {
+    var _this = this;
+
+    document.getElementById('user-icon').addEventListener("click", this.openMenu);
     window.onresize = this.watchViewport;
-    this.map = _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_1___default.a.map({
-      key: APIKEY,
-      center: this.home,
-      zoom: 14,
-      container: 'map'
+    axios.get('/api/getApartment', {
+      params: {
+        id: this.apartmentId
+      }
+    }).then(function (response) {
+      _this.home = [response.data.results.apartment.longitude, response.data.results.apartment.latitude];
+      _this.nummberOfImages = response.data.results['apartment_secondary_images'].length + 1;
+      _this.map = _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_1___default.a.map({
+        key: APIKEY,
+        center: _this.home,
+        zoom: 14,
+        container: 'map'
+      });
+      _this.marker = new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_1___default.a.Marker().setLngLat(_this.home).addTo(_this.map);
     });
-    this.marker = new _tomtom_international_web_sdk_maps__WEBPACK_IMPORTED_MODULE_1___default.a.Marker().setLngLat(this.home).addTo(this.map);
   }
 });
-document.getElementById('user-icon').addEventListener("click", openMenu);
-
-function openMenu() {
-  document.getElementById('user-dropdown-menu').classList.toggle("open");
-}
 
 /***/ }),
 
@@ -89333,8 +89304,8 @@ function openMenu() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

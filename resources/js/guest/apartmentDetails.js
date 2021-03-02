@@ -6,16 +6,20 @@ const APIKEY = 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC';
 var app = new Vue({
     el: '#apartment-page',
     data: {
-        home: [longitude_js, latitude_js],
+        apartmentId,
+        home: [],
         map : {},
         marker: {},
         imgIndex: 0,
-        nummberOfImages,
+        nummberOfImages: 0,
         showMessageForm: false,
         sliderVisible: false,
         slidingDirection: ''
     },
     methods: {
+        openMenu() {
+            document.getElementById('user-dropdown-menu').classList.toggle("open");
+        },
         prev() {
             this.imgIndex--;
 
@@ -47,61 +51,27 @@ var app = new Vue({
             event.stopPropagation();
         }
     },
-    // methods: {
-    //     moveMap(lnglat) {
-    //         this.map.flyTo({
-    //             center: lnglat,
-    //             zoom: 14
-    //         });
-    //     },
-    //     handleResults(response) {
-    //         if (response.results) {
-    //             var position = response.results[0].position;
-    //
-    //             this.moveMap(position);
-    //
-    //             this.marker.remove();
-    //
-    //             this.marker = new tt.Marker().setLngLat(position).addTo(this.map);
-    //         }
-    //     },
-    //     search() {
-    //         TT.services.fuzzySearch({
-    //             key: APIKEY,
-    //             query: this.searchedAdress,
-    //
-    //         }).go().then(this.handleResults);
-    //     },
-    //     convertAdress() {
-    //         TT.services.fuzzySearch({
-    //             key: APIKEY,
-    //             query: this.inputAdress
-    //         }).go().then(response => {
-    //             if (response.results) {
-    //                 var position = response.results[0].position;
-    //
-    //                 this.latitude = position.lat;
-    //                 this.longitude = position.lng;
-    //             }
-    //         });
-    //     }
-    // },
     mounted() {
+        document.getElementById('user-icon').addEventListener("click", this.openMenu);
+
         window.onresize = this.watchViewport;
 
-        this.map = tt.map({
-            key: APIKEY,
-            center: this.home,
-            zoom: 14,
-            container: 'map'
-        });
+        axios.get('/api/getApartment', {params: {id: this.apartmentId}}).then((response) => {
+            this.home = [
+                response.data.results.apartment.longitude,
+                response.data.results.apartment.latitude
+            ];
 
-        this.marker = new tt.Marker().setLngLat(this.home).addTo(this.map);
+            this.nummberOfImages = response.data.results['apartment_secondary_images'].length + 1;
+
+            this.map = tt.map({
+                key: APIKEY,
+                center: this.home,
+                zoom: 14,
+                container: 'map'
+            });
+
+            this.marker = new tt.Marker().setLngLat(this.home).addTo(this.map);
+        });
     }
 });
-
-document.getElementById('user-icon').addEventListener("click", openMenu);
-
-function openMenu() {
-    document.getElementById('user-dropdown-menu').classList.toggle("open");
-}
