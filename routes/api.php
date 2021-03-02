@@ -19,6 +19,8 @@ Route::get('/showViews', 'Api\ApartmentController@showViews');
 
 Route::get('/getApartment', 'Api\ApartmentController@getApartment');
 
+Route::get('/isSponsored', 'Api\ApartmentController@isSponsored');
+
 Route::post('/viewedMessage', 'Api\MessageController@viewedMessage');
 
 Route::get('/clientToken', 'Api\PaymentController@clientToken');

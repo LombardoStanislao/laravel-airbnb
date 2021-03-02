@@ -84,7 +84,7 @@
 
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input id="name" type="text" class="@error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus
+                    <input id="name" type="text" class="@error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autocomplete="name" autofocus
                     placeholder="Inserisci il tuo nome">
 
                 </div>
@@ -96,7 +96,7 @@
 
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input id="lastname" type="text" class="@error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname"
+                    <input id="lastname" type="text" class="@error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" autocomplete="lastname"
                     placeholder="Inserisci il tuo cognome" autofocus>
                 </div>
                 @error('lastname')
@@ -109,7 +109,7 @@
                     <i class="fas fa-birthday-cake"></i>
 
 
-                    <input id="date_of_birth" type="date" class="@error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required autocomplete="date_of_birth" autofocus>
+                    <input id="date_of_birth" type="date" class="@error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" autocomplete="date_of_birth" autofocus>
 
                 </div>
                 @error('date_of_birth')

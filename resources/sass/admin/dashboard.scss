@@ -5,15 +5,13 @@
     }
 }
 
-#dashboard-main h1 {
-    font-size: 26px;
+#dashboard-main {
+    h1 {
+        font-size: 30px;
 
-    @media only screen and (min-width: 368px) {
-        font-size: 36px;
-    }
-
-    .dropdown-menu {
-        min-width: 0;
+        @media only screen and (min-width: 396px) {
+            font-size: 36px;
+        }
     }
 }
 
@@ -26,6 +24,23 @@
 
     @media only screen and (min-width: 768px) {
         border-bottom: 0;
+    }
+}
+
+#apartments-table {
+    min-width: 320px;
+
+    .dropdown-menu {
+        min-width: 0;
+    }
+
+    .sponsored {
+        display: inline-block;
+        padding: 0 $spacing/4;
+        font-size: 12px;
+        border-radius: 10px;
+        color: white;
+        background-color: $main-color;
     }
 }
 
@@ -73,6 +88,15 @@
 
     img {
         object-fit: cover;
+    }
+
+    .sponsored {
+        display: inline-block;
+        padding: 0 $spacing/4;
+        font-size: 12px;
+        border-radius: 10px;
+        color: white;
+        background-color: $main-color;
     }
 }
 

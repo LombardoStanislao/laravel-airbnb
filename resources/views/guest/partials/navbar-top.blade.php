@@ -6,7 +6,7 @@
 
         <div id="header-form">
             <form  class="input-menu navbar-search" action="{{ route('search') }}" method="get">
-                <input type="text" name="location" value=""  placeholder="Dove vuoi andare?">
+                <input type="text" name="location" value="" placeholder="Dove vuoi andare?">
                 <button type="submit" class="navbar-top-button">
                     <i class="fas fa-search">
 
