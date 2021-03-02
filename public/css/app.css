@@ -17381,17 +17381,13 @@ footer #footer-privacy-menu li {
 }
 
 #dashboard-main h1 {
-  font-size: 26px;
+  font-size: 30px;
 }
 
-@media only screen and (min-width: 368px) {
+@media only screen and (min-width: 396px) {
   #dashboard-main h1 {
     font-size: 36px;
   }
-}
-
-#dashboard-main h1 .dropdown-menu {
-  min-width: 0;
 }
 
 .sidebar {
@@ -17406,6 +17402,23 @@ footer #footer-privacy-menu li {
   .sidebar {
     border-bottom: 0;
   }
+}
+
+#apartments-table {
+  min-width: 320px;
+}
+
+#apartments-table .dropdown-menu {
+  min-width: 0;
+}
+
+#apartments-table .sponsored {
+  display: inline-block;
+  padding: 0 5px;
+  font-size: 12px;
+  border-radius: 10px;
+  color: white;
+  background-color: #ff385c;
 }
 
 #messages-table {
@@ -17464,6 +17477,15 @@ footer #footer-privacy-menu li {
 #show-apartment img {
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+#show-apartment .sponsored {
+  display: inline-block;
+  padding: 0 5px;
+  font-size: 12px;
+  border-radius: 10px;
+  color: white;
+  background-color: #ff385c;
 }
 
 #create-apartment .drop-zone,
