@@ -1,31 +1,9 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/services/services-web.min.js"></script>
     <script type="text/javascript" defer>
-
-        var nummberOfImages = "{{ $apartment->images->count()+1 }}";
-
-        var longitude_js = "{{$apartment->longitude}}";
-        // console.log(longitude_js);
-        var latitude_js = "{{$apartment->latitude}}";
-        // console.log(latitude_js);
-
-        function callbackFn() {
-            tt.services.reverseGeocode({
-                key: 'wSHLIGhfBYex4WI2gWpiUlecXvt3TOKC',
-                position: {longitude: longitude_js, latitude: latitude_js}
-            }).then(response => {
-                // console.log(response.addresses[0].address);
-                address = response.addresses[0].address.freeformAddress;
-                document.getElementById("adress_id").innerHTML = address;
-            })
-        }
-
-        callbackFn();
+        var apartmentId = "{{ $apartment->id }}";
     </script>
-
-
 @endsection
 
 @section('header')
@@ -242,8 +220,4 @@
             </div>
         </transition>
     </div>
-    <form class="d-none" action="index.html" method="post">
-        <input type="text" name="user" value="{{ Auth::user() ? Auth::user()->id : '' }}">
-        <input type="text" name="apartment" value="{{ $apartment->id }}">
-    </form>
 @endsection
