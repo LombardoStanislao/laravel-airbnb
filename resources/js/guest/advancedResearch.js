@@ -17,7 +17,8 @@ const advancedResearch = new Vue({
         locationName: null,
         locationCoordinates: null,
         checkedComfortsId: [],
-        apartments: null
+        apartments: null,
+        sponsoredApartments: []
     },
     methods: {
         getAddress(long,lat){
@@ -81,8 +82,16 @@ const advancedResearch = new Vue({
                 }
             }).then(response => {
                 this.apartments = response.data.results;
-                console.log(this.apartments);
+
+                this.sponsoredApartments = [];
+
+                this.apartments.forEach(apartment => {
+                    this.isSponsored(apartment.id);
+                });
+
+                this.toggleFilterDropdown();
             });
+
         },
         toggleFilterDropdown() {
             let element = document.getElementById('dropdown-filters-menu');
@@ -94,6 +103,19 @@ const advancedResearch = new Vue({
             this.minimumBathrooms = 0;
             this.minimumSleepsAccomodations = 0;
             this.checkedComfortsId = [];
+        },
+        async isSponsored(apartmentId) {
+            await axios({
+                url: 'http://localhost:8000/api/isSponsored',
+                method: 'get',
+                params: {
+                    apartmentId: apartmentId
+                }
+            }).then(response => {
+                if (response.data.result) {
+                    this.sponsoredApartments.push(apartmentId);
+                }
+            });
         }
 
 

@@ -109,6 +109,30 @@ class ApartmentController extends Controller
         ]);
     }
 
+    public function isSponsored(Request $request) {
+        $apartmentId = $request->query()['apartmentId'];
+        if(!is_numeric($apartmentId)) abort(404);
+        $apartment = Apartment::find($apartmentId);
+
+        if(!$apartment) abort(404);
+
+        $is_sponsored = false;
+        $last_sponsorship = $apartment->sponsorships->sortBy('created_at')->last();
+
+        if ($last_sponsorship) {
+            $last_payment = $last_sponsorship->payments->sortBy('created_at')->last();
+
+            if ($last_payment->accepted) {
+                $sponsorship_end = $last_sponsorship->created_at->addHours($last_sponsorship->sponsorshipType->duration);
+                $is_sponsored = $sponsorship_end > Carbon::now();
+            }
+        }
+
+        return response()->json([
+            'result' => $is_sponsored
+        ]);
+    }
+
     public function showViews(Request $request) {
         $apartment = Apartment::where('id', $request->id)->first();
 

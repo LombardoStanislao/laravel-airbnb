@@ -55,7 +55,7 @@ class RegisterController extends Controller
         $minDate_of_birth = Carbon::now()->sub('years', 16);
         return Validator::make($data, [
             'name' => ['nullable', 'string', 'max:255'],
-            'lastname' => ['string', 'max:255'],
+            'lastname' => ['nullable', 'string', 'max:255'],
             'date_of_birth' => ['nullable', 'date', 'before:' . $minDate_of_birth],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],

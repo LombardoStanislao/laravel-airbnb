@@ -34,7 +34,15 @@
             @endif
             <div class="row mt-4 mb-4">
                 <div class="col-12 col-sm-6 mb-2">
-                    <h1>{{ $apartment->title }}</h1>
+                    <h1 class="d-flex align-items-center">
+                        <span class="mr-2">{{ $apartment->title }}</span>
+                        @if (isSponsored($apartment))
+                            <small class="sponsored d-sm-none">sponsorizzato</small>
+                        @endif
+                    </h1>
+                    @if (isSponsored($apartment))
+                        <small class="sponsored d-none d-sm-inline-block">sponsorizzato</small>
+                    @endif
                 </div>
                 <div class="col-12 col-sm-6 text-sm-right">
                     <a class="btn btn-primary" href="{{ route('admin.statistics', ['apartment_id' => $apartment->id]) }}">
@@ -119,7 +127,7 @@
                                 <strong>Scadenza sponsorizzazione:</strong>
                                 <span>{{ $active_sponsorship->created_at->addHours($active_sponsorship->sponsorshipType->duration) }}</span>
                             @else
-                                <strong>Sponsorizzazione</strong>
+                                <strong>Sponsorizzazione:</strong>
                                 <span>Nessuna</span>
                             @endif
                         </li>
