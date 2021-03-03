@@ -267,9 +267,3 @@
         </div>
     </div>
 @endsection
-
-@section('footer')
-    <footer>
-        @include('guest.partials.footer')
-    </footer>
-@endsection
