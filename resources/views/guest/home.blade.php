@@ -36,17 +36,6 @@
 @section('content')
     <main id="main-home">
         <div id="home" class="container">
-        <div class="row">
-            <div class="col-3">
-                <a href="#">
-                    <div id="sponsoredapartment-card"class="card">
-                        <img src="{{asset('./img/logo.png')}}" alt="">
-                        <h2>TITOLO</h2>
-                        <p>DESCRIZIONE</p>
-                    </div>
-                </a>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-12">

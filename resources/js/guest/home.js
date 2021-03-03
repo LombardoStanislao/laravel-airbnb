@@ -14,7 +14,8 @@ const jumbotron = document.querySelector("#jumbotron-homepage");
 
 const tl = new TimelineMax();
 
-tl.fromTo(headerGuest, 2, {opacity: "0"}, {opacity: "1"});
+tl.fromTo(headerGuest, 2, {opacity: "0"}, {opacity: "1"})
+.fromTo(jumbotron, 2, {x: "-100%"}, {x: "0%", ease: Elastic.easeInOut.config(1,0.4)}, "-=2");
 
 
 
