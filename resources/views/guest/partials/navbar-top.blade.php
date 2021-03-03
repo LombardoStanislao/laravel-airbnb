@@ -22,6 +22,15 @@
             <a class="user-menu" id="user-icon">
                 <i class="fas fa-user-circle fa-2x"></i>
             </a>
+            @guest
+                <span class="ml-2">
+                    
+                </span>
+            @else
+                <span class="ml-2">
+                    {{ Auth::user()->name }}
+                </span>
+            @endguest
             <div id="user-dropdown-menu">
 
                 @guest
@@ -42,11 +51,6 @@
                     </ul>
                 @else
                     <ul>
-                        <li>
-                            <p>
-                                {{ Auth::user()->name }}
-                            </p>
-                        </li>
                         <li>
                             <a class="dropdown-item" href="{{ route('admin.index') }}">
                                 Area privata
