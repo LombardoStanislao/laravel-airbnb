@@ -18231,7 +18231,7 @@ nav {
 
 #apartment-page {
   position: relative;
-  padding-bottom: 100px;
+  padding-bottom: 35px;
   padding-top: 100px;
 }
 
@@ -18602,6 +18602,35 @@ nav {
   100% {
     transform: scale(1);
   }
+}
+
+#footer-apartment-details {
+  padding: 20px 0 85px 0;
+  border-top: 1px solid #dee2e6;
+}
+
+@media only screen and (min-width: 768px) {
+  #footer-apartment-details {
+    padding: 20px 0 20px 0;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  #footer-apartment-details ul {
+    justify-content: flex-end;
+  }
+}
+
+#footer-apartment-details ul .dot-separator {
+  line-height: 100%;
+}
+
+#footer-apartment-details ul a {
+  color: #222222;
+}
+
+#footer-apartment-details ul a:hover {
+  text-decoration: underline;
 }
 
 .display-error {
