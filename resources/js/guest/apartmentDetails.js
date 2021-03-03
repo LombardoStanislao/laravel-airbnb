@@ -50,6 +50,7 @@ var app = new Vue({
         watchViewport() {
             if (window.innerWidth < 992) {
                 this.sliderVisible = false;
+                document.getElementById('footer-apartment-details').classList.remove('d-none');
             }
         },
         preventClosure() {
