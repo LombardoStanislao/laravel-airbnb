@@ -17762,7 +17762,9 @@ footer ul a:hover {
   position: relative;
   height: 400px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  color: #222222;
+  border-radius: 8px;
 }
 
 .card-apartment-container .card-apartment-image {
@@ -17775,6 +17777,9 @@ footer ul a:hover {
 .card-apartment-container .card-apartment-image img {
   transition: 0.5s;
   width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .card-apartment-container .card-apartment-image .card-apartment-city {
@@ -17788,6 +17793,7 @@ footer ul a:hover {
   color: #fff;
   text-transform: uppercase;
   font-weight: 500;
+  font-size: 22px;
   padding: 5px 20px;
   transition: 0.5s;
 }
@@ -17804,22 +17810,26 @@ footer ul a:hover {
   position: absolute;
   padding: 20px;
   transition: 0.5s;
+  width: 100%;
 }
 
 .card-apartment-container .card-apartment-description .card-apartment-header {
   margin: 0;
   padding: 10px 0;
-  height: 75px;
-  font-size: 28px;
+  font-size: 22px;
   overflow: hidden;
 }
 
 .card-apartment-container .card-apartment-description p {
-  font-size: 16px;
-  margin: 10px 0 0;
+  font-size: 14px;
+  margin: 25px 0 0;
   padding: 0;
   transition: 0.5s;
   opacity: 0;
+}
+
+.card-apartment-container .card-apartment-description p i {
+  color: #ff385c;
 }
 
 .card-apartment-container:hover .card-apartment-description p {
