@@ -89227,6 +89227,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     watchViewport: function watchViewport() {
       if (window.innerWidth < 992) {
         this.sliderVisible = false;
+        document.getElementById('footer-apartment-details').classList.remove('d-none');
       }
     },
     preventClosure: function preventClosure() {
