@@ -87,13 +87,6 @@
             </a>
         </div>
 
-        <div class="navbar-bottom-link">
-            <a href="{{route('search')}}" class="{{ Request::route()->getName() == 'search' ? 'active-link' : ' ' }}">
-                <i class="fas fa-search"></i>
-                <p>Esplora</p>
-            </a>
-        </div>
-
         @guest
             <div class="navbar-bottom-link">
                 <a class=""  href="{{ route('login') }}">
