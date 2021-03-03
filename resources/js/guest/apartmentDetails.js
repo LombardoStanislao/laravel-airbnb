@@ -40,7 +40,12 @@ var app = new Vue({
         },
         showSlider(index) {
             this.sliderVisible = true;
+            document.getElementById('footer-apartment-details').classList.add('d-none');
             this.imgIndex = index;
+        },
+        hideSlider() {
+            this.sliderVisible = false;
+            document.getElementById('footer-apartment-details').classList.remove('d-none');
         },
         watchViewport() {
             if (window.innerWidth < 992) {

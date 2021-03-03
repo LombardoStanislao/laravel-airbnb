@@ -89217,7 +89217,12 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     },
     showSlider: function showSlider(index) {
       this.sliderVisible = true;
+      document.getElementById('footer-apartment-details').classList.add('d-none');
       this.imgIndex = index;
+    },
+    hideSlider: function hideSlider() {
+      this.sliderVisible = false;
+      document.getElementById('footer-apartment-details').classList.remove('d-none');
     },
     watchViewport: function watchViewport() {
       if (window.innerWidth < 992) {

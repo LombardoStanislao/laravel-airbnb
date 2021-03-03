@@ -173,7 +173,7 @@
         </div>
         <transition name="fade-slider-container">
             <div v-if="sliderVisible" class="slider-container d-none d-lg-block">
-                <div @click="sliderVisible = false" class="close">
+                <div @click="hideSlider()" class="close">
                     <i class="fas fa-times fa-2x"></i>
                 </div>
                 <div class="slider h-100 overflow-hidden rounded">
