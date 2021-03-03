@@ -9,6 +9,7 @@
 @section('header')
     <header id="header-guest">
         @include('guest.partials.navbar-top')
+        @include('guest.partials.navbar-bottom')
 
         <section id="jumbotron-homepage">
             <div class="container">
