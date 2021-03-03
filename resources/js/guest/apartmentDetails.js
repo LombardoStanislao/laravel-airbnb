@@ -41,10 +41,16 @@ var app = new Vue({
         showSlider(index) {
             this.sliderVisible = true;
             this.imgIndex = index;
+            document.querySelector('footer').classList.add('d-none');
+        },
+        hideSlider() {
+            this.sliderVisible = false;
+            document.querySelector('footer').classList.remove('d-none');
         },
         watchViewport() {
             if (window.innerWidth < 992) {
                 this.sliderVisible = false;
+                document.querySelector('footer').classList.remove('d-none');
             }
         },
         preventClosure() {

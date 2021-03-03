@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div id="root">
+    <div id="root" v-cloak>
         <div id="advanced-research-page">
             <header id="header-apartment-details">
                 <div class="desktop-header d-none d-md-block">
@@ -289,10 +289,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('footer')
-    <footer>
-        @include('guest.partials.footer')
-    </footer>
 @endsection

@@ -123,6 +123,9 @@ const advancedResearch = new Vue({
         isRightPage(index) {
             if(this.page == Math.floor((index) / 10)) return true;
             else return false;
+        },
+        openMenu() {
+            document.getElementById('user-dropdown-menu').classList.toggle("open");
         }
 
 
@@ -137,6 +140,8 @@ const advancedResearch = new Vue({
             lat: locationData.locationCoordinates.substring(0, commaIndex),
             lon: locationData.locationCoordinates.substring(commaIndex + 1)
         };
+
+        document.getElementById('user-icon').addEventListener("click", this.openMenu);
     }
 
 })

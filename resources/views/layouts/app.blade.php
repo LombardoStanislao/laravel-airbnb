@@ -36,9 +36,7 @@
         </main>
 
         {{-- navbar bottom --}}
-        <footer>
-            @yield('footer')
-        </footer>
+        @include('guest.partials.footer')
     </div>
 </body>
 </html>

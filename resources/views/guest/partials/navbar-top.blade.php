@@ -22,6 +22,15 @@
             <a class="user-menu" id="user-icon">
                 <i class="fas fa-user-circle fa-2x"></i>
             </a>
+            @guest
+                <span class="ml-2">
+
+                </span>
+            @else
+                <span class="ml-2">
+                    {{ Auth::user()->name }}
+                </span>
+            @endguest
             <div id="user-dropdown-menu">
 
                 @guest
@@ -42,11 +51,6 @@
                     </ul>
                 @else
                     <ul>
-                        <li>
-                            <p>
-                                {{ Auth::user()->name }}
-                            </p>
-                        </li>
                         <li>
                             <a class="dropdown-item" href="{{ route('admin.index') }}">
                                 Area privata
@@ -72,52 +76,5 @@
                 @endguest
             </div>
         </div>
-    </div>
-</nav>
-
-{{-- Navbar per mobile --}}
-
-<nav class="navbar-bottom">
-    <div class="container">
-
-        <div class="navbar-bottom-link">
-            <a href="{{url('/')}}" class="{{ Request::route()->getName() == 'home' ? 'active-link' : ' ' }}">
-                <i class="fas fa-home"></i>
-                <p>Home</p>
-            </a>
-        </div>
-
-        <div class="navbar-bottom-link">
-            <a href="{{route('search')}}" class="{{ Request::route()->getName() == 'search' ? 'active-link' : ' ' }}">
-                <i class="fas fa-search"></i>
-                <p>Esplora</p>
-            </a>
-        </div>
-
-        @guest
-            <div class="navbar-bottom-link">
-                <a class=""  href="{{ route('login') }}">
-                    <i class="far fa-user"></i>
-                    <p>Accedi</p>
-                </a>
-            </div>
-
-
-            @if (Route::has('register'))
-                <div class="navbar-bottom-link">
-                    <a class=""  href="{{ route('register') }}">
-                        <i class="far fa-user"></i>
-                        <p>Registrati</p>
-                    </a>
-                </div>
-
-            @endif
-        @else
-            <a class=""  href="{{ route('admin.index') }}">
-                <i class="far fa-user"></i>
-                <p>{{ Auth::user()->name }}</p>
-            </a>
-        @endguest
-
     </div>
 </nav>
