@@ -314,30 +314,3 @@ $comfort-icons: ('1': '\f1eb', '2': '\f1b9', '3': '\f5c5', '4': '\f52b', '5': '\
         }
     }
 }
-
-#footer-apartment-details {
-    padding: 20px 0 85px 0;
-    border-top: 1px solid #dee2e6;
-
-    @media only screen and (min-width: 768px) {
-        padding: 20px 0 20px 0;
-    }
-
-    ul {
-        @media only screen and (min-width: 1200px) {
-            justify-content: flex-end;
-        }
-
-        .dot-separator {
-            line-height: 100%;
-        }
-
-        a {
-            color: #222222;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
-}

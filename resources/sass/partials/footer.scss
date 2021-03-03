@@ -1,9 +1,26 @@
 footer {
-    #footer-privacy-menu{
-        display: inline-block;
-        li {
-            display: inline-block;
-            padding: 0 10px;
+    padding: 20px 0 85px 0;
+    border-top: 1px solid #dee2e6;
+
+    @media only screen and (min-width: 768px) {
+        padding: 20px 0 20px 0;
+    }
+
+    ul {
+        @media only screen and (min-width: 1200px) {
+            justify-content: flex-end;
+        }
+
+        .dot-separator {
+            line-height: 100%;
+        }
+
+        a {
+            color: #222222;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }
