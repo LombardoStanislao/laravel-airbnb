@@ -5,6 +5,7 @@
         <div class="desktop-header d-none d-md-block">
             @include('guest.partials.navbar-top')
         </div>
+        @include('guest.partials.navbar-bottom')
     </header>
 
     <div class="mobile-header d-md-none">

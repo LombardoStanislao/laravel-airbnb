@@ -89149,6 +89149,9 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
           }
         }, _callee);
       }))();
+    },
+    openMenu: function openMenu() {
+      document.getElementById('user-dropdown-menu').classList.toggle("open");
     }
   },
   mounted: function mounted() {
@@ -89161,6 +89164,7 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
       lat: locationData.locationCoordinates.substring(0, commaIndex),
       lon: locationData.locationCoordinates.substring(commaIndex + 1)
     };
+    document.getElementById('user-icon').addEventListener("click", this.openMenu);
   }
 });
 

@@ -116,6 +116,9 @@ const advancedResearch = new Vue({
                     this.sponsoredApartments.push(apartmentId);
                 }
             });
+        },
+        openMenu() {
+            document.getElementById('user-dropdown-menu').classList.toggle("open");
         }
 
 
@@ -130,6 +133,8 @@ const advancedResearch = new Vue({
             lat: locationData.locationCoordinates.substring(0, commaIndex),
             lon: locationData.locationCoordinates.substring(commaIndex + 1)
         };
+
+        document.getElementById('user-icon').addEventListener("click", this.openMenu);
     }
 
 })
