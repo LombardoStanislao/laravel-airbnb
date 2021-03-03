@@ -23,6 +23,7 @@
                         </div>
                     </div>
                 </div>
+                @include('guest.partials.navbar-bottom')
             </header>
 
 
