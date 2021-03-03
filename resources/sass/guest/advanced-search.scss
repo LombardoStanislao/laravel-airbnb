@@ -46,6 +46,7 @@ button:focus {
 
 
     &:hover {
+        color: white;
         background-color: black;
     }
 }
@@ -74,6 +75,15 @@ button:focus {
 #advanced-research-page {
     color: black;
 
+    .desktop-header nav {
+        border-bottom: 1px solid rgb(235, 235, 235);
+        background-color: white;
+    }
+
+    .unavailable {
+        border-color: rgb(235, 235, 235);
+        color: rgb(235, 235, 235);
+    }
 
     #dropdown-filters-menu {
         position: fixed;
@@ -335,7 +345,7 @@ button:focus {
     #main-content {
 
         .content-header {
-            padding: $spacing*1.5 0;
+            padding: $spacing*1.5 $spacing/4;
             color: #484848;
             border-bottom: 1px solid rgb(235, 235, 235);
 
@@ -410,33 +420,46 @@ button:focus {
                         }
                     }
 
-                    &::after {
-                        content: '';
-                        position: absolute;
-                        bottom: -0.5px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        height: 1px;
-                        width: 95%;
-                        background-color: rgb(220, 220, 220);
-                    }
+
 
                     &:hover {
                         background-color: rgba(0, 0, 0, 0.05);
                     }
                 }
 
-                &:last-child .apartment-card {
-                    border-color: transparent;
+                &:nth-child(10n+1) .apartment-card::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -0.5px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    height: 1px;
+                    width: 95%;
+                    background-color: rgb(220, 220, 220);
+                }
+
+                &.page-input {
+                    @include flex-center;
+
+                    i {
+                        margin: $spacing
+                    }
+
+                    span {
+
+                        &:not(.current-page) {
+                            opacity: 0.5;
+                            transform: scale(0.7);
+                        }
+
+                        &:not(:last-of-type) {
+                            margin-right: $spacing / 2;
+                        }
+                    }
                 }
             }
         }
     }
-}
-
-nav {
-    border-bottom: 1px solid rgb(235, 235, 235);
-    background-color: white;
 }
 
 @media (min-width: 768px) {
@@ -444,7 +467,7 @@ nav {
 
     #root #advanced-research-page {
         #main-content #location-data {
-            padding-top: ($spacing * 1.5) + 209px;
+            padding-top: ($spacing * 1.5) + 185px;
         }
 
         #dropdown-filters-menu #dropdown-filters-menu-container {
@@ -485,5 +508,10 @@ nav {
 @media (min-width: 960px) {
     #root #advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container {
         width: 40vw;
+
+        .content-header {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 };

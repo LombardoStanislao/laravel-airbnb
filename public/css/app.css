@@ -17094,6 +17094,44 @@ body {
   font-size: 16px;
 }
 
+body #main-home,
+body #advanced-research-page,
+body #apartment-page {
+  min-height: calc(100vh - 270px);
+}
+
+@media only screen and (min-width: 315px) {
+  body #main-home,
+  body #advanced-research-page,
+  body #apartment-page {
+    min-height: calc(100vh - 245px);
+  }
+}
+
+@media only screen and (min-width: 492px) {
+  body #main-home,
+  body #advanced-research-page,
+  body #apartment-page {
+    min-height: calc(100vh - 220px);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  body #main-home,
+  body #advanced-research-page,
+  body #apartment-page {
+    min-height: calc(100vh - 91px);
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  body #main-home,
+  body #advanced-research-page,
+  body #apartment-page {
+    min-height: calc(100vh - 66px);
+  }
+}
+
 body h1,
 body h2,
 body h3,
@@ -17898,6 +17936,7 @@ button:focus {
 }
 
 .sp-primary-btn:hover {
+  color: white;
   background-color: black;
 }
 
@@ -17924,6 +17963,16 @@ button:focus {
 
 #advanced-research-page {
   color: black;
+}
+
+#advanced-research-page .desktop-header nav {
+  border-bottom: 1px solid #ebebeb;
+  background-color: white;
+}
+
+#advanced-research-page .unavailable {
+  border-color: #ebebeb;
+  color: #ebebeb;
 }
 
 #advanced-research-page #dropdown-filters-menu {
@@ -18179,7 +18228,7 @@ button:focus {
 }
 
 #advanced-research-page #main-content .content-header {
-  padding: 30px 0;
+  padding: 30px 5px;
   color: #484848;
   border-bottom: 1px solid #ebebeb;
 }
@@ -18250,7 +18299,11 @@ button:focus {
   margin: 0;
 }
 
-#advanced-research-page #main-content .apartment-list li .apartment-card::after {
+#advanced-research-page #main-content .apartment-list li .apartment-card:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+#advanced-research-page #main-content .apartment-list li:nth-child(10n+1) .apartment-card::after {
   content: "";
   position: absolute;
   bottom: -0.5px;
@@ -18261,22 +18314,28 @@ button:focus {
   background-color: gainsboro;
 }
 
-#advanced-research-page #main-content .apartment-list li .apartment-card:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+#advanced-research-page #main-content .apartment-list li.page-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#advanced-research-page #main-content .apartment-list li:last-child .apartment-card {
-  border-color: transparent;
+#advanced-research-page #main-content .apartment-list li.page-input i {
+  margin: 20px;
 }
 
-nav {
-  border-bottom: 1px solid #ebebeb;
-  background-color: white;
+#advanced-research-page #main-content .apartment-list li.page-input span:not(.current-page) {
+  opacity: 0.5;
+  transform: scale(0.7);
+}
+
+#advanced-research-page #main-content .apartment-list li.page-input span:not(:last-of-type) {
+  margin-right: 10px;
 }
 
 @media (min-width: 768px) {
   #root #advanced-research-page #main-content #location-data {
-    padding-top: 239px;
+    padding-top: 215px;
   }
 
   #root #advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container {
@@ -18314,6 +18373,11 @@ nav {
 @media (min-width: 960px) {
   #root #advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container {
     width: 40vw;
+  }
+
+  #root #advanced-research-page #dropdown-filters-menu #dropdown-filters-menu-container .content-header {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

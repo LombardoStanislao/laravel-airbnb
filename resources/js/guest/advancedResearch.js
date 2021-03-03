@@ -18,7 +18,10 @@ const advancedResearch = new Vue({
         locationCoordinates: null,
         checkedComfortsId: [],
         apartments: null,
-        sponsoredApartments: []
+        sponsoredApartments: [],
+        page: 0,
+        apartmentNumber: null,
+        apartmentFromphp: null
     },
     methods: {
         getAddress(long,lat){
@@ -116,6 +119,13 @@ const advancedResearch = new Vue({
                     this.sponsoredApartments.push(apartmentId);
                 }
             });
+        },
+        isRightPage(index) {
+            if(this.page == Math.floor((index) / 10)) return true;
+            else return false;
+        },
+        openMenu() {
+            document.getElementById('user-dropdown-menu').classList.toggle("open");
         }
 
 
@@ -130,6 +140,8 @@ const advancedResearch = new Vue({
             lat: locationData.locationCoordinates.substring(0, commaIndex),
             lon: locationData.locationCoordinates.substring(commaIndex + 1)
         };
+
+        document.getElementById('user-icon').addEventListener("click", this.openMenu);
     }
 
 })

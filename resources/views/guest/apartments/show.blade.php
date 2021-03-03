@@ -9,6 +9,7 @@
 @section('header')
     <header id="header-apartment-details">
         @include('guest.partials.navbar-top')
+        @include('guest.partials.navbar-bottom')
     </header>
 @endsection
 

@@ -53,7 +53,7 @@ class ApartmentController extends Controller
         $apartments = Apartment::where([
             ['sleeps_accomodations', '>=',  $request->query()['minimumSleepsAccomodations']],
             ['rooms_number', '>=', $request->query()['minimumRooms']],
-            ['bathrooms_number', '>=', $request->query()['minimumRooms']]
+            ['bathrooms_number', '>=', $request->query()['minimumBathrooms']]
         ])->get();
 
         // Array with the positions of all the apartments in the DB
