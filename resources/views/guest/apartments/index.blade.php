@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('header')
-
-
-
-@endsection
-
 @section('content')
     <div id="root" v-cloak>
         <div id="advanced-research-page">
