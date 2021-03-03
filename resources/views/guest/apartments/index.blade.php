@@ -27,7 +27,7 @@
 @endsection
 
 @section('content')
-    <div id="root">
+    <div id="root" v-cloak>
         <div id="advanced-research-page">
 
 
