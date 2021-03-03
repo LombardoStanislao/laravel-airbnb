@@ -18211,18 +18211,22 @@ nav {
 }
 
 #header-apartment-details .navbar-top {
-  padding: 10px 30px 20px 30px;
+  padding: 10px 0 20px 0;
   background-color: white;
-}
-
-@media only screen and (min-width: 768px) {
-  #header-apartment-details .navbar-top {
-    padding: 0 30px;
-  }
 }
 
 #header-apartment-details .navbar-top form {
   border: 1px solid #dddddd;
+}
+
+#header-apartment-details .navbar-top span {
+  font-size: 12px;
+}
+
+@media only screen and (min-width: 960px) {
+  #header-apartment-details .navbar-top span {
+    font-size: 16px;
+  }
 }
 
 #apartment-page {
@@ -18232,12 +18236,6 @@ nav {
 }
 
 @media only screen and (min-width: 768px) {
-  #apartment-page {
-    padding-top: 170px;
-  }
-}
-
-@media only screen and (min-width: 960px) {
   #apartment-page {
     padding-top: 200px;
   }
