@@ -36,6 +36,25 @@
 @section('content')
     <main id="main-home">
         <div id="home" class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-5">
+                    <div class="card-apartment-container">
+                        <div class="card-apartment-image">
+                            <img src="{{asset("img/prova.jpg")}} " alt="Immagine dell'appartamento" class="img-fluid">
+                            <span class="card-apartment-city">Milano</span>
+                        </div>
+                        <div class="card-apartment-description">
+                            {{-- <span class="card-apartment-city">Milano</span> --}}
+                            <h2 class="card-apartment-header text-center">Titolo dell'appartamento ancora più lungo</h2>
+                            <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         <div class="row">
             <div class="col-12">
@@ -73,7 +92,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Id: {{$apartment->id}}</h5>
                                     <p class="card-text">{{ $apartment->title }}</p>
-                                    <p class="card-text">Sponsorizzazione attiva: {{ isSponsored($apartment) ? 'Sì' : 'No' }}</p>
+                                    <p class="card-text">Città: {{ $apartment->street_name }} </p>
                                 </div>
                             </a>
                         </div>

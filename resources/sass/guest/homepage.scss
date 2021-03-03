@@ -54,6 +54,79 @@
     max-width: 125px;
 }
 
+.card-apartment-container {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+
+    .card-apartment-image {
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+        transition: .5s;
+
+        img {
+            transition: .5s;
+            width: 100%;
+        }
+        .card-apartment-city {
+            position: absolute;
+            top: calc(100% - 30px);
+            left: 0;
+            height: 30px;
+            line-height: 30px;
+            background: $main-color;
+            text-align: center;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding: 5px 20px;
+            transition: .5s;
+
+        }
+    }
+
+    &:hover .card-apartment-image {
+        transform: translateY(-150px);
+    }
+
+    &:hover .card-apartment-image img {
+        transform: scale(1.2) translateY(-50px);
+    }
+
+    .card-apartment-description {
+        position: absolute;
+        padding: 20px;
+        transition: .5s;
+
+
+        .card-apartment-header {
+            margin: 0;
+            padding: 10px 0;
+            height: 75px;
+            font-size: 28px;
+            overflow: hidden;
+        }
+        p {
+            font-size: 16px;
+            margin: 10px 0 0;
+            padding: 0;
+            transition: .5s;
+            opacity: 0;
+        }
+    }
+
+    &:hover .card-apartment-description p {
+        opacity: 1;
+    }
+
+    &:hover .card-apartment-description {
+        transform: translateY(-150px);
+    }
+
+}
+
 @media (min-width: 576px) {
 
     #jumbotron-homepage {
