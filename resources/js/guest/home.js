@@ -14,9 +14,9 @@ const jumbotron = document.querySelector("#jumbotron-homepage");
 
 const tl = new TimelineMax();
 
-tl.fromTo(headerGuest, 2, {opacity: "0"}, {opacity: "1"})
-.fromTo(navbarTop, 0.9, {x: "-100%"}, {x: "0%", ease: Power0.easeInOut}, "-=2")
-.fromTo(jumbotron, 1.8, {x: "+100%"}, {x: "0%", ease: Power2.easeOut}, "-=2");
+tl.fromTo(headerGuest, 2, {opacity: "0"}, {opacity: "1"});
+
+
 
 window.addEventListener("scroll",function(){
     var navbarSearch = document.querySelector(".navbar-search");
