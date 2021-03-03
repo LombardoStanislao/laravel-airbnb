@@ -89217,17 +89217,17 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     },
     showSlider: function showSlider(index) {
       this.sliderVisible = true;
-      document.getElementById('footer-apartment-details').classList.add('d-none');
       this.imgIndex = index;
+      document.querySelector('footer').classList.add('d-none');
     },
     hideSlider: function hideSlider() {
       this.sliderVisible = false;
-      document.getElementById('footer-apartment-details').classList.remove('d-none');
+      document.querySelector('footer').classList.remove('d-none');
     },
     watchViewport: function watchViewport() {
       if (window.innerWidth < 992) {
         this.sliderVisible = false;
-        document.getElementById('footer-apartment-details').classList.remove('d-none');
+        document.querySelector('footer').classList.remove('d-none');
       }
     },
     preventClosure: function preventClosure() {
@@ -89318,8 +89318,8 @@ function openMenu() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\Boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\Boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
