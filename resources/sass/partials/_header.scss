@@ -261,6 +261,11 @@
                     border-top-right-radius: 10px;
                 }
 
+                &:last-of-type:hover li a {
+                    border-bottom-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                }
+
                 p {
                     color: $text-black;
                     padding: $spacing / 2 $spacing * 2 $spacing / 2 $spacing / 2;
