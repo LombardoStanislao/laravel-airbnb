@@ -17094,6 +17094,44 @@ body {
   font-size: 16px;
 }
 
+body #main-home,
+body #advanced-research-page,
+body #apartment-page {
+  min-height: calc(100vh - 270px);
+}
+
+@media only screen and (min-width: 315px) {
+  body #main-home,
+  body #advanced-research-page,
+  body #apartment-page {
+    min-height: calc(100vh - 245px);
+  }
+}
+
+@media only screen and (min-width: 492px) {
+  body #main-home,
+  body #advanced-research-page,
+  body #apartment-page {
+    min-height: calc(100vh - 220px);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  body #main-home,
+  body #advanced-research-page,
+  body #apartment-page {
+    min-height: calc(100vh - 91px);
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  body #main-home,
+  body #advanced-research-page,
+  body #apartment-page {
+    min-height: calc(100vh - 66px);
+  }
+}
+
 body h1,
 body h2,
 body h3,
