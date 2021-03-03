@@ -1,33 +1,35 @@
 @extends('layouts.app')
 
 @section('header')
-    <header id="header-apartment-details">
-        <div class="desktop-header d-none d-md-block">
-            @include('guest.partials.navbar-top')
-        </div>
-    </header>
 
-    <div class="mobile-header d-md-none">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-9">
-                    <div class="location-container">
-                        <h3 class="location-name">{{ $locationName }}</h3>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="filters-dropdown text-right">
-                        <i @click="toggleFilterDropdown"  class="fas fa-sliders-h btn sp-secondary-btn"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 @endsection
 
 @section('content')
     <div id="root">
         <div id="advanced-research-page">
+            <header id="header-apartment-details">
+                <div class="desktop-header d-none d-md-block">
+                    @include('guest.partials.navbar-top')
+                </div>
+                <div class="mobile-header d-md-none">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-9">
+                                <div class="location-container">
+                                    <h3 class="location-name">{{ $locationName }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="filters-dropdown text-right">
+                                    <i @click="toggleFilterDropdown"  class="fas fa-sliders-h btn sp-secondary-btn"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
 
             <div id="dropdown-filters-menu" class="d-none">
@@ -128,18 +130,27 @@
             </div>
 
             <div id="main-content">
-                <div class="container-fluid">
+                <div class="container-lg">
                     <div class="content-header" id="location-data" data-location-coordinates={{ $locationCoordinates }} data-location-name={{ str_replace(' ', '__', $locationName) }}>
                         <div v-if="apartments">
-                            <p>
+                            <p v-if="apartments.length">
                                 @{{ apartments.length }} appartamenti
+                            </p>
+                            <p v-else>
+                                Non ci sono appartamenti disponibili
                             </p>
                             <h2>@{{ locationName }}</h2>
                         </div>
                         <div v-else>
-                            <p>
-                                {{ $apartments->count() }} appartamenti
-                            </p>
+                            @if ($apartments->count())
+                                <p>
+                                    {{ $apartments->count() }} appartamenti
+                                </p>
+                            @else
+                                <p>
+                                    Non ci sono appartamenti disponibili
+                                </p>
+                            @endif
                             <h2>{{ $locationName }}</h2>
                         </div>
                         <button @click="toggleFilterDropdown" class="btn sp-transparent-btn">
@@ -148,7 +159,7 @@
                     </div>
                 </div>
 
-                <ul v-if="apartments" class="apartment-list">
+                <ul v-if="apartments" class="apartment-list vue" :data-apartment-number="apartments.length">
                     <li v-for="apartment in apartments">
                         <a id="apartment-card" :href="'/apartments/' + apartment.slug" class="apartment-card">
                             <div class="container-lg">
@@ -200,68 +211,80 @@
                         </a>
                     </li>
                 </ul>
-
-                <ul v-else class="apartment-list">
-                    @foreach ($apartments as $apartment)
-                        <li>
-                            <a id="apartment-card" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" class="apartment-card">
-                                <div class="container-lg">
-                                    <div class="row">
-                                        <div class="col-12 col-md-5">
-                                            <div class="img-container clearfix">
-                                                <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" alt="{{ $apartment->title }} foto">
-                                                @if (isSponsored($apartment))
-                                                    <small class="sponsored d-md-none">sponsorizzato</small>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-7">
-                                            <div class="apartment-info-container">
-                                                @if (isSponsored($apartment))
-                                                    <small class="sponsored d-none d-md-block">sponsorizzato</small>
-                                                @endif
-
-                                                <h3>{{ $apartment->title }}</h3>
-                                                <p>
-                                                    <span>
-                                                        {{ $apartment->sleeps_accomodations }} ospiti &middot;
-                                                    </span>
-                                                    <span>
-                                                        {{ $apartment->rooms_number }} camere &middot;
-                                                    </span>
-                                                    <span>
-                                                        {{ $apartment->bathrooms_number }} bagni &middot;
-                                                    </span>
-
-                                                    @if (count($apartment->comforts) > 3)
-                                                        @for ($i = 0; $i < 3; $i++)
-                                                            <span>
-                                                                {{ $apartment->comforts[$i]->name }}
-                                                                {{$loop->last ? '...' : '·'}}
-                                                            </span>
-                                                        @endfor
-                                                    @elseif ($apartment->comforts)
-                                                        @foreach ($apartment->comforts as $comfort)
-                                                            <span>
-                                                                {{ $comfort->name }}
-                                                                {{$loop->last ? '' : '·'}}
-                                                            </span>
-                                                        @endforeach
+                <ul v-else class="apartment-list" data-apartment-number="{{ $apartments->count() }}">
+                    @foreach($apartments as $apartment)
+                            <li v-if="isRightPage({{ $loop->index }})">
+                                <a id="apartment-card" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}" class="apartment-card">
+                                    <div class="container-lg">
+                                        <div class="row">
+                                            <div class="col-12 col-md-5">
+                                                <div class="img-container clearfix">
+                                                    <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" alt="{{ $apartment->title }} foto">
+                                                    @if (isSponsored($apartment))
+                                                        <small class="sponsored d-md-none">sponsorizzato</small>
                                                     @endif
-                                                </p>
-                                                <p class="price">
-                                                    <strong>
-                                                        {{ $apartment->price_per_night }}&euro;
-                                                    </strong>
-                                                    / notte
-                                                </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-7">
+                                                <div class="apartment-info-container">
+                                                    @if (isSponsored($apartment))
+                                                        <small class="sponsored d-none d-md-block">sponsorizzato</small>
+                                                    @endif
+
+                                                    <h3>{{ $apartment->title }}</h3>
+                                                    <p>
+                                                        <span>
+                                                            {{ $apartment->sleeps_accomodations }} ospiti &middot;
+                                                        </span>
+                                                        <span>
+                                                            {{ $apartment->rooms_number }} camere &middot;
+                                                        </span>
+                                                        <span>
+                                                            {{ $apartment->bathrooms_number }} bagni &middot;
+                                                        </span>
+
+                                                        @if (count($apartment->comforts) > 3)
+                                                            @for ($i = 0; $i < 3; $i++)
+                                                                <span>
+                                                                    {{ $apartment->comforts[$i]->name }}
+                                                                    {{$loop->last ? '...' : '·'}}
+                                                                </span>
+                                                            @endfor
+                                                        @elseif ($apartment->comforts)
+                                                            @foreach ($apartment->comforts as $comfort)
+                                                                <span>
+                                                                    {{ $comfort->name }}
+                                                                    {{$loop->last ? '' : '·'}}
+                                                                </span>
+                                                            @endforeach
+                                                        @endif
+                                                    </p>
+                                                    <p class="price">
+                                                        <strong>
+                                                            {{ $apartment->price_per_night }}&euro;
+                                                        </strong>
+                                                        / notte
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
                     @endforeach
+                    <li class="page-input">
+                        <i v-if="page" class="btn sp-transparent-btn fas fa-arrow-left" @click="page--"></i>
+                        <i v-else class="btn sp-transparent-btn fas fa-arrow-left unavailable"></i>
+
+                        @for ($i = 0; $i < $apartments->count() / 10; $i++)
+                            <span :class="page == {{ $i }} ? 'current-page' : ''">
+                                {{ $i + 1 }}
+                            </span>
+                        @endfor
+
+                        <i v-if="page != {{ floor(($apartments->count() - 1) / 10) }}" class="btn sp-transparent-btn fas fa-arrow-right" @click="page++"></i>
+                        <i v-else class="btn sp-transparent-btn fas fa-arrow-right unavailable"></i>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -89034,7 +89034,10 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
     locationCoordinates: null,
     checkedComfortsId: [],
     apartments: null,
-    sponsoredApartments: []
+    sponsoredApartments: [],
+    page: 0,
+    apartmentNumber: null,
+    apartmentFromphp: null
   },
   methods: {
     getAddress: function getAddress(_long, lat) {
@@ -89149,6 +89152,9 @@ var advancedResearch = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
           }
         }, _callee);
       }))();
+    },
+    isRightPage: function isRightPage(index) {
+      if (this.page == Math.floor(index / 10)) return true;else return false;
     }
   },
   mounted: function mounted() {
@@ -89322,8 +89328,8 @@ function openMenu() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\Boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\Boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
