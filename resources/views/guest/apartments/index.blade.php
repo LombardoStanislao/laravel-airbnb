@@ -154,8 +154,8 @@
                     </div>
                 </div>
 
-                <ul v-if="apartments" class="apartment-list vue" :data-apartment-number="apartments.length">
-                    <li v-for="apartment in apartments">
+                <ul v-if="apartments" class="apartment-list">
+                    <li v-for="(apartment, index) in apartments" v-if="isRightPage(index)">
                         <a id="apartment-card" :href="'/apartments/' + apartment.slug" class="apartment-card">
                             <div class="container-lg">
                                 <div class="row">
@@ -204,6 +204,17 @@
                                 </div>
                             </div>
                         </a>
+                    </li>
+                    <li class="page-input">
+                        <i v-if="page" class="btn sp-transparent-btn fas fa-arrow-left" @click="page--"></i>
+                        <i v-else class="btn sp-transparent-btn fas fa-arrow-left unavailable"></i>
+
+                        <span v-for="index in Math.ceil(apartments.length/10)" :class="page==index-1 ? 'current-page' : ''">
+                            @{{ index }}
+                        </span>
+
+                        <i v-if="page != Math.floor((apartments.length - 1)/10)" class="btn sp-transparent-btn fas fa-arrow-right" @click="page++"></i>
+                        <i v-else class="btn sp-transparent-btn fas fa-arrow-right unavailable"></i>
                     </li>
                 </ul>
                 <ul v-else class="apartment-list" data-apartment-number="{{ $apartments->count() }}">

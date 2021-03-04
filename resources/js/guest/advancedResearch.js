@@ -20,8 +20,6 @@ const advancedResearch = new Vue({
         apartments: null,
         sponsoredApartments: [],
         page: 0,
-        apartmentNumber: null,
-        apartmentFromphp: null
     },
     methods: {
         getAddress(long,lat){
@@ -92,6 +90,7 @@ const advancedResearch = new Vue({
                     this.isSponsored(apartment.id);
                 });
 
+                this.page = 0;
                 this.toggleFilterDropdown();
             });
 
