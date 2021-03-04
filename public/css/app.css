@@ -18386,9 +18386,14 @@ button:focus {
   margin: 20px;
 }
 
+#advanced-research-page #main-content .apartment-list li.page-input span {
+  cursor: default;
+}
+
 #advanced-research-page #main-content .apartment-list li.page-input span:not(.current-page) {
   opacity: 0.5;
   transform: scale(0.7);
+  cursor: pointer;
 }
 
 #advanced-research-page #main-content .apartment-list li.page-input span:not(:last-of-type) {

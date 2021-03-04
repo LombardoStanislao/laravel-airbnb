@@ -446,10 +446,12 @@ button:focus {
                     }
 
                     span {
+                        cursor: default;
 
                         &:not(.current-page) {
                             opacity: 0.5;
                             transform: scale(0.7);
+                            cursor: pointer;
                         }
 
                         &:not(:last-of-type) {

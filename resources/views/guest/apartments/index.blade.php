@@ -209,7 +209,9 @@
                         <i v-if="page" class="btn sp-transparent-btn fas fa-arrow-left" @click="page--"></i>
                         <i v-else class="btn sp-transparent-btn fas fa-arrow-left unavailable"></i>
 
-                        <span v-for="index in Math.ceil(apartments.length/10)" :class="page==index-1 ? 'current-page' : ''">
+                        <span v-for="index in Math.ceil(apartments.length/10)"
+                              :class="page==index-1 ? 'current-page' : ''"
+                              @click="page = index-1">
                             @{{ index }}
                         </span>
 
@@ -283,7 +285,7 @@
                         <i v-else class="btn sp-transparent-btn fas fa-arrow-left unavailable"></i>
 
                         @for ($i = 0; $i < $apartments->count() / 10; $i++)
-                            <span :class="page == {{ $i }} ? 'current-page' : ''">
+                            <span @click="page = {{ $i }}" :class="page == {{ $i }} ? 'current-page' : ''">
                                 {{ $i + 1 }}
                             </span>
                         @endfor
