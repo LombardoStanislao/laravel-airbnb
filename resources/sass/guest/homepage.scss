@@ -135,6 +135,16 @@
 
 }
 
+button.show-more {
+    background-color: $main-color;
+    color: white;
+
+    &:hover {
+        background-color: lighten($main-color, 20%);
+        color: black;
+    }
+}
+
 @media (min-width: 576px) {
 
     #jumbotron-homepage {
