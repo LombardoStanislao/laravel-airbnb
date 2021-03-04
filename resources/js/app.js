@@ -4,6 +4,10 @@ if (document.getElementById('create-apartment')) {
     require('./admin/create.js');
 }
 
+if (document.getElementById('header-form')) {
+    require('./guest/autocomplete');
+}
+
 if(document.getElementById('edit-apartment')) {
     require('./admin/edit.js');
 }

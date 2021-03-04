@@ -88896,6 +88896,10 @@ if (document.getElementById('create-apartment')) {
   __webpack_require__(/*! ./admin/create.js */ "./resources/js/admin/create.js");
 }
 
+if (document.getElementById('header-form')) {
+  __webpack_require__(/*! ./guest/autocomplete */ "./resources/js/guest/autocomplete.js");
+}
+
 if (document.getElementById('edit-apartment')) {
   __webpack_require__(/*! ./admin/edit.js */ "./resources/js/admin/edit.js");
 }
@@ -89269,6 +89273,70 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
+/***/ "./resources/js/guest/autocomplete.js":
+/*!********************************************!*\
+  !*** ./resources/js/guest/autocomplete.js ***!
+  \********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @tomtom-international/web-sdk-services */ "./node_modules/@tomtom-international/web-sdk-services/dist/services.min.js");
+/* harmony import */ var _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var autocomplete = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  el: '#header-form',
+  data: {
+    query: '',
+    lastQuery: '',
+    suggestions: []
+  },
+  methods: {
+    searchSuggestions: function searchSuggestions(event) {
+      if (this.query != this.lastQuery || this.lastQuery == '') {
+        this.fuzzySearch();
+        this.lastQuery = this.query;
+      }
+    },
+    fuzzySearch: function fuzzySearch() {
+      var _this = this;
+
+      if (this.query) {
+        _tomtom_international_web_sdk_services__WEBPACK_IMPORTED_MODULE_1___default.a.services.fuzzySearch({
+          key: 'uh1InUaJszlyTvCRilNBbn0pPm2ktvmD',
+          query: this.query,
+          countrySet: 'IT',
+          language: 'it-IT',
+          idxSet: 'Geo,Str'
+        }).then(function (response) {
+          _this.suggestions = [];
+
+          if (response.results.length) {
+            for (var i = 0; i < 4 && i < response.results.length; i++) {
+              _this.suggestions.push({
+                place: response.results[i].address.freeformAddress,
+                type: response.results[i].type == "Geography" ? 'city' : 'road'
+              });
+            }
+          }
+        });
+      } else {
+        this.suggestions = [];
+      }
+    },
+    setQuery: function setQuery(place) {
+      this.query = place;
+      document.querySelector('#header-form input').focus();
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/guest/home.js":
 /*!************************************!*\
   !*** ./resources/js/guest/home.js ***!
@@ -89333,8 +89401,8 @@ function openMenu() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\boolean\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercitazioni-backend\progetto-finale\laravel-airbnb\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

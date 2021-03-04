@@ -3,15 +3,24 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             <img id="logo" src="{{asset('./img/logo.png')}}" alt="">
         </a>
-
         <div id="header-form">
-            <form  class="input-menu navbar-search" action="{{ route('search') }}" method="get">
-                <input type="text" name="location" value="" placeholder="Dove vuoi andare?">
+            <form class="input-menu navbar-search" action="{{ route('search') }}" method="get">
+                <input autocomplete="off" v-on:keyup="searchSuggestions"
+                type="text" name="location" v-model="query"
+                placeholder="Dove vuoi andare?">
                 <button type="submit" class="navbar-top-button">
                     <i class="fas fa-search">
 
                     </i>
                 </button>
+                <div id="search-form-dropdown" v-if="suggestions.length" v-cloak>
+                    <ul>
+                        <li v-for="suggestion in suggestions" @click="setQuery(suggestion.place)">
+                            <i class="fas" :class="'fa-' + suggestion.type"></i>
+                            <span>@{{ suggestion.place }}</span>
+                        </li>
+                    </ul>
+                </div>
             </form>
         </div>
 
