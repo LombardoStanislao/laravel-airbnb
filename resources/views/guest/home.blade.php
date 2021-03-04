@@ -73,17 +73,28 @@
                         <a id="sponsored-apartment-card" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug])}}">
                             <div class="card-apartment-container">
                                 <div class="card-apartment-image">
-                                    <img src="{{asset("img/prova.jpg")}} " alt="Immagine dell'appartamento" class="img-fluid">
+                                    <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" alt="Immagine dell'appartamento" class="img-fluid">
                                     <span class="card-apartment-city">{{ substr($apartment->address, strpos($apartment->address, ',')+2) }}</span>
                                 </div>
                                 <div class="card-apartment-description">
                                     {{-- <span class="card-apartment-city">Milano</span> --}}
                                     <h2 class="card-apartment-header text-center">{{$apartment->title}}</h2>
                                     <p class="text-center">
-                                        <i class="fas fa-euro-sign"></i>
-                                        <span>Prezzo per notte: 65€</span>
+                                        <span>Prezzo per notte: <i class="fas fa-euro-sign"></i> {{ $apartment->price_per_night }}</span>
                                     </p>
-
+                                    <p class="text-center">
+                                        @if ($apartment->available)
+                                            <span class="green">
+                                                <i class="fas fa-check-circle text-success"></i>
+                                                Disponibile
+                                            </span>
+                                        @else
+                                            <span class="red">
+                                                <i class="fas fa-times-circle text-danger"></i>
+                                                Non disponibile
+                                            </span>
+                                        @endif
+                                    </p>
                                 </div>
 
                             </div>
@@ -124,17 +135,28 @@
                                 <a id="sponsored-apartment-card" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug]) }}">
                                     <div class="card-apartment-container">
                                         <div class="card-apartment-image">
-                                            <img src="{{ asset("storage/" . $apartment->{"main-image"}) }} " alt="Immagine dell'appartamento" class="img-fluid">
+                                            <img src="{{ asset("storage/" . $apartment->{"main-image"}) }}" alt="Immagine dell'appartamento" class="img-fluid">
                                             <span class="card-apartment-city">{{ substr($apartment->address, strpos($apartment->address, ',')+2) }}</span>
                                         </div>
                                         <div class="card-apartment-description">
                                             {{-- <span class="card-apartment-city">Milano</span> --}}
                                             <h2 class="card-apartment-header text-center">{{$apartment->title}}</h2>
                                             <p class="text-center">
-                                                <i class="fas fa-euro-sign"></i>
-                                                <span>Prezzo per notte: {{$apartment->price_per_night}}€</span>
+                                                <span>Prezzo per notte: <i class="fas fa-euro-sign"></i> {{ $apartment->price_per_night }}</span>
                                             </p>
-
+                                            <p class="text-center">
+                                                @if ($apartment->available)
+                                                    <span class="green">
+                                                        <i class="fas fa-check-circle text-success"></i>
+                                                        Disponibile
+                                                    </span>
+                                                @else
+                                                    <span class="red">
+                                                        <i class="fas fa-times-circle text-danger"></i>
+                                                        Non disponibile
+                                                    </span>
+                                                @endif
+                                            </p>
                                         </div>
 
                                     </div>
