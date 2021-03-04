@@ -36,7 +36,7 @@
 
 @section('content')
     <main id="main-home">
-        <div id="home" class="container">
+        <div id="home" class="container" v-cloak>
 
             {{-- Card di prova --}}
             {{-- <div class="row">
@@ -65,16 +65,16 @@
             <div class="row">
                 <div class="col-12">
                     @if (!$sponsored_apartments->isEmpty())
-                        <h1>Appartamenti in evidenza</h1>
+                        <h1 class="mt-5 mb-5">Appartamenti in evidenza</h1>
                     @endif
                 </div>
                 @foreach ($sponsored_apartments as $apartment)
                     <div class="col-12 col-sm-6 col-md-4 col-lg-4 mb-5">
-                        <a id="sponsored-apartment-card" href="{{ route('guest.apartment-show', ['slug' => $apartment->slug])}}">
+                        <a id="sponsored-apartment-card" href="{{ route('guest.apartments.show', ['slug' => $apartment->slug])}}">
                             <div class="card-apartment-container">
                                 <div class="card-apartment-image">
                                     <img src="{{asset("img/prova.jpg")}} " alt="Immagine dell'appartamento" class="img-fluid">
-                                    <span class="card-apartment-city">Milano</span>
+                                    <span class="card-apartment-city">{{ substr($apartment->address, strpos($apartment->address, ',')+2) }}</span>
                                 </div>
                                 <div class="card-apartment-description">
                                     {{-- <span class="card-apartment-city">Milano</span> --}}
@@ -103,9 +103,16 @@
             </div>
 
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 text-center">
                     @if (!$sponsored_apartments->isEmpty() && !$non_sponsored_apartments->isEmpty())
-                        <button @click="showMore ? showMore = false : showMore = true" class="btn btn-success">Mostra altri appartamenti</button>
+                        <button v-if="!showMore" @click="showMore = true" class="btn mb-4 show-more">
+                            Mostra altri appartamenti
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <button v-if="showMore" @click="showMore = false" class="btn mb-5 show-more">
+                            Nascondi appartamenti
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
                     @endif
                 </div>
 
@@ -118,7 +125,7 @@
                                     <div class="card-apartment-container">
                                         <div class="card-apartment-image">
                                             <img src="{{ asset("storage/" . $apartment->{"main-image"}) }} " alt="Immagine dell'appartamento" class="img-fluid">
-                                            <span class="card-apartment-city">Milano</span>
+                                            <span class="card-apartment-city">{{ substr($apartment->address, strpos($apartment->address, ',')+2) }}</span>
                                         </div>
                                         <div class="card-apartment-description">
                                             {{-- <span class="card-apartment-city">Milano</span> --}}

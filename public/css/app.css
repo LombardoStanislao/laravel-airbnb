@@ -17878,6 +17878,16 @@ footer ul a:hover {
   transform: translateY(-150px);
 }
 
+button.show-more {
+  background-color: #ff385c;
+  color: white;
+}
+
+button.show-more:hover {
+  background-color: #ff9eb0;
+  color: black;
+}
+
 @media (min-width: 576px) {
   #jumbotron-homepage .jumbo-container #jumbo-title {
     font-size: 3rem;
